@@ -7,7 +7,7 @@ const Hero = () => {
   const t = useTranslations("HomePage.Hero");
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-15 overflow-hidden bg-background">
+    <section className="relative min-h-screen flex items-center justify-center md:py-30 overflow-hidden bg-background">
       {/* 1. ডাইনামিক ব্যাকগ্রাউন্ড (Animated Gradient Mesh) */}
       <div className="absolute inset-0 z-0">
         {/* উপরের বড় ব্লু গ্লো */}
