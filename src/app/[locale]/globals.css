@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #2563eb;
+  --secondary: #6366f1;
+  --paragraph: #475569;
+}
+
+.dark {
+  --background: #020617;
+  --foreground: #f1f5f9;
+  --primary: #3b82f6;
+  --secondary: #818cf8;
+  --paragraph: #94a3b8;
+}
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-paragraph: var(--paragraph);
+}
+
+@layer base {
+  html,
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    overflow-x: hidden;
+    font-family:
+      var(--font-poppins), var(--font-hind), ui-sans-serif, system-ui; /* Multi Font (Order Important!) */
+  }
+
+  p {
+    color: var(--paragraph);
+  }
+}
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--color-primary), transparent);
+  border-radius: 50px;
+}
+
+/* ডার্ক মোড ভেরিয়েন্ট ডিটেকশন */
+@variant dark (&:where(.dark, .dark *));

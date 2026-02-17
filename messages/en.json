@@ -1,0 +1,51 @@
+{
+  "Navbar": {
+    "Platform": "Platform",
+    "Solutions": "Solutions",
+    "Enterprise": "Enterprise",
+    "Docs": "Docs"
+  },
+  "HomePage": {
+    "Hero": {
+      "titlePart1": "Experience the Next Level",
+      "titlePart2": "Premium Tech Collection",
+      "description": "Discover high-performance gadgets and premium electronics designed for your digital lifestyle. Shop the latest tech from Vintax.",
+      "ctaPrimary": "Shop Now",
+      "ctaSecondary": "View Categories"
+    },
+    "Categories": {
+      "title": "Browse",
+      "subtitle": "Categories",
+      "laptop": "Laptops",
+      "phone": "Phones",
+      "audio": "Audio",
+      "gadgets": "Gadgets",
+      "itemCount": "Products"
+    },
+    "FlashDeals": {
+      "badge": "Limited Time Offer",
+      "titleMain": "Flash",
+      "titleSub": "Sale",
+      "desc": "Get up to 40% off on premium tech.",
+      "hours": "Hours",
+      "mins": "Mins",
+      "secs": "Secs"
+    },
+    "ProductFeed": {
+      "title": "Our",
+      "subtitle": "Picks",
+      "tabNew": "New Arrivals",
+      "tabBest": "Best Sellers"
+    }
+  },
+  "Footer": {
+    "description": "Building the future of technology with premium gadgets and high-performance electronics.",
+    "newsletterTitle": "Join the Vintax Insider",
+    "newsletterDesc": "Get exclusive deals and tech news directly in your inbox.",
+    "subscribe": "Subscribe",
+    "shop": "Shop",
+    "company": "Company",
+    "support": "Support",
+    "rights": "All rights reserved."
+  }
+}
