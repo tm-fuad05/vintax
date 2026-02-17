@@ -24,9 +24,9 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed z-50 top-6 inset-x-0 mx-auto max-w-6xl px-4">
+    <nav className="fixed z-50 top-6 inset-x-0 mx-auto w-11/12 md:w-10/12">
       {/* Container: Glassmorphism with Primary Tint */}
-      <div className="relative rounded-2xl border border-primary/20 bg-background/80 px-4 py-2.5 backdrop-blur-xl shadow-[0_8px_30px_rgba(37,99,235,0.1)]">
+      <div className="relative rounded-2xl border border-primary/20 bg-background/80 px-4 py-3 backdrop-blur-xl shadow-[0_8px_30px_rgba(37,99,235,0.1)]">
         <div className="flex items-center justify-between">
           {/* 1. Logo Section */}
           <Link href="/" className="flex items-center gap-2 group px-2">
@@ -74,7 +74,7 @@ const Navbar = () => {
                 </button>
               </Link>
 
-              <Link href="/signup">
+              <Link href="/signup" className="hidden sm:block">
                 <button className="relative group overflow-hidden rounded-full bg-primary px-6 py-2.5 text-sm font-black text-white transition-all hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] active:scale-95">
                   <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
                   <span className="relative z-10 flex items-center gap-2">

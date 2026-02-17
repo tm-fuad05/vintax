@@ -12,6 +12,7 @@ import {
   MapPin,
   Phone,
 } from "lucide-react";
+import Image from "next/image";
 
 const Footer = () => {
   const t = useTranslations("Footer");
@@ -27,12 +28,12 @@ const Footer = () => {
           {/* 1. Brand & Newsletter Section (5 Columns) */}
           <div className="lg:col-span-5 space-y-8">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary shadow-lg shadow-primary/20">
-                <Command size={22} className="text-white" />
-              </div>
-              <span className="text-2xl font-black tracking-tighter text-foreground uppercase">
-                Vintax<span className="text-primary">.</span>
-              </span>
+              <Image
+                src={"/logo/logo.png"}
+                alt="Vintax"
+                width={150}
+                height={0}
+              />
             </Link>
 
             <p className="text-paragraph text-lg max-w-sm leading-relaxed">
@@ -53,7 +54,7 @@ const Footer = () => {
                   className="absolute left-4 top-1/2 -translate-y-1/2 text-paragraph/50"
                   size={18}
                 />
-                <button className="absolute right-2 top-2 bottom-2 bg-primary hover:bg-secondary text-white px-6 rounded-xl font-bold text-sm transition-all flex items-center gap-2 group-hover:shadow-lg group-hover:shadow-primary/20">
+                <button className="absolute right-0 inset-y-0 bg-primary hover:bg-secondary text-white px-6 rounded-xl rounded-l-none font-bold text-sm transition-all flex items-center gap-2 group-hover:shadow-lg group-hover:shadow-primary/20">
                   {t("subscribe")}
                   <ArrowRight size={16} />
                 </button>

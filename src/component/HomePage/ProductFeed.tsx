@@ -7,8 +7,8 @@ export const ProductFeed = () => {
   const [active, setActive] = useState(t("tabNew"));
 
   return (
-    <section className="py-24">
-      <div className="container mx-auto px-4">
+    <section>
+      <div className="w-11/12 mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter uppercase leading-none">
             {t("title")} <span className="text-secondary">{t("subtitle")}</span>

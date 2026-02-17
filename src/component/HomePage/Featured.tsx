@@ -13,8 +13,8 @@ export default function Featured() {
   ];
 
   return (
-    <section className="py-24">
-      <div className="container mx-auto px-4">
+    <section>
+      <div className="w-11/12 mx-auto">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-16 tracking-tighter uppercase">
           {t("title")} <span className="text-primary">{t("subtitle")}</span>
         </h2>

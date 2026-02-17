@@ -6,8 +6,8 @@ export const FlashDeals = () => {
   const t = useTranslations("HomePage.FlashDeals");
 
   return (
-    <section className="py-12">
-      <div className="container mx-auto px-4">
+    <section>
+      <div className="w-11/12 mx-auto">
         <div className="relative rounded-[3rem] bg-gradient-to-br from-primary via-primary to-secondary p-10 md:p-16 overflow-hidden">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
 
