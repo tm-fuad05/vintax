@@ -1,9 +1,10 @@
 {
   "Navbar": {
-    "Platform": "প্ল্যাটফর্ম",
-    "Solutions": "সলিউশন",
-    "Enterprise": "এন্টারপ্রাইজ",
-    "Docs": "ডক্স"
+    "home": "হোম",
+    "shop": "শপ",
+    "categories": "ক্যাটাগরি",
+    "community": "কমিউনিটি",
+    "login": "লগইন"
   },
   "HomePage": {
     "Hero": {

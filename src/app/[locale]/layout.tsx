@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins, Hind_Siliguri } from "next/font/google";
+import { Inter, Hind_Siliguri } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
@@ -7,10 +7,10 @@ import "./globals.css";
 import Navbar from "@/component/shared/Navbar";
 import Footer from "@/component/shared/Footer";
 
-const poppinsFont = Poppins({
+const interFont = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-inter",
 });
 
 const hindFont = Hind_Siliguri({
@@ -40,7 +40,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <NextIntlClientProvider>
         <body
           className={`
-          ${poppinsFont.variable} 
+          ${interFont.variable} 
           ${hindFont.variable} 
           antialiased
         `}

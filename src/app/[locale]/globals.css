@@ -5,6 +5,7 @@
   --foreground: #0f172a;
   --primary: #2563eb;
   --secondary: #6366f1;
+  --title: #0f172a;
   --paragraph: #475569;
 }
 
@@ -13,6 +14,7 @@
   --foreground: #f1f5f9;
   --primary: #3b82f6;
   --secondary: #818cf8;
+  --title: #0f172a;
   --paragraph: #94a3b8;
 }
 @theme {
@@ -21,6 +23,7 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-paragraph: var(--paragraph);
+  --color-title: var (--title);
 }
 
 @layer base {
@@ -29,8 +32,8 @@
     background-color: var(--background);
     color: var(--foreground);
     overflow-x: hidden;
-    font-family:
-      var(--font-poppins), var(--font-hind), ui-sans-serif, system-ui; /* Multi Font (Order Important!) */
+    font-family: var(--font-inter), var(--font-hind), ui-sans-serif, system-ui;
+    /* Multi Font (Order Important!) */
   }
 
   p {

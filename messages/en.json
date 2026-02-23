@@ -1,9 +1,10 @@
 {
   "Navbar": {
-    "Platform": "Platform",
-    "Solutions": "Solutions",
-    "Enterprise": "Enterprise",
-    "Docs": "Docs"
+    "home": "Home",
+    "shop": "Shop",
+    "categories": "Categories",
+    "community": "Community",
+    "login": "Login"
   },
   "HomePage": {
     "Hero": {
