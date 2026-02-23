@@ -29,7 +29,7 @@ const Navbar = () => {
   return (
     <nav className="fixed z-50 w-full bg-white border-b border-gray-200">
       {/* Container: Glassmorphism with Primary Tint */}
-      <div className="relative w-11/12 mx-auto px-4 py-5">
+      <div className="relative w-11/12 mx-auto py-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-5">
             {/* 1. Logo Section */}
@@ -50,8 +50,8 @@ const Navbar = () => {
           </div>
 
           {/* 3. Right Actions Section */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2 ">
+            <div className="lg:flex items-center gap-1 hidden">
               <button className="flex p-2 items-center justify-center gap-1.5 rounded-full text-paragraph transition-all hover:bg-primary/10 hover:text-primary uppercase font-bold text-xs cursor-pointer">
                 <BsHeartFill size={18} />
               </button>
@@ -62,7 +62,7 @@ const Navbar = () => {
                 <FaShoppingBag size={18} />
               </button>
             </div>
-            <div className="mx-2 h-6 w-px bg-primary/10 hidden md:block" />
+            <div className="mx-2 h-6 w-px bg-primary/10 hidden lg:block" />
             <div className="flex items-center gap-1">
               {/* Language Switcher */}
               <button

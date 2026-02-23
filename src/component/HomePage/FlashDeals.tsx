@@ -7,8 +7,8 @@ export const FlashDeals = () => {
 
   return (
     <section>
-      <div className="w-11/12 mx-auto">
-        <div className="relative rounded-[3rem] bg-gradient-to-br from-primary via-primary to-secondary p-10 md:p-16 overflow-hidden">
+      <div>
+        <div className="relative bg-gradient-to-br from-primary via-primary to-secondary p-10 md:p-16 md:py-28 overflow-hidden">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
 
           <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">

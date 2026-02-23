@@ -10,15 +10,16 @@ export default function Hero() {
       <motion.div
         initial={{ x: -800, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
         className="flex flex-col gap-6"
       >
-        <h1 className="text-5xl lg:text-8xl text-title font-black uppercase">
+        <h1 className="text-5xl md:text-6xl lg:text-8xl text-title font-black uppercase">
           {t("titleTop")}{" "}
           <span className="text-primary">{t("titleMiddle")}</span>{" "}
           {t("titleBottom")}
         </h1>
-        <p className="w-11/12 leading-relaxed text-paragraph text-xl font-medium">
+        <p className="w-11/12 leading-relaxed text-paragraph text-lg md:text-xl font-medium">
           {t("description")}
         </p>
         {/* Button */}
