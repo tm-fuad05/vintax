@@ -1,19 +1,11 @@
 "use client";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import {
-  Globe,
-  Moon,
-  Menu,
-  Command,
-  Heart,
-  ShoppingCart,
-  ShoppingBag,
-} from "lucide-react";
+import { Globe, Moon, Menu } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { BsHeartFill } from "react-icons/bs";
-import { FaShoppingBag, FaTshirt } from "react-icons/fa";
-import { PiShoppingCartFill } from "react-icons/pi";
-import { RiShoppingBagFill } from "react-icons/ri";
+import { FaShoppingBag } from "react-icons/fa";
+
+import Logo from "./logo";
 
 const Navbar = () => {
   const locale = useLocale();
@@ -35,18 +27,13 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full px-10">
+    <nav className="w-full bg-white">
       {/* Container: Glassmorphism with Primary Tint */}
-      <div className="relative px-4 py-5">
+      <div className="relative w-11/12 mx-auto px-4 py-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-5">
             {/* 1. Logo Section */}
-            <Link href="/" className="flex items-center gap-1 group px-2">
-              <FaTshirt className="text-primary rotate-10 text-xl md:text-2xl lg:text-[32px]" />
-              <h2 className="text-2xl md:text-3xl font-black text-title italic">
-                VANTIX
-              </h2>
-            </Link>
+            <Logo />
 
             {/* 2. Navigation - Matching Hero Accent */}
             <div className="hidden lg:flex items-center gap-1">

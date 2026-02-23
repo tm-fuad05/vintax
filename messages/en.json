@@ -8,11 +8,12 @@
   },
   "HomePage": {
     "Hero": {
-      "titlePart1": "Experience the Next Level",
-      "titlePart2": "Premium Tech Collection",
-      "description": "Discover high-performance gadgets and premium electronics designed for your digital lifestyle. Shop the latest tech from Vintax.",
+      "titleTop": "Elevate Your",
+      "titleMiddle": "Everyday",
+      "titleBottom": "Style",
+      "description": "Experience the intersection of luxury and street culture with our latest seasonal drop. High-end materials meets iconic silhouettes.",
       "ctaPrimary": "Shop Now",
-      "ctaSecondary": "View Categories"
+      "ctaSecondary": "Explore Collection"
     },
     "Categories": {
       "title": "Browse",
