@@ -16,12 +16,12 @@
       "ctaSecondary": "Explore Collection"
     },
     "Categories": {
-      "title": "Browse",
+      "title": "Featured",
       "subtitle": "Categories",
-      "laptop": "Laptops",
-      "phone": "Phones",
-      "audio": "Audio",
-      "gadgets": "Gadgets",
+      "men": "Men",
+      "women": "Women",
+      "sneakers": "Sneakers",
+      "accessories": "Accessories",
       "itemCount": "Products"
     },
     "FlashDeals": {

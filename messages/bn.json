@@ -16,12 +16,12 @@
       "ctaSecondary": "কালেকশন দেখুন"
     },
     "Categories": {
-      "title": "ব্রাউজ",
+      "title": "জনপ্রিয়",
       "subtitle": "ক্যাটাগরি",
-      "laptop": "ল্যাপটপ",
-      "phone": "ফোন",
-      "audio": "অডিও",
-      "gadgets": "গ্যাজেট",
+      "men": "পুরুষ",
+      "women": "নারী",
+      "sneakers": "স্নিকার্স",
+      "accessories": "সাজসজ্জা",
       "itemCount": "প্রোডাক্ট"
     },
     "FlashDeals": {

@@ -1,13 +1,19 @@
 "use client";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { motion } from "framer-motion";
 
 export const ProductFeed = () => {
   const t = useTranslations("HomePage.ProductFeed");
   const [active, setActive] = useState(t("tabNew"));
 
   return (
-    <section>
+    <motion.div
+      initial={{ y: 100, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+    >
       <div className="w-11/12 mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter uppercase leading-none">
@@ -44,6 +50,6 @@ export const ProductFeed = () => {
           ))}
         </div>
       </div>
-    </section>
+    </motion.div>
   );
 };

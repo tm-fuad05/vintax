@@ -27,7 +27,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full bg-white">
+    <nav className="fixed z-50 w-full bg-white border-b border-gray-200">
       {/* Container: Glassmorphism with Primary Tint */}
       <div className="relative w-11/12 mx-auto px-4 py-5">
         <div className="flex items-center justify-between">
