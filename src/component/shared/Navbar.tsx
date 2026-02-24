@@ -52,10 +52,10 @@ const Navbar = () => {
           {/* 3. Right Actions Section */}
           <div className="flex items-center gap-2 ">
             <div className="lg:flex items-center gap-1 hidden">
-              <button className="flex p-2 items-center justify-center gap-1.5 rounded-full text-paragraph transition-all hover:bg-primary/10 hover:text-primary uppercase font-bold text-xs cursor-pointer">
+              <button className="flex p-2 items-center justify-center rounded-full text-paragraph transition-all hover:bg-primary/10 hover:text-primary uppercase font-bold text-xs cursor-pointer">
                 <BsHeartFill size={18} />
               </button>
-              <button className=" relative flex p-2 items-center justify-center gap-1.5 rounded-full text-paragraph transition-all hover:bg-primary/10 hover:text-primary uppercase font-bold text-xs cursor-pointer">
+              <button className=" relative flex p-2 items-center justify-center  rounded-full text-paragraph transition-all hover:bg-primary/10 hover:text-primary uppercase font-bold text-xs cursor-pointer">
                 <p className="absolute top-1 right-0 bg-primary w-4 h-4 rounded-full text-white flex items-center justify-center">
                   5
                 </p>

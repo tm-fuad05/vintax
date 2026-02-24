@@ -62,7 +62,7 @@ export default function Featured() {
                 style={{
                   backgroundImage: `url(${cat.img})`,
                 }}
-                className="absolute z-0 inset-0 group-hover:scale-120 duration-300 bg-cover bg-top"
+                className="absolute z-0 inset-0 group-hover:scale-120 group-active:scale-120 duration-300 bg-cover bg-top"
               />
               {/* Overlay */}
               <div className="absolute inset-0 z-10 bg-linear-to-t from-black/90 to-transparent" />

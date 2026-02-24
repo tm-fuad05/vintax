@@ -8,7 +8,7 @@ export default function Hero() {
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 gap-8 justify-between items-center w-11/12 mx-auto py-20 pt-40">
       {/* Content */}
       <motion.div
-        initial={{ x: -800, opacity: 0 }}
+        initial={{ x: -300, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
@@ -34,7 +34,7 @@ export default function Hero() {
       </motion.div>
       {/* Image */}
       <motion.div
-        initial={{ x: 800, opacity: 0 }}
+        initial={{ x: 300, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
         className="relative w-full h-200"

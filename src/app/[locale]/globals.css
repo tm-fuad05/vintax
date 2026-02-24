@@ -23,7 +23,7 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-paragraph: var(--paragraph);
-  --color-title: var (--title);
+  --color-title: var(--title);
 }
 
 @layer base {

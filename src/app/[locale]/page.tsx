@@ -1,3 +1,4 @@
+import BestSelling from "@/component/HomePage/BestSelling";
 import Featured from "@/component/HomePage/Featured";
 import { FlashDeals } from "@/component/HomePage/FlashDeals";
 import Hero from "@/component/HomePage/Hero";
@@ -12,6 +13,7 @@ export default async function Home() {
       <Hero />
       <Featured />
       <FlashDeals />
+      <BestSelling />
       <ProductFeed />
     </div>
   );
