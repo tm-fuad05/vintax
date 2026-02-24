@@ -33,7 +33,7 @@ export default async function BestSelling() {
       price: 54.0,
       sizes: ["S", "M", "L", "XL"],
       colors: ["Cream", "Black"],
-      image: "https://images.unsplash.com/photo-1581044777550-4cfa60707c03",
+      image: "/wpant.jpg",
       description:
         "Chic high-waist wide leg pants with breathable fabric and relaxed fit.",
     },
@@ -44,7 +44,7 @@ export default async function BestSelling() {
       price: 59.99,
       sizes: ["30", "32", "34", "36"],
       colors: ["Navy", "Khaki"],
-      image: "https://images.unsplash.com/photo-1593032465175-481ac7f401a0",
+      image: "pant.webp",
       description:
         "Modern slim-fit chino pants suitable for both office and casual wear.",
     },
@@ -55,7 +55,7 @@ export default async function BestSelling() {
       price: 39.99,
       sizes: ["XS", "S", "M", "L"],
       colors: ["White"],
-      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
+      image: "/blouse.jpg",
       description:
         "Elegant minimalist white blouse made from premium soft fabric.",
     },
@@ -92,7 +92,7 @@ export default async function BestSelling() {
                 <img
                   src={image}
                   alt={name}
-                  className="w-full object-cover h-80 hover:scale-110 active:scale-110 duration-300"
+                  className="w-full object-cover object-bottom h-80 hover:scale-110 :scale-110 duration-300"
                 />
               </figure>
             </div>
