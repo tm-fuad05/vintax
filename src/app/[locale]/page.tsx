@@ -12,9 +12,11 @@ export default async function Home() {
     >
       <Hero />
       <Featured />
-      <FlashDeals />
-      <BestSelling />
-      <ProductFeed />
+      <div>
+        <FlashDeals />
+        <BestSelling />
+        <ProductFeed />
+      </div>
     </div>
   );
 }

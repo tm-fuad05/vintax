@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "BestSelling" ALTER COLUMN "price" SET DATA TYPE DOUBLE PRECISION;

@@ -1,65 +1,58 @@
+import { getBestSellingProducts } from "@/lib/actions/bestSelling";
 import { getTranslations } from "next-intl/server";
 import { BsHeartFill } from "react-icons/bs";
 
 export default async function BestSelling() {
-  interface BestSelling {
-    id: string;
-    name: string;
-    category: "Men" | "Women";
-    price: number;
-    sizes: string[];
-    colors: string[];
-    image: string;
-    description: string;
-  }
+  //   const bestSelling: BestSelling[] = [
+  //     {
+  //       id: "men-002",
+  //       name: "Casual Oversized T-Shirt",
+  //       category: "Men",
+  //       price: 29.99,
+  //       sizes: ["S", "M", "L", "XL", "XXL"],
+  //       colors: ["White", "Beige", "Olive"],
+  //       image: "https://images.unsplash.com/photo-1618354691438-25bc04584c23",
+  //       description:
+  //         "Soft cotton oversized t-shirt designed for everyday comfort.",
+  //     },
 
-  const bestSelling: BestSelling[] = [
-    {
-      id: "men-002",
-      name: "Casual Oversized T-Shirt",
-      category: "Men",
-      price: 29.99,
-      sizes: ["S", "M", "L", "XL", "XXL"],
-      colors: ["White", "Beige", "Olive"],
-      image: "https://images.unsplash.com/photo-1618354691438-25bc04584c23",
-      description:
-        "Soft cotton oversized t-shirt designed for everyday comfort.",
-    },
+  //     {
+  //       id: "women-002",
+  //       name: "High-Waist Wide Leg Pants",
+  //       category: "Women",
+  //       price: 54.0,
+  //       sizes: ["S", "M", "L", "XL"],
+  //       colors: ["Cream", "Black"],
+  //       image: "/wpant.jpg",
+  //       description:
+  //         "Chic high-waist wide leg pants with breathable fabric and relaxed fit.",
+  //     },
+  //     {
+  //       id: "men-003",
+  //       name: "Slim Fit Chino Pants",
+  //       category: "Men",
+  //       price: 59.99,
+  //       sizes: ["30", "32", "34", "36"],
+  //       colors: ["Navy", "Khaki"],
+  //       image: "pant.webp",
+  //       description:
+  //         "Modern slim-fit chino pants suitable for both office and casual wear.",
+  //     },
+  //     {
+  //       id: "women-003",
+  //       name: "Minimalist White Blouse",
+  //       category: "Women",
+  //       price: 39.99,
+  //       sizes: ["XS", "S", "M", "L"],
+  //       colors: ["White"],
+  //       image: "/blouse.jpg",
+  //       description:
+  //         "Elegant minimalist white blouse made from premium soft fabric.",
+  //     },
+  //   ];
 
-    {
-      id: "women-002",
-      name: "High-Waist Wide Leg Pants",
-      category: "Women",
-      price: 54.0,
-      sizes: ["S", "M", "L", "XL"],
-      colors: ["Cream", "Black"],
-      image: "/wpant.jpg",
-      description:
-        "Chic high-waist wide leg pants with breathable fabric and relaxed fit.",
-    },
-    {
-      id: "men-003",
-      name: "Slim Fit Chino Pants",
-      category: "Men",
-      price: 59.99,
-      sizes: ["30", "32", "34", "36"],
-      colors: ["Navy", "Khaki"],
-      image: "pant.webp",
-      description:
-        "Modern slim-fit chino pants suitable for both office and casual wear.",
-    },
-    {
-      id: "women-003",
-      name: "Minimalist White Blouse",
-      category: "Women",
-      price: 39.99,
-      sizes: ["XS", "S", "M", "L"],
-      colors: ["White"],
-      image: "/blouse.jpg",
-      description:
-        "Elegant minimalist white blouse made from premium soft fabric.",
-    },
-  ];
+  const bestSelling = await getBestSellingProducts();
+  console.log(bestSelling);
 
   const t = await getTranslations("HomePage.BestSelling");
 

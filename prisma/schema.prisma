@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model BestSelling {
+  id          String   @id @default(cuid())
+  name        String
+  category    Category
+  price       Float
+  sizes       String[]
+  colors      String[]
+  image       String
+  description String
+}
+
+enum Category {
+  Men
+  Women
+}
