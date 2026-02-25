@@ -1,8 +1,7 @@
 "use client";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import {
-  Command,
   Facebook,
   Instagram,
   Twitter,
@@ -15,8 +14,10 @@ import {
 import Image from "next/image";
 
 const Footer = () => {
-  const t = useTranslations("Footer");
+  const pathname = usePathname();
 
+  const t = useTranslations("Footer");
+  if (pathname === "/sign-up" || pathname === "/sign-in") return null;
   return (
     <footer className="relative mt-20 bg-background overflow-hidden">
       {/* Background Decorative Glow */}

@@ -4,8 +4,30 @@
     "shop": "Shop",
     "categories": "Categories",
     "community": "Community",
-    "login": "Login"
+    "login": "Login",
+    "getStarted": "Get Started"
   },
+
+  "SignUp": {
+    "title": "Create your account",
+    "subtitle": "Join the community of streetwear enthusiasts.",
+    "labels": {
+      "fullName": "Full Name",
+      "email": "Email Address",
+      "password": "Password",
+      "confirmPassword": "Confirm",
+      "profilePhoto": "Profile Photo URL"
+    },
+    "placeholders": {
+      "fullName": "John Doe",
+      "email": "name@example.com",
+      "password": "••••••••",
+      "confirmPassword": "••••••••",
+      "profilePhoto": "https://image-url.com/profile.jpg"
+    },
+    "button": "Sign Up"
+  },
+
   "HomePage": {
     "Hero": {
       "titleTop": "Elevate Your",
