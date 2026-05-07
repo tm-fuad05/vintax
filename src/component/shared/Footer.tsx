@@ -12,6 +12,7 @@ import {
   Phone,
 } from "lucide-react";
 import Image from "next/image";
+import Logo from "./logo";
 
 const Footer = () => {
   const pathname = usePathname();
@@ -29,12 +30,7 @@ const Footer = () => {
           {/* 1. Brand & Newsletter Section (5 Columns) */}
           <div className="lg:col-span-5 space-y-8">
             <Link href="/" className="flex items-center gap-2 group">
-              <Image
-                src={"/logo/logo.png"}
-                alt="Vintax"
-                width={150}
-                height={0}
-              />
+              <Logo />
             </Link>
 
             <p className="text-paragraph text-lg max-w-sm leading-relaxed">

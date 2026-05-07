@@ -1,117 +1,12 @@
 "use client";
 
-import * as React from "react";
-import { useSignUp } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
-import { ArrowBigRight, ArrowRight, Lock, Mail, User } from "lucide-react";
+import { ArrowRight, Lock, Mail, User } from "lucide-react";
 import Logo from "@/component/shared/logo";
 import { FcGoogle } from "react-icons/fc";
-import {
-  BiLogoFacebookCircle,
-  BiRightArrow,
-  BiSolidRightArrow,
-} from "react-icons/bi";
+import { BiLogoFacebookCircle } from "react-icons/bi";
 import Link from "next/link";
 
 export default function Page() {
-  const t = useTranslations("SignUp");
-
-  const { isLoaded, signUp, setActive } = useSignUp();
-  const [emailAddress, setEmailAddress] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [verifying, setVerifying] = React.useState(false);
-  const [code, setCode] = React.useState("");
-  const router = useRouter();
-
-  // Handle submission of the sign-up form
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!isLoaded) return <div>Loading...</div>;
-
-    // Start the sign-up process using the email and password provided
-    try {
-      await signUp.create({
-        emailAddress,
-        password,
-      });
-
-      // Send the user an email with the verification code
-      await signUp.prepareEmailAddressVerification({
-        strategy: "email_code",
-      });
-
-      // Set 'verifying' true to display second form
-      // and capture the code
-      setVerifying(true);
-    } catch (err: any) {
-      // See https://clerk.com/docs/guides/development/custom-flows/error-handling
-      // for more info on error handling
-      console.error(JSON.stringify(err, null, 2));
-    }
-  };
-
-  // Handle the submission of the verification form
-  const handleVerify = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!isLoaded) return <div>Loading...</div>;
-
-    try {
-      // Use the code the user provided to attempt verification
-      const signUpAttempt = await signUp.attemptEmailAddressVerification({
-        code,
-      });
-
-      // If verification was completed, set the session to active
-      // and redirect the user
-      if (signUpAttempt.status === "complete") {
-        await setActive({
-          session: signUpAttempt.createdSessionId,
-          navigate: async ({ session }) => {
-            if (session?.currentTask) {
-              // Handle pending session tasks
-              // See https://clerk.com/docs/guides/development/custom-flows/authentication/session-tasks
-              console.log(session?.currentTask);
-              return;
-            }
-
-            router.push("/");
-          },
-        });
-      } else {
-        // If the status is not complete, check why. User may need to
-        // complete further steps.
-        console.error("Sign-up attempt not complete:", signUpAttempt);
-        console.error("Sign-up attempt status:", signUpAttempt.status);
-      }
-    } catch (err: any) {
-      // See https://clerk.com/docs/guides/development/custom-flows/error-handling
-      // for more info on error handling
-      console.error(JSON.stringify(err, null, 2));
-    }
-  };
-
-  // Display the verification form to capture the code
-  if (verifying) {
-    return (
-      <>
-        <h1>Verify your email</h1>
-        <form onSubmit={handleVerify}>
-          <label id="code">Enter your verification code</label>
-          <input
-            value={code}
-            id="code"
-            name="code"
-            onChange={(e) => setCode(e.target.value)}
-          />
-          <button type="submit">Verify</button>
-        </form>
-      </>
-    );
-  }
-
   // Display the initial sign-up form to capture the email and password
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 overflow-y-hidden h-screen">
@@ -154,7 +49,7 @@ export default function Page() {
             Join the community of streetwear enthusiasists.
           </p>
         </div>
-        <form onSubmit={handleSubmit} className="w-full space-y-4">
+        <form className="w-full space-y-4">
           {/* Name */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">

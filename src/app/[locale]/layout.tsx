@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, Hind_Siliguri } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { ClerkProvider } from "@clerk/nextjs";
+
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import "./globals.css";
+import "../../app/globals.css";
 import Navbar from "@/component/shared/Navbar";
 import Footer from "@/component/shared/Footer";
 
@@ -37,22 +37,20 @@ export default async function LocaleLayout({ children, params }: Props) {
     notFound();
   }
   return (
-    <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
-        <NextIntlClientProvider>
-          <body
-            className={`
+    <html lang="en" suppressHydrationWarning>
+      <NextIntlClientProvider>
+        <body
+          className={`
           ${interFont.variable} 
           ${hindFont.variable} 
           antialiased
         `}
-          >
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-          </body>
-        </NextIntlClientProvider>
-      </html>
-    </ClerkProvider>
+        >
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </body>
+      </NextIntlClientProvider>
+    </html>
   );
 }

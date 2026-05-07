@@ -52,7 +52,6 @@ export default async function BestSelling() {
   //   ];
 
   const bestSelling = await getBestSellingProducts();
-  console.log(bestSelling);
 
   const t = await getTranslations("HomePage.BestSelling");
 

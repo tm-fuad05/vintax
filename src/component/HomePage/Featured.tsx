@@ -2,8 +2,10 @@
 import { useTranslations } from "next-intl";
 import { MoveRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 
 export default function Featured() {
+  // const { locale } = useRouter();
   const t = useTranslations("HomePage.Categories");
 
   const categories = [
@@ -31,6 +33,7 @@ export default function Featured() {
 
   return (
     <motion.div
+      // key={locale}
       initial={{ y: 100, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       viewport={{ once: true }}
