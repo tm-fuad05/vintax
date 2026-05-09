@@ -1,16 +1,67 @@
 "use client";
 
-import { FcGoogle } from "react-icons/fc";
-import { BiLogoFacebookCircle } from "react-icons/bi";
 import Link from "next/link";
 import { ArrowRight, Lock, Mail } from "lucide-react";
 import Logo from "@/component/shared/logo";
+import SocialLogin from "@/component/shared/SocialLogin";
+import { authClient } from "@/lib/auth-client";
+import React, { useState } from "react";
+import { signInInput, signInSchema } from "@/ZodSchema/authSchema";
+import { redirect } from "next/navigation";
+import { toast } from "sonner";
+import AuthButton from "@/component/shared/AuthButton";
 
 export default function SignInForm() {
-  // Display a form to capture the user's email and password
+  const { data } = authClient.useSession();
+  console.log(data?.user);
+  const [inputError, setInputError] = useState<
+    Record<string, string[] | undefined>
+  >({});
+  const [formData, setFormData] = useState<signInInput>({
+    email: "",
+    password: "",
+  });
+
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Zod Parse
+  const formDataValidation = signInSchema.safeParse(formData);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!formDataValidation.success) {
+      const error = formDataValidation.error.flatten().fieldErrors;
+      setInputError(error);
+      return;
+    }
+    setInputError({});
+
+    await authClient.signIn.email(
+      {
+        email: formData.email,
+        password: formData.password,
+        callbackURL: "/dashboard",
+      },
+      {
+        //callbacks
+        onSuccess: (ctx) => {
+          redirect("/");
+        },
+        onError: (ctx) => {
+          // display the error message
+          toast.error(ctx.error.message);
+        },
+      },
+    );
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 overflow-y-hidden h-screen">
-      <div className="relative lg:col-span-7 hidden lg:block">
+      <div className="relative lg:col-span-6 hidden lg:block">
         <div
           style={{
             backgroundImage:
@@ -22,7 +73,7 @@ export default function SignInForm() {
             <Logo />
           </div>
           <div className="z-10 space-y-2">
-            <h1 className="capitalize text-5xl font-bold text-white ">
+            <h1 className="capitalize text-5xl font-black text-white ">
               manage your <br /> assets with <br /> clarity
             </h1>
             <p className="text-white text-sm">
@@ -36,19 +87,20 @@ export default function SignInForm() {
             <li className="text-white text-sm list-disc">Privacy Policy</li>
           </div>
         </div>
-        <div className="absolute bg-linear-to-t from-primary via-primary/80 to-transparent inset-0 h-screen" />
+        {/* Blue Overlay */}
+        <div className="absolute bg-linear-to-t from-primary/80 via-primary/50 to-transparent inset-0 h-screen" />
       </div>
       {/* Form */}
-      <div className="flex flex-col gap-5 justify-center p-20 py-8 lg:col-span-5">
+      <div className="flex flex-col gap-5 justify-center p-20 py-8 lg:col-span-6">
         <div className="space-y-1">
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-slate-800">
             Welcome Back
           </h2>
-          <p className="text-paragraph text-sm md:text-md font-medium">
+          <p className="text-sm text-slate-500 leading-relaxed max-w-sm">
             Enter your details to access your account.
           </p>
         </div>
-        <form className="w-full space-y-4">
+        <form onSubmit={handleSubmit} className="w-full space-y-4">
           {/* Email */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">Email</label>
@@ -56,6 +108,8 @@ export default function SignInForm() {
               <input
                 type="text"
                 name="email"
+                value={formData.email}
+                onChange={changeHandler}
                 placeholder="Your email address"
                 className="rounded-xl ring-1 ring-gray-300 w-full py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
               />
@@ -64,8 +118,12 @@ export default function SignInForm() {
                 className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500 group-focus-within:text-primary"
               />
             </div>
+            {inputError.email && (
+              <small className="text-red-500 font-medium block -mt-1 ml-1">
+                {inputError.email[0]}
+              </small>
+            )}
           </div>
-          {/* Passwords */}
 
           {/* Pass */}
           <div className="space-y-2">
@@ -82,6 +140,8 @@ export default function SignInForm() {
               <input
                 type="password"
                 name="password"
+                value={formData.password}
+                onChange={changeHandler}
                 placeholder="••••••••"
                 className="rounded-xl ring-1 ring-gray-300 w-full py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
               />
@@ -90,13 +150,15 @@ export default function SignInForm() {
                 className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500 group-focus-within:text-primary"
               />
             </div>
+            {inputError.password && (
+              <small className="text-red-500 font-medium block -mt-1 ml-1">
+                {inputError.password[0]}
+              </small>
+            )}
           </div>
 
           {/* Button */}
-          <button className="text-white bg-primary py-3 rounded-xl w-full mt-2 text-sm flex items-center justify-center gap-2 group hover:bg-blue-700 duration-200 cursor-pointer">
-            <span>Sign In</span>
-            <ArrowRight className="group-hover:translate-x-2 duration-200" />
-          </button>
+          <AuthButton>Sign In</AuthButton>
         </form>
         {/* Divider */}
         <div className="flex items-center gap-2">
@@ -107,16 +169,7 @@ export default function SignInForm() {
           <div className="h-px grow bg-gray-300" />
         </div>
         {/* OAuth Login */}
-        <div className="flex gap-2 w-full">
-          <button className="w-1/2 py-3 flex justify-center gap-2 items-center rounded-xl border border-gray-300 text-sm hover:bg-gray-200 duration-200 cursor-pointer">
-            <FcGoogle size={20} />
-            <span className="font-semibold">Google</span>
-          </button>
-          <button className="w-1/2 py-3 flex justify-center gap-2 items-center rounded-xl border border-gray-300 text-sm hover:bg-gray-200 duration-200 cursor-pointer">
-            <BiLogoFacebookCircle className="text-primary" size={20} />
-            <span className="font-semibold">Facebook</span>
-          </button>
-        </div>
+        <SocialLogin />
         <p className="text gray-600 text-center">
           Don't have an account?{" "}
           <Link href={"sign-up"} className="text-primary font-semibold">

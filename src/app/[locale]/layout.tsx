@@ -5,8 +5,9 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import "../../app/globals.css";
-import Navbar from "@/component/shared/Navbar";
-import Footer from "@/component/shared/Footer";
+import Navbar from "@/layout/Navbar";
+import Footer from "@/layout/Footer";
+import { Toaster } from "sonner";
 
 const interFont = Inter({
   subsets: ["latin"],
@@ -49,6 +50,16 @@ export default async function LocaleLayout({ children, params }: Props) {
           <Navbar />
           <main>{children}</main>
           <Footer />
+          <Toaster
+            position="top-right"
+            duration={3000}
+            toastOptions={{
+              style: {
+                background: "black",
+                color: "white",
+              },
+            }}
+          />
         </body>
       </NextIntlClientProvider>
     </html>

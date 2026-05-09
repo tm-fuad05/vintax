@@ -5,12 +5,13 @@ import { useLocale, useTranslations } from "next-intl";
 import { BsHeartFill } from "react-icons/bs";
 import { FaShoppingBag } from "react-icons/fa";
 
-import Logo from "./logo";
+import Logo from "../component/shared/logo";
+import { authClient } from "@/lib/auth-client";
 
 const Navbar = () => {
+  const { data } = authClient.useSession();
+  console.log(data);
   const locale = useLocale();
-  console.log(locale);
-  console.log("Lang", document.documentElement.lang);
   const router = useRouter();
   const pathname = usePathname();
   console.log(pathname);
@@ -29,7 +30,12 @@ const Navbar = () => {
     document.documentElement.lang = nextLocale;
     router.replace(pathname, { locale: nextLocale, scroll: false });
   };
-  const hiddenPath = ["/sign-in", "/sign-up"];
+  const hiddenPath = [
+    "/sign-in",
+    "/sign-up",
+    "/forgot-password",
+    "/reset-password",
+  ];
   const isHiddenNavbar = hiddenPath.some((p) => p === pathname);
 
   if (!isHiddenNavbar)

@@ -13,7 +13,7 @@ export default function Logo() {
       <Link href="/" className="flex items-center gap-1 group px-2">
         <FaTshirt className="text-primary rotate-10 text-xl md:text-2xl lg:text-[32px]" />
         <h2
-          className={`text-2xl md:text-3xl font-black text-title italic ${login ? "text-white" : "text-title"}`}
+          className={`text-2xl md:text-3xl font-black italic ${login ? "text-white" : "text-[#0f172a]"}`}
         >
           VINTAX
         </h2>

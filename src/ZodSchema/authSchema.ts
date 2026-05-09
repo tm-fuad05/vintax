@@ -16,15 +16,12 @@ export const signUpSchema = z
 
     password: z
       .string()
-      .min(8, "Password must be at least 8 characters")
+      .min(8, "8 characters")
       .max(100)
-      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-      .regex(/[0-9]/, "Password must contain at least one number")
-      .regex(
-        /[^A-Za-z0-9]/,
-        "Password must contain at least one special character",
-      ),
+      .regex(/[A-Z]/, "one uppercase letter")
+      .regex(/[a-z]/, "one lowercase letter")
+      .regex(/[0-9]/, "one number")
+      .regex(/[^A-Za-z0-9]/, "one special character"),
 
     confirmPassword: z.string(),
   })
@@ -35,7 +32,7 @@ export const signUpSchema = z
 // Sign In Schema
 export const signInSchema = z.object({
   email: z.string().email("Invalid email address").trim(),
-  password: z.string().min(1, "Password is required"), // সাইন-ইনের সময় রিজেক্স দরকার নেই
+  password: z.string().min(1, "Password is required"),
 });
 
 export type signUpInput = z.infer<typeof signUpSchema>;
