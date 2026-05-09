@@ -17,7 +17,7 @@ export const auth = betterAuth({
     revokeSessionsOnPasswordReset: true,
     sendResetPassword: async ({ user, url }) => {
       resend.emails.send({
-        from: "Vintax <vintax@resend.dev>",
+        from: "Vintax <hello@tanvirmahmud.online>",
         to: user.email,
         subject: "Reset your password",
         react: ResetPasswordEmail({ name: user.name, resetUrl: url }),

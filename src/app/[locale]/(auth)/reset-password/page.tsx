@@ -21,17 +21,19 @@ export default function NewPassword() {
   const [inputError, setInputError] = useState<
     Record<string, string[] | undefined>
   >({});
+  console.log(inputError.newPassword);
   const [loading, setLoading] = useState(false);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setFormData({ ...formData, [name]: value });
+    setInputError({ ...inputError, [name]: undefined });
   };
 
-  const formDataValidation = resetPasswordSchema.safeParse(formData);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formDataValidation = resetPasswordSchema.safeParse(formData);
     if (!formDataValidation.success) {
       const error = formDataValidation.error.flatten().fieldErrors;
       setInputError(error);
@@ -90,10 +92,10 @@ export default function NewPassword() {
       </div>
 
       {/* ── RIGHT PANEL ── */}
-      <div className="flex flex-1 flex-col justify-between px-6 py-10 sm:px-10 md:px-14 lg:px-20 bg-white">
+      <div className="flex flex-1 flex-col justify-between px-6 py-10 sm:px-10 md:px-14 lg:px-20 bg-white overflow-y-auto">
         <div className="flex flex-col justify-center flex-1">
           {/* Brand */}
-          <div className="mb-10 md:mb-16">
+          <div className="mb-7 md:mb-8">
             <Logo />
           </div>
 
@@ -135,11 +137,12 @@ export default function NewPassword() {
               <div className="relative group">
                 <input
                   type="password"
-                  name="password"
+                  name="newPassword"
                   value={formData.newPassword}
                   onChange={changeHandler}
                   placeholder="••••••••"
                   className="rounded-xl ring-1 ring-gray-300 w-full py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
                 />
                 <Lock
                   size={20}
@@ -160,22 +163,25 @@ export default function NewPassword() {
               <div className="relative group">
                 <input
                   type="password"
-                  name="confirmPassword"
+                  name="confirmNewPassword"
                   value={formData.confirmNewPassword}
+                  onChange={changeHandler}
                   placeholder="••••••••"
                   className="rounded-xl ring-1 ring-gray-300 w-full py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
                 />
                 <Lock
                   size={20}
                   className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500 group-focus-within:text-primary"
                 />
               </div>
+              {inputError.confirmNewPassword && (
+                <small className="text-red-500 font-medium block -mt-1 ml-1">
+                  {inputError.confirmNewPassword[0]}
+                </small>
+              )}
             </div>
-            {inputError.confirmNewPassword && (
-              <small className="text-red-500 font-medium block mt-1 ml-1">
-                {inputError.confirmNewPassword[0]}
-              </small>
-            )}
+
             {/* Submit Button */}
             <AuthButton loading={loading}>Update Password</AuthButton>
 

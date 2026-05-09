@@ -11,7 +11,6 @@ import { redirect, useRouter } from "next/navigation";
 import SocialLogin from "@/component/shared/SocialLogin";
 import { toast } from "sonner";
 import AuthButton from "@/component/shared/AuthButton";
-import { router } from "better-auth/api";
 
 export default function SignUpForm() {
   const router = useRouter();
@@ -30,7 +29,7 @@ export default function SignUpForm() {
   const changehandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setInputError({ ...inputError, [name]: [] });
+    setInputError({ ...inputError, [name]: undefined });
   };
 
   // Zod Parse
@@ -187,7 +186,7 @@ export default function SignUpForm() {
                 </div>
                 {inputError.password && (
                   <small className="text-red-500 font-medium block -mt-1 ml-1">
-                    {/* Password must be at least {inputError.password?.join(", ")}. */}
+                    Password must be at least {inputError.password?.join(", ")}.
                   </small>
                 )}
               </div>

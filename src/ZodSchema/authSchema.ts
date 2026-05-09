@@ -51,7 +51,7 @@ export const resetPasswordSchema = z
   })
   .refine((data) => data.newPassword === data.confirmNewPassword, {
     message: "Passwords do not match",
-    path: ["confirmPassword"],
+    path: ["confirmNewPassword"],
   });
 
 export type signUpInput = z.infer<typeof signUpSchema>;
