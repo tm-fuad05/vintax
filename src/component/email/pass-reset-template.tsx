@@ -11,6 +11,7 @@ import {
   Tailwind,
   Hr,
 } from "react-email";
+import Logo from "../shared/logo";
 
 interface ResetPasswordEmailProps {
   name: string;
@@ -28,16 +29,8 @@ export const ResetPasswordEmail = ({
       <Tailwind>
         <Body className="bg-slate-50 my-auto mx-auto font-sans">
           <Container className="border border-solid border-[#eaeaea] rounded-xl my-[40px] mx-auto p-[20px] w-[465px] bg-white shadow-sm">
-            <Section className="mt-[32px]">
-              {/* Placeholder for your logo */}
-              <Img
-                src="https://your-cdn.com/logo.png"
-                width="40"
-                height="40"
-                alt="Logo"
-                className="my-0 mx-auto"
-              />
-            </Section>
+            {/* Placeholder for your logo */}
+            <Logo />
 
             <Section className="px-[20px]">
               <Text className="text-black text-[24px] font-semibold p-0 my-[30px] mx-0 text-center">
@@ -59,11 +52,6 @@ export const ResetPasswordEmail = ({
                   Reset Password
                 </Button>
               </Section>
-
-              <Text className="text-slate-600 text-[14px] leading-[24px]">
-                Or copy and paste this URL into your browser:{" "}
-                <span className="text-blue-600 break-all">{resetUrl}</span>
-              </Text>
 
               <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
 

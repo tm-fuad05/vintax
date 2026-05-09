@@ -1,19 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Lock, Mail } from "lucide-react";
+import { Lock, Mail } from "lucide-react";
 import Logo from "@/component/shared/logo";
 import SocialLogin from "@/component/shared/SocialLogin";
 import { authClient } from "@/lib/auth-client";
 import React, { useState } from "react";
 import { signInInput, signInSchema } from "@/ZodSchema/authSchema";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import AuthButton from "@/component/shared/AuthButton";
+import { router } from "better-auth/api";
 
 export default function SignInForm() {
+  const router = useRouter();
   const { data } = authClient.useSession();
-  console.log(data?.user);
+  const [loading, setLoading] = useState(false);
   const [inputError, setInputError] = useState<
     Record<string, string[] | undefined>
   >({});
@@ -25,6 +27,7 @@ export default function SignInForm() {
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setInputError({ ...inputError, [name]: [] });
   };
 
   // Zod Parse
@@ -39,24 +42,31 @@ export default function SignInForm() {
       return;
     }
     setInputError({});
-
-    await authClient.signIn.email(
-      {
-        email: formData.email,
-        password: formData.password,
-        callbackURL: "/dashboard",
-      },
-      {
-        //callbacks
-        onSuccess: (ctx) => {
-          redirect("/");
+    setLoading(true);
+    try {
+      await authClient.signIn.email(
+        {
+          email: formData.email,
+          password: formData.password,
+          callbackURL: "/",
         },
-        onError: (ctx) => {
-          // display the error message
-          toast.error(ctx.error.message);
+        {
+          //callbacks
+          onSuccess: (ctx) => {
+            setLoading(false);
+            toast.success("Successfully signed in");
+            router.push("/");
+          },
+          onError: (ctx) => {
+            setLoading(false);
+            toast.error(ctx.error.message);
+          },
         },
-      },
-    );
+      );
+    } catch (error: any) {
+      toast.error(JSON.stringify(error));
+      console.error(error);
+    }
   };
 
   return (
@@ -158,7 +168,7 @@ export default function SignInForm() {
           </div>
 
           {/* Button */}
-          <AuthButton>Sign In</AuthButton>
+          <AuthButton loading={loading}>Sign In</AuthButton>
         </form>
         {/* Divider */}
         <div className="flex items-center gap-2">

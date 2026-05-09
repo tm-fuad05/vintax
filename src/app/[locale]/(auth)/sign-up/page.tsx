@@ -1,23 +1,25 @@
 "use client";
 
-import { ArrowRight, Lock, Mail, User } from "lucide-react";
+import { Lock, Mail, User } from "lucide-react";
 import Logo from "@/component/shared/logo";
-import { FcGoogle } from "react-icons/fc";
-import { BiLogoFacebookCircle } from "react-icons/bi";
+
 import Link from "next/link";
 import { useState } from "react";
 import { signUpInput, signUpSchema } from "@/ZodSchema/authSchema";
 import { authClient } from "@/lib/auth-client";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import SocialLogin from "@/component/shared/SocialLogin";
 import { toast } from "sonner";
 import AuthButton from "@/component/shared/AuthButton";
+import { router } from "better-auth/api";
 
-export default function Page() {
+export default function SignUpForm() {
+  const router = useRouter();
   const [inputError, setInputError] = useState<
     Record<string, string[] | undefined>
   >({});
-  console.log(inputError.password);
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState<signUpInput>({
     name: "",
     email: "",
@@ -28,6 +30,7 @@ export default function Page() {
   const changehandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setInputError({ ...inputError, [name]: [] });
   };
 
   // Zod Parse
@@ -42,24 +45,31 @@ export default function Page() {
       return;
     }
     setInputError({});
-
-    await authClient.signUp.email(
-      {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-        callbackURL: "/",
-      },
-      {
-        onSuccess: (ctx) => {
-          redirect("/sign-in");
+    setLoading(true);
+    try {
+      await authClient.signUp.email(
+        {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          callbackURL: "/",
         },
-        onError: (ctx) => {
-          // display the error message
-          toast.error(ctx.error.message);
+        {
+          onSuccess: () => {
+            setLoading(false);
+            toast.success("Successfully signed up");
+            router.push("/sign-in");
+          },
+          onError: (ctx) => {
+            setLoading(false);
+            toast.error(ctx.error.message);
+          },
         },
-      },
-    );
+      );
+    } catch (error: any) {
+      toast.error("Something went wrong");
+      console.log(error);
+    }
   };
 
   return (
@@ -81,7 +91,7 @@ export default function Page() {
             <h1 className="capitalize text-5xl font-black text-white ">
               define your <br />
               <span className="text-primary">street identitiy.</span>
-            </h1>
+            </h1>{" "}
             <p className="text-white text-sm">
               Join the world's most exclusive community of streetwear
               collectors, <br />
@@ -126,7 +136,7 @@ export default function Page() {
                 />
               </div>
               {inputError.name && (
-                <small className="text-red-500 font-medium block mt-1 ml-1">
+                <small className="text-red-500 font-medium block -mt-1 ml-1">
                   {inputError.name[0]}
                 </small>
               )}
@@ -149,7 +159,7 @@ export default function Page() {
                 />
               </div>
               {inputError.email && (
-                <small className="text-red-500 font-medium block mt-1 ml-1">
+                <small className="text-red-500 font-medium block -mt-1 ml-1">
                   {inputError.email[0]}
                 </small>
               )}
@@ -177,7 +187,7 @@ export default function Page() {
                 </div>
                 {inputError.password && (
                   <small className="text-red-500 font-medium block -mt-1 ml-1">
-                    Password must be at least {inputError.password.join(", ")}.
+                    {/* Password must be at least {inputError.password?.join(", ")}. */}
                   </small>
                 )}
               </div>
@@ -201,14 +211,14 @@ export default function Page() {
                   />
                 </div>
                 {inputError.confirmPassword && (
-                  <small className="text-red-500 font-medium block mt-1 ml-1">
+                  <small className="text-red-500 font-medium block -mt-1 ml-1">
                     {inputError.confirmPassword[0]}
                   </small>
                 )}
               </div>
             </div>
             {/* Button */}
-            <AuthButton>Sign Up</AuthButton>
+            <AuthButton loading={loading}>Sign Up</AuthButton>
           </form>
           {/* Divider */}
           <div className="flex items-center gap-2">

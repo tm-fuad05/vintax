@@ -35,5 +35,25 @@ export const signInSchema = z.object({
   password: z.string().min(1, "Password is required"),
 });
 
+// Reset Password Schema
+export const resetPasswordSchema = z
+  .object({
+    newPassword: z
+      .string()
+      .min(8, "8 characters")
+      .max(100)
+      .regex(/[A-Z]/, "one uppercase letter")
+      .regex(/[a-z]/, "one lowercase letter")
+      .regex(/[0-9]/, "one number")
+      .regex(/[^A-Za-z0-9]/, "one special character"),
+
+    confirmNewPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
 export type signUpInput = z.infer<typeof signUpSchema>;
 export type signInInput = z.infer<typeof signInSchema>;
+export type resetPasswordType = z.infer<typeof resetPasswordSchema>;

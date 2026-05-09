@@ -3,19 +3,21 @@
 import AuthButton from "@/component/shared/AuthButton";
 import Logo from "@/component/shared/logo";
 import { authClient } from "@/lib/auth-client";
-import { ArrowLeft, Mail } from "lucide-react";
+import { ArrowLeft, Mail, MailCheck, MailOpen } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import z from "zod";
 
 export default function ResetPassword() {
+  const router = useRouter();
   const [email, setEmail] = useState<emailType>("");
   const [submitted, setSubmitted] = useState(false);
   const [errorInput, setErrorInput] = useState("");
-
+  const [loading, setLoading] = useState(false);
   // Zod Schema
-  const emailSchema = z.email("Invalid email address").trim();
+  const emailSchema = z.email().trim();
   type emailType = z.infer<typeof emailSchema>;
   const emailValidation = emailSchema.safeParse(email);
 
@@ -28,14 +30,28 @@ export default function ResetPassword() {
       return;
     }
     setErrorInput("");
+    setLoading(true);
 
-    const { data, error } = await authClient.requestPasswordReset({
-      email: email,
-      redirectTo: "/reset-password",
-    });
+    try {
+      const { data, error } = await authClient.requestPasswordReset({
+        email: email,
+        redirectTo: "/reset-password",
+      });
 
-    if (data?.status) setSubmitted(true);
-    if (error) toast.error(error.message);
+      if (error) {
+        toast.error(error.message);
+        setLoading(false);
+        return;
+      }
+
+      if (data?.status) {
+        setSubmitted(true);
+        setLoading(false);
+      }
+    } catch (error: any) {
+      toast.error(error);
+      setLoading(false);
+    }
   };
 
   return (
@@ -67,84 +83,101 @@ export default function ResetPassword() {
           </h2>
         </div>
       </div>
-
       {/* ── RIGHT PANEL ── */}
-      <div className="flex flex-1 flex-col justify-center px-6 py-10 sm:px-10 md:px-16 lg:px-20 bg-white">
-        {/* Brand */}
-        <div className="mb-10 md:mb-16">
-          <Logo />
-        </div>
-
-        {/* Heading */}
-        <h1 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-slate-800 mb-2">
-          Reset your password
-        </h1>
-
-        {/* Description */}
-        <p className="text-sm text-slate-500 leading-relaxed mb-5 max-w-sm">
-          Enter the email address associated with your account and we'll send
-          you a link to reset your password.
-        </p>
-
-        {/* Success Banner */}
-        {submitted && (
-          <div className="flex items-center gap-3 rounded-lg border border-primary/25 bg-primary/10 px-4 py-3 mb-5 text-primary text-sm font-semibold">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-            Reset link sent! Check your inbox.
+      {!submitted ? (
+        <div className="flex flex-1 flex-col justify-center px-6 py-10 sm:px-10 md:px-16 lg:px-20 bg-white">
+          {/* Brand */}
+          <div className="mb-10 md:mb-16">
+            <Logo />
           </div>
-        )}
 
-        <form onClick={handleSubmit} className="space-y-3">
-          {/* Email */}
-          <div className="space-y-2">
-            <div className="relative group">
-              <input
-                type="text"
-                name="email"
-                value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setEmail(e.target.value)
-                }
-                placeholder="Your email address"
-                className="rounded-xl ring-1 ring-gray-300 w-full py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-              <Mail
-                size={20}
-                className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500 group-focus-within:text-primary"
-              />
+          {/* Heading */}
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-slate-800 mb-2">
+            Reset your password
+          </h1>
+
+          {/* Description */}
+          <p className="text-sm text-slate-500 leading-relaxed mb-5 max-w-sm">
+            Enter the email address associated with your account and we'll send
+            you a link to reset your password.
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-3">
+            {/* Email */}
+            <div className="space-y-2">
+              <div className="relative group">
+                <input
+                  type="text"
+                  name="email"
+                  value={email}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setEmail(e.target.value);
+                    setErrorInput("");
+                  }}
+                  placeholder="Your email address"
+                  className="rounded-xl ring-1 ring-gray-300 w-full py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+                <Mail
+                  size={20}
+                  className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500 group-focus-within:text-primary"
+                />
+              </div>
+              {errorInput && (
+                <small className="text-red-500 font-medium block -mt-1 ml-1">
+                  {errorInput}
+                </small>
+              )}
             </div>
-            {errorInput && (
-              <small className="text-red-500 font-medium block -mt-1 ml-1">
-                {errorInput}
-              </small>
-            )}
+            {/* Button */}
+            <AuthButton loading={loading}>Send Reset Link</AuthButton>
+            {/* back to login */}
+            <Link
+              href={"/sign-in"}
+              className="text-gray-500 flex items-center justify-center gap-2 group mt-10 w-fit mx-auto"
+            >
+              <ArrowLeft
+                size={20}
+                className="group-hover:-translate-x-2 duration-200"
+              />
+              <span>Back to Login</span>
+            </Link>
+          </form>
+        </div>
+      ) : (
+        <div className="min-h-screen flex items-center justify-center bg-white p-6 font-sans">
+          <div className="w-full rounded-2xl p-10 text-center">
+            {/* Icon Area */}
+            <div className="flex justify-center mb-6">
+              <div className="p-4 bg-slate-50 rounded-full">
+                <MailOpen className="w-10 h-10 text-primary" />
+              </div>
+            </div>
+
+            {/* Text Content */}
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-slate-800 mb-3">
+              Check your email
+            </h1>
+            <p className="text-sm text-slate-500 leading-relaxed mb-5">
+              We have sent a password reset link to your email address. Please
+              click the link in the message to set a new password.
+            </p>
+
+            {/* Back to Login */}
+            <div className="mt-10 pt-6 border-t border-slate-100">
+              <Link
+                href={"/sign-in"}
+                className="text-gray-500 flex items-center justify-center gap-2 group mt-10 w-fit mx-auto"
+              >
+                <ArrowLeft
+                  size={20}
+                  className="group-hover:-translate-x-2 duration-200"
+                />
+                <span>Back to Login</span>
+              </Link>
+            </div>
           </div>
-          {/* Button */}
-          <AuthButton>Send Reset Link</AuthButton>
-          {/* back to login */}
-          <Link
-            href={"/sign-in"}
-            className="text-gray-500 flex items-center justify-center gap-2 group mt-10"
-          >
-            <ArrowLeft
-              size={20}
-              className="group-hover:-translate-x-2 duration-200"
-            />
-            <span>Back to Login</span>
-          </Link>
-        </form>
-      </div>
+        </div>
+      )}
     </div>
   );
 }

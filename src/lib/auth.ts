@@ -14,6 +14,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     autoSignIn: false,
+    revokeSessionsOnPasswordReset: true,
     sendResetPassword: async ({ user, url }) => {
       resend.emails.send({
         from: "Vintax <vintax@resend.dev>",

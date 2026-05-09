@@ -1,30 +1,69 @@
 "use client";
 
+import AuthButton from "@/component/shared/AuthButton";
 import Logo from "@/component/shared/logo";
+import { authClient } from "@/lib/auth-client";
+import { resetPasswordSchema, resetPasswordType } from "@/ZodSchema/authSchema";
 import { ArrowLeft, Lock } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function NewPassword() {
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [showNew, setShowNew] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState("");
+  const router = useRouter();
+  const [formData, setFormData] = useState<resetPasswordType>({
+    newPassword: "",
+    confirmNewPassword: "",
+  });
 
-  const handleSubmit = () => {
-    if (!newPassword || newPassword.length < 6) {
-      setError("Password must be at least 6 characters.");
-      setTimeout(() => setError(""), 2000);
+  const [submitted, setSubmitted] = useState(false);
+  const [inputError, setInputError] = useState<
+    Record<string, string[] | undefined>
+  >({});
+  const [loading, setLoading] = useState(false);
+
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const formDataValidation = resetPasswordSchema.safeParse(formData);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    if (!formDataValidation.success) {
+      const error = formDataValidation.error.flatten().fieldErrors;
+      setInputError(error);
       return;
     }
-    if (newPassword !== confirmPassword) {
-      setError("Passwords do not match.");
-      setTimeout(() => setError(""), 2000);
-      return;
+    setInputError({});
+    setLoading(true);
+
+    try {
+      const token = new URLSearchParams(window.location.search).get("token");
+      if (!token) {
+        return;
+      }
+      const { data, error } = await authClient.resetPassword({
+        newPassword: formData.newPassword,
+        token,
+      });
+
+      if (error) {
+        setLoading(false);
+        toast.error(error.message);
+        return;
+      }
+      if (data.status) {
+        setLoading(false);
+        toast.success("Password reset successfull!");
+        router.push("/sign-in");
+      }
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
     }
-    setSubmitted(true);
   };
 
   return (
@@ -59,7 +98,7 @@ export default function NewPassword() {
           </div>
 
           {/* Heading */}
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-title mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-800 mb-2">
             Create new password
           </h1>
 
@@ -87,28 +126,7 @@ export default function NewPassword() {
             </div>
           )}
 
-          {/* Error Banner */}
-          {error && (
-            <div className="flex items-center gap-3 rounded-lg border border-red-300 bg-red-50 px-4 py-3 mb-5 text-red-500 text-sm font-semibold">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="8" x2="12" y2="12" />
-                <line x1="12" y1="16" x2="12.01" y2="16" />
-              </svg>
-              {error}
-            </div>
-          )}
-
-          <form className="space-y-3">
+          <form onSubmit={handleSubmit} className="space-y-3">
             {/* NewPass */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">
@@ -118,8 +136,8 @@ export default function NewPassword() {
                 <input
                   type="password"
                   name="password"
-                  // value={formData.password}
-                  // onChange={changehandler}
+                  value={formData.newPassword}
+                  onChange={changeHandler}
                   placeholder="••••••••"
                   className="rounded-xl ring-1 ring-gray-300 w-full py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
                 />
@@ -128,11 +146,11 @@ export default function NewPassword() {
                   className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500 group-focus-within:text-primary"
                 />
               </div>
-              {/* {inputError.password && (
-              <small className="text-red-500 font-medium block -mt-1 ml-1">
-                Password must be at least {inputError.password.join(", ")}.
-              </small>
-            )} */}
+              {inputError.newPassword && (
+                <small className="text-red-500 font-medium block -mt-1 ml-1">
+                  Password must be at least {inputError.newPassword.join(", ")}.
+                </small>
+              )}
             </div>
             {/* Confirm New Pass*/}
             <div className="space-y-2">
@@ -143,8 +161,7 @@ export default function NewPassword() {
                 <input
                   type="password"
                   name="confirmPassword"
-                  // value={formData.confirmPassword}
-                  // onChange={changehandler}
+                  value={formData.confirmNewPassword}
                   placeholder="••••••••"
                   className="rounded-xl ring-1 ring-gray-300 w-full py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
                 />
@@ -154,23 +171,18 @@ export default function NewPassword() {
                 />
               </div>
             </div>
-            {/* {inputError.confirmPassword && (
+            {inputError.confirmNewPassword && (
               <small className="text-red-500 font-medium block mt-1 ml-1">
-                {inputError.confirmPassword[0]}
+                {inputError.confirmNewPassword[0]}
               </small>
-            )} */}
+            )}
             {/* Submit Button */}
-            <button
-              onClick={handleSubmit}
-              className="w-full rounded-lg bg-primary py-3.5 text-sm font-bold text-white tracking-wide transition-all hover:bg-primary/90 active:scale-[0.98]"
-            >
-              Update Password
-            </button>
+            <AuthButton loading={loading}>Update Password</AuthButton>
 
             {/* Back to Login */}
             <Link
               href={"/sign-in"}
-              className="text-gray-500 flex items-center justify-center gap-2 group mt-10"
+              className="text-gray-500 flex items-center justify-center gap-2 group mt-10 w-fit mx-auto"
             >
               <ArrowLeft
                 size={20}
