@@ -1,6 +1,7 @@
 node_modules
+.next
 .git
 .env
-npm-debug.log
 dist
 build
+npm-debug.log
