@@ -5,7 +5,8 @@
     "categories": "Categories",
     "community": "Community",
     "login": "Login",
-    "getStarted": "Get Started"
+    "getStarted": "Get Started",
+    "logout": "Logout"
   },
   "HomePage": {
     "Hero": {

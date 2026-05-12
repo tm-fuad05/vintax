@@ -10,7 +10,7 @@ import { authClient } from "@/lib/auth-client";
 
 const Navbar = () => {
   const { data } = authClient.useSession();
-  console.log(data);
+  const user = data?.user;
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -92,22 +92,31 @@ const Navbar = () => {
               </div>
               <div className="mx-2 h-6 w-px bg-primary/10 hidden md:block" />
               {/* Auth Buttons - Matching Hero Style */}{" "}
-              <div className="flex items-center gap-3">
-                <Link href="/sign-in" className="hidden sm:block">
-                  <button className="px-4 py-2 text-sm font-bold text-foreground transition-all hover:text-primary">
-                    {t("login")}
-                  </button>
-                </Link>
+              {!user ? (
+                <div className="flex items-center gap-3">
+                  <Link href="/sign-in" className="hidden sm:block">
+                    <button className="px-4 py-2 text-sm font-bold text-foreground transition-all hover:text-primary">
+                      {t("login")}
+                    </button>
+                  </Link>
 
-                <Link href="/sign-up" className="hidden sm:block">
-                  <button className="relative group overflow-hidden rounded-full bg-primary px-6 py-2.5 text-sm font-black text-white transition-all hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] active:scale-95">
-                    <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <span className="relative z-10 flex items-center gap-2">
-                      {t("getStarted")}
-                    </span>
-                  </button>
-                </Link>
-              </div>
+                  <Link href="/sign-up" className="hidden sm:block">
+                    <button className="relative group overflow-hidden rounded-full bg-primary px-6 py-2.5 text-sm font-black text-white transition-all hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] active:scale-95">
+                      <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <span className="relative z-10 flex items-center gap-2">
+                        {t("getStarted")}
+                      </span>
+                    </button>
+                  </Link>
+                </div>
+              ) : (
+                <button
+                  onClick={async () => await authClient.signOut()}
+                  className="px-4 py-2 text-sm font-bold text-foreground transition-all hover:text-red-500"
+                >
+                  {t("logout")}
+                </button>
+              )}
               {/* Mobile Menu */}
               <button className="lg:hidden flex size-10 items-center justify-center rounded-full bg-primary/5 text-primary border border-primary/10">
                 <Menu size={20} />

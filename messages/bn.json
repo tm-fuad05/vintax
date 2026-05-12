@@ -5,7 +5,8 @@
     "categories": "ক্যাটাগরি",
     "community": "কমিউনিটি",
     "login": "লগইন",
-    "getStarted": "শুরু করুন"
+    "getStarted": "শুরু করুন",
+    "logout": "লগআউট"
   },
   "HomePage": {
     "Hero": {
