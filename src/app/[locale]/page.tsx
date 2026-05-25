@@ -10,7 +10,7 @@ export default async function Home() {
       className="flex flex-col gap-60
   "
     >
-      {/* <Hero /> */}
+      <Hero />
       <Featured />
       <div>
         <FlashDeals />

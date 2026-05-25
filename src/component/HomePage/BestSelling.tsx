@@ -1,57 +1,14 @@
-import { getBestSellingProducts } from "@/lib/actions/bestSelling";
+import {
+  BestSellingProduct,
+  getBestSellingProducts,
+} from "@/lib/db-actions/bestSelling";
 import { getTranslations } from "next-intl/server";
 import { BsHeartFill } from "react-icons/bs";
 
 export default async function BestSelling() {
-  //   const bestSelling: BestSelling[] = [
-  //     {
-  //       id: "men-002",
-  //       name: "Casual Oversized T-Shirt",
-  //       category: "Men",
-  //       price: 29.99,
-  //       sizes: ["S", "M", "L", "XL", "XXL"],
-  //       colors: ["White", "Beige", "Olive"],
-  //       image: "https://images.unsplash.com/photo-1618354691438-25bc04584c23",
-  //       description:
-  //         "Soft cotton oversized t-shirt designed for everyday comfort.",
-  //     },
-
-  //     {
-  //       id: "women-002",
-  //       name: "High-Waist Wide Leg Pants",
-  //       category: "Women",
-  //       price: 54.0,
-  //       sizes: ["S", "M", "L", "XL"],
-  //       colors: ["Cream", "Black"],
-  //       image: "/wpant.jpg",
-  //       description:
-  //         "Chic high-waist wide leg pants with breathable fabric and relaxed fit.",
-  //     },
-  //     {
-  //       id: "men-003",
-  //       name: "Slim Fit Chino Pants",
-  //       category: "Men",
-  //       price: 59.99,
-  //       sizes: ["30", "32", "34", "36"],
-  //       colors: ["Navy", "Khaki"],
-  //       image: "pant.webp",
-  //       description:
-  //         "Modern slim-fit chino pants suitable for both office and casual wear.",
-  //     },
-  //     {
-  //       id: "women-003",
-  //       name: "Minimalist White Blouse",
-  //       category: "Women",
-  //       price: 39.99,
-  //       sizes: ["XS", "S", "M", "L"],
-  //       colors: ["White"],
-  //       image: "/blouse.jpg",
-  //       description:
-  //         "Elegant minimalist white blouse made from premium soft fabric.",
-  //     },
-  //   ];
-
-  const bestSelling = await getBestSellingProducts();
+  const { data }: { data?: BestSellingProduct[] } =
+    await getBestSellingProducts();
+  const products = data ?? [];
 
   const t = await getTranslations("HomePage.BestSelling");
 
@@ -66,7 +23,7 @@ export default async function BestSelling() {
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-11/12 mx-auto">
-        {bestSelling.map(({ id, name, category, price, image }) => (
+        {products.map(({ id, name, category, price, image }) => (
           <div
             key={id}
             className="bg-background rounded-2xl p-4 flex flex-col gap-3 h-full"

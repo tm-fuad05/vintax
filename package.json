@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "^1.6.9",
+    "@paralleldrive/cuid2": "^3.3.0",
     "@prisma/adapter-pg": "^7.4.1",
     "@prisma/client": "^7.4.1",
     "better-auth": "^1.6.9",
@@ -38,6 +39,11 @@
     "eslint-config-next": "16.1.6",
     "prisma": "^7.4.1",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
