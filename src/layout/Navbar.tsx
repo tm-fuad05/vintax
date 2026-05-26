@@ -18,7 +18,7 @@ const Navbar = () => {
   const t = useTranslations("Navbar");
 
   const navLinks = [
-    { label: t("home"), href: "/platform" },
+    { label: t("home"), href: "/" },
     { label: t("shop"), href: "/solutions" },
     { label: t("categories"), href: "/enterprise" },
     { label: t("community"), href: "/docs" },
@@ -67,12 +67,15 @@ const Navbar = () => {
                 <button className="flex p-2 items-center justify-center rounded-full text-paragraph transition-all hover:bg-primary/10 hover:text-primary uppercase font-bold text-xs cursor-pointer">
                   <BsHeartFill size={18} />
                 </button>
-                <button className=" relative flex p-2 items-center justify-center  rounded-full text-paragraph transition-all hover:bg-primary/10 hover:text-primary uppercase font-bold text-xs cursor-pointer">
+                <Link
+                  href={"/shopping-cart"}
+                  className=" relative flex p-2 items-center justify-center  rounded-full text-paragraph transition-all hover:bg-primary/10 hover:text-primary uppercase font-bold text-xs cursor-pointer"
+                >
                   <p className="absolute top-1 right-0 bg-primary w-4 h-4 rounded-full text-white flex items-center justify-center">
                     5
                   </p>
                   <FaShoppingBag size={18} />
-                </button>
+                </Link>
               </div>
               <div className="mx-2 h-6 w-px bg-primary/10 hidden lg:block" />
               <div className="flex items-center gap-1">

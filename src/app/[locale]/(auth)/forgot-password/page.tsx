@@ -10,19 +10,20 @@ import { useState } from "react";
 import { toast } from "sonner";
 import z from "zod";
 
+// Zod Schema
+const emailSchema = z.email().trim();
+
 export default function ResetPassword() {
   const router = useRouter();
-  const [email, setEmail] = useState<emailType>("");
+  const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [errorInput, setErrorInput] = useState("");
   const [loading, setLoading] = useState(false);
-  // Zod Schema
-  const emailSchema = z.email().trim();
-  type emailType = z.infer<typeof emailSchema>;
-  const emailValidation = emailSchema.safeParse(email);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const emailValidation = emailSchema.safeParse(email);
 
     if (!emailValidation.success) {
       const error = emailValidation.error.issues[0]?.message;
@@ -44,10 +45,8 @@ export default function ResetPassword() {
         return;
       }
 
-      if (data?.status) {
-        setSubmitted(true);
-        setLoading(false);
-      }
+      setSubmitted(true);
+      setLoading(false);
     } catch (error: any) {
       toast.error(error);
       setLoading(false);

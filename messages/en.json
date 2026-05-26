@@ -51,6 +51,23 @@
       }
     }
   },
+  "Cart": {
+    "CartItems": {
+      "title": "your bag",
+      "items-length": "{count,number} Items"
+    },
+    "OrderSummary": {
+      "title": "order summary",
+      "promo": "promo code",
+      "sub-total": "Subtotal",
+      "discount": "Discount",
+      "shipping": "Shipping",
+      "estimated-tax": "Estimated Tax",
+      "total": "total",
+      "checkout": "proceed to checkout",
+      "help": "Need help with your order?"
+    }
+  },
   "Footer": {
     "description": "Building the future of technology with premium gadgets and high-performance electronics.",
     "newsletterTitle": "Join the Vintax Insider",

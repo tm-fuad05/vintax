@@ -1,17 +1,13 @@
 import { prisma } from "@/lib/prisma";
 import { Category, Prisma } from "../src/generated/prisma/client";
-
-// ফাইলের ভেতরে গ্লোবাল prisma ভ্যারিয়েবলের বদলে নতুন ইনস্ট্যান্স তৈরি করুন
-
 import { createId } from "@paralleldrive/cuid2";
 
-// ১. প্রিজমার জেনারেটেড টাইপ থেকে ইনপুট টাইপ ডিফাইন করা (id ছাড়া বাকি সব)
 type BestSellingInput = Omit<Prisma.BestSellingCreateInput, "id">;
 
 const bestSellingProducts: BestSellingInput[] = [
   {
     name: "Casual Oversized T-Shirt",
-    category: Category.Men, // স্কিমার Enum ব্যবহার করা হয়েছে
+    category: Category.Men,
     price: 29.99,
     sizes: ["S", "M", "L", "XL", "XXL"],
     colors: ["White", "Beige", "Olive"],
@@ -56,17 +52,14 @@ const bestSellingProducts: BestSellingInput[] = [
 async function main(): Promise<void> {
   console.log("⏳ Seeding BestSelling products...");
 
-  // ২. প্রতিটি প্রোডাক্টের সাথে টাইপ-সেফ উপায়ে CUID যুক্ত করা
   const productsWithCuid: Prisma.BestSellingCreateManyInput[] =
     bestSellingProducts.map((product) => ({
-      id: createId(), // @paralleldrive/cuid2 থেকে ইউনিক আইডি জেনারেট হচ্ছে
+      id: createId(),
       ...product,
     }));
 
-  // আগের কোনো ডামি ডেটা থাকলে তা টেবিল থেকে মুছে ফেলা
   await prisma.bestSelling.deleteMany();
 
-  // ৩. বাল্ক ইনসার্ট (একটি মাত্র কোয়েরিতে সব ডেটা ইনসার্ট)
   const result = await prisma.bestSelling.createMany({
     data: productsWithCuid,
     skipDuplicates: true,

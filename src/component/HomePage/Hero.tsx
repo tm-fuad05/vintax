@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { easeInOut, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function Hero() {
   const t = useTranslations("HomePage.Hero");

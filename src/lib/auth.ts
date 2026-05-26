@@ -16,8 +16,8 @@ export const auth = betterAuth({
     autoSignIn: false,
     revokeSessionsOnPasswordReset: true,
     sendResetPassword: async ({ user, url }) => {
-      resend.emails.send({
-        from: "Vintax <hello@tanvirmahmud.online>",
+      await resend.emails.send({
+        from: "Vintax <onboarding@resend.dev>",
         to: user.email,
         subject: "Reset your password",
         react: ResetPasswordEmail({ name: user.name, resetUrl: url }),
