@@ -7,10 +7,9 @@ import SocialLogin from "@/component/shared/SocialLogin";
 import { authClient } from "@/lib/auth-client";
 import React, { useState } from "react";
 import { signInInput, signInSchema } from "@/ZodSchema/authSchema";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import AuthButton from "@/component/shared/AuthButton";
-import { router } from "better-auth/api";
 
 export default function SignInForm() {
   const router = useRouter();
@@ -30,11 +29,10 @@ export default function SignInForm() {
     setInputError({ ...inputError, [name]: [] });
   };
 
-  // Zod Parse
-  const formDataValidation = signInSchema.safeParse(formData);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // Zod Parse
+    const formDataValidation = signInSchema.safeParse(formData);
 
     if (!formDataValidation.success) {
       const error = formDataValidation.error.flatten().fieldErrors;

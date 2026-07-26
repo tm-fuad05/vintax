@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { signUpInput, signUpSchema } from "@/ZodSchema/authSchema";
 import { authClient } from "@/lib/auth-client";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import SocialLogin from "@/component/shared/SocialLogin";
 import { toast } from "sonner";
 import AuthButton from "@/component/shared/AuthButton";
@@ -32,11 +32,10 @@ export default function SignUpForm() {
     setInputError({ ...inputError, [name]: undefined });
   };
 
-  // Zod Parse
-  const formDataValidation = signUpSchema.safeParse(formData);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // Zod Parse
+    const formDataValidation = signUpSchema.safeParse(formData);
 
     if (!formDataValidation.success) {
       const error = formDataValidation.error.flatten().fieldErrors;

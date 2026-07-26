@@ -4,10 +4,11 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import "../../app/globals.css";
+import "../globals.css";
 import Navbar from "@/layout/Navbar";
 import Footer from "@/layout/Footer";
 import { Toaster } from "sonner";
+import { ReactLenis } from "lenis/react";
 
 const interFont = Inter({
   subsets: ["latin"],
@@ -39,29 +40,31 @@ export default async function LocaleLayout({ children, params }: Props) {
   }
   return (
     <html lang="en" suppressHydrationWarning>
-      <NextIntlClientProvider>
-        <body
-          className={`
+      <ReactLenis root options={{ lerp: 0.1, duration: 1.5 }}>
+        <NextIntlClientProvider>
+          <body
+            className={`
           ${interFont.variable} 
           ${hindFont.variable} 
           antialiased
         `}
-        >
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-          <Toaster
-            position="top-right"
-            duration={3000}
-            toastOptions={{
-              style: {
-                background: "black",
-                color: "white",
-              },
-            }}
-          />
-        </body>
-      </NextIntlClientProvider>
+          >
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+            <Toaster
+              position="top-right"
+              duration={3000}
+              toastOptions={{
+                style: {
+                  background: "black",
+                  color: "white",
+                },
+              }}
+            />
+          </body>
+        </NextIntlClientProvider>
+      </ReactLenis>
     </html>
   );
 }

@@ -1,15 +1,9 @@
-import {
-  BestSellingProduct,
-  getBestSellingProducts,
-} from "@/lib/db-actions/bestSelling";
+import { Link } from "@/i18n/navigation";
+
 import { getTranslations } from "next-intl/server";
 import { BsHeartFill } from "react-icons/bs";
 
 export default async function BestSelling() {
-  const { data }: { data?: BestSellingProduct[] } =
-    await getBestSellingProducts();
-  const products = data ?? [];
-
   const t = await getTranslations("HomePage.BestSelling");
 
   return (
@@ -22,9 +16,10 @@ export default async function BestSelling() {
           {t("subtitle")}
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-11/12 mx-auto">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-11/12 mx-auto">
         {products.map(({ id, name, category, price, image }) => (
-          <div
+          <Link
+            href={`/products/${category}/${id}`}
             key={id}
             className="bg-background rounded-2xl p-4 flex flex-col gap-3 h-full"
           >
@@ -41,7 +36,7 @@ export default async function BestSelling() {
                 <img
                   src={image}
                   alt={name}
-                  className="w-full object-cover object-bottom h-80 hover:scale-110 :scale-110 duration-300"
+                  className="w-full object-cover object-center h-70 hover:scale-110 :scale-110 duration-300"
                 />
               </figure>
             </div>
@@ -55,15 +50,9 @@ export default async function BestSelling() {
             <h4 className="text-lg md:text-xl text-primary font-semibold">
               ${price}{" "}
             </h4>
-            <button
-              className="capitalize w-full rounded-full border-2 border-primary text-primary font-semibold py-2 hover:bg-primary hover:text-white
-            active:bg-primary active:text-white duration-200 cursor-pointer"
-            >
-              {t("addToCart")}
-            </button>
-          </div>
+          </Link>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
