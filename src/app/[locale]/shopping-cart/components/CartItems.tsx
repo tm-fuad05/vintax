@@ -1,9 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Minus, Plus, Trash2, ShoppingBag, ArrowUpRight } from "lucide-react";
-import Link from "next/link";
+import { Minus, Plus, Trash2 } from "lucide-react";
 
 interface CartItem {
   id: string;
@@ -19,7 +17,7 @@ interface CartItem {
 export default function CartItems() {
   const t = useTranslations("Cart.CartItems");
 
-  const [items, setItems] = useState<CartItem[]>([
+  const items: CartItem[] = [
     {
       id: "1",
       name: "ARCHIVAL LEATHER TRENCH",
@@ -53,23 +51,7 @@ export default function CartItems() {
       image:
         "https://images.unsplash.com/photo-1560769629-975ec94e6a86?q=80&w=1000&auto=format&fit=crop",
     },
-  ]);
-
-  const updateQuantity = (id: string, delta: number) => {
-    setItems((prev) =>
-      prev.map((item) => {
-        if (item.id === id) {
-          const newQty = Math.max(1, item.quantity + delta);
-          return { ...item, quantity: newQty };
-        }
-        return item;
-      })
-    );
-  };
-
-  const removeItem = (id: string) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
-  };
+  ];
 
   return (
     <div className="space-y-8">
@@ -79,118 +61,92 @@ export default function CartItems() {
           {t("title") || "YOUR SELECTION"}
         </h2>
         <span className="text-xs font-mono font-bold text-secondary tracking-widest uppercase">
-          {t("items-length", { count: items.length }) ||
-            `${items.length} ITEMS`}
+          {items.length} ITEMS
         </span>
       </div>
 
       {/* Cart List */}
-      {items.length === 0 ? (
-        <div className="py-20 text-center space-y-4 bg-surface border border-border p-8">
-          <ShoppingBag size={48} className="mx-auto text-gray-400" />
-          <h3 className="text-lg font-bold text-title uppercase tracking-wider">
-            YOUR BAG IS EMPTY
-          </h3>
-          <p className="text-gray-500 text-xs font-mono">
-            Explore our curated collections and add signature archival pieces.
-          </p>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 px-8 py-3 bg-title text-white font-bold text-xs uppercase tracking-widest hover:bg-secondary hover:text-title transition-all duration-300"
+      <div className="space-y-6">
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className="group bg-surface border border-border p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-6 hover:border-secondary/50 transition-all duration-300 shadow-sm"
           >
-            <span>CONTINUE SHOPPING</span>
-            <ArrowUpRight size={14} />
-          </Link>
-        </div>
-      ) : (
-        <div className="space-y-6">
-          {items.map((item) => (
-            <div
-              key={item.id}
-              className="group bg-surface border border-border p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-6 hover:border-secondary/50 transition-all duration-300 shadow-sm"
-            >
-              {/* Product Image Box */}
-              <div className="relative w-full sm:w-36 h-44 bg-title/10 overflow-hidden flex-shrink-0 border border-border">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-full object-cover object-center filter brightness-95 group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
+            {/* Product Image Box */}
+            <div className="relative w-full sm:w-36 h-44 bg-title/10 overflow-hidden flex-shrink-0 border border-border">
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-full object-cover object-center filter brightness-95 group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
 
-              {/* Details & Actions */}
-              <div className="flex-1 w-full space-y-4">
-                <div className="flex justify-between items-start gap-4">
-                  <div>
-                    <h3 className="font-extrabold text-base sm:text-lg text-title uppercase tracking-wider group-hover:text-secondary transition-colors duration-300">
-                      {item.name}
-                    </h3>
-                    <p className="text-xs text-gray-400 font-mono mt-1">
-                      {item.series}
-                    </p>
+            {/* Details & Actions */}
+            <div className="flex-1 w-full space-y-4">
+              <div className="flex justify-between items-start gap-4">
+                <div>
+                  <h3 className="font-extrabold text-base sm:text-lg text-title uppercase tracking-wider group-hover:text-secondary transition-colors duration-300">
+                    {item.name}
+                  </h3>
+                  <p className="text-xs text-gray-400 font-mono mt-1">
+                    {item.series}
+                  </p>
 
-                    {/* Specifications */}
-                    <div className="flex flex-wrap gap-4 mt-3 text-xs font-mono">
-                      <span className="text-gray-400">
-                        SIZE:{" "}
-                        <strong className="text-title font-semibold">
-                          {item.size}
-                        </strong>
-                      </span>
-                      <span className="text-gray-300">•</span>
-                      <span className="text-gray-400">
-                        COLOR:{" "}
-                        <strong className="text-title font-semibold">
-                          {item.color}
-                        </strong>
-                      </span>
-                    </div>
+                  {/* Specifications */}
+                  <div className="flex flex-wrap gap-4 mt-3 text-xs font-mono">
+                    <span className="text-gray-400">
+                      SIZE:{" "}
+                      <strong className="text-title font-semibold">
+                        {item.size}
+                      </strong>
+                    </span>
+                    <span className="text-gray-300">•</span>
+                    <span className="text-gray-400">
+                      COLOR:{" "}
+                      <strong className="text-title font-semibold">
+                        {item.color}
+                      </strong>
+                    </span>
                   </div>
-
-                  {/* Price */}
-                  <span className="font-black text-lg sm:text-xl text-title font-mono">
-                    ${(item.price * item.quantity).toFixed(2)}
-                  </span>
                 </div>
 
-                {/* Bottom Bar: Quantity & Remove */}
-                <div className="flex items-center justify-between pt-3 border-t border-border/60">
-                  {/* Quantity Counter */}
-                  <div className="flex items-center border border-border bg-background">
-                    <button
-                      onClick={() => updateQuantity(item.id, -1)}
-                      aria-label="Decrease quantity"
-                      className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-title hover:bg-black/5 transition-colors cursor-pointer"
-                    >
-                      <Minus size={13} />
-                    </button>
-                    <span className="w-10 text-center text-xs font-bold font-mono text-title">
-                      {item.quantity}
-                    </span>
-                    <button
-                      onClick={() => updateQuantity(item.id, 1)}
-                      aria-label="Increase quantity"
-                      className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-title hover:bg-black/5 transition-colors cursor-pointer"
-                    >
-                      <Plus size={13} />
-                    </button>
-                  </div>
+                {/* Price */}
+                <span className="font-black text-lg sm:text-xl text-title font-mono">
+                  ${item.price.toFixed(2)}
+                </span>
+              </div>
 
-                  {/* Remove Button */}
+              {/* Bottom Bar: Quantity & Remove */}
+              <div className="flex items-center justify-between pt-3 border-t border-border/60">
+                {/* Quantity Counter */}
+                <div className="flex items-center border border-border bg-background">
                   <button
-                    onClick={() => removeItem(item.id)}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wider text-gray-400 uppercase hover:text-red-500 transition-colors duration-300 cursor-pointer"
+                    aria-label="Decrease quantity"
+                    className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-title hover:bg-black/5 transition-colors cursor-pointer"
                   >
-                    <Trash2 size={14} />
-                    <span>Remove</span>
+                    <Minus size={13} />
+                  </button>
+                  <span className="w-10 text-center text-xs font-bold font-mono text-title">
+                    {item.quantity}
+                  </span>
+                  <button
+                    aria-label="Increase quantity"
+                    className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-title hover:bg-black/5 transition-colors cursor-pointer"
+                  >
+                    <Plus size={13} />
                   </button>
                 </div>
+
+                {/* Remove Button */}
+                <button className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wider text-gray-400 uppercase hover:text-red-500 transition-colors duration-300 cursor-pointer">
+                  <Trash2 size={14} />
+                  <span>Remove</span>
+                </button>
               </div>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
-

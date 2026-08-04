@@ -1,19 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { ArrowRight, ShieldCheck, Truck, Lock, HelpCircle } from "lucide-react";
 
 export default function OrderSummary() {
   const t = useTranslations("Cart.OrderSummary");
-  const [promo, setPromo] = useState("");
-  const [discountApplied, setDiscountApplied] = useState(false);
-
-  const handleApplyPromo = () => {
-    if (promo.trim().length > 0) {
-      setDiscountApplied(true);
-    }
-  };
 
   return (
     <div className="w-full space-y-6">
@@ -40,23 +31,13 @@ export default function OrderSummary() {
             <div className="flex gap-2">
               <input
                 type="text"
-                value={promo}
-                onChange={(e) => setPromo(e.target.value)}
                 placeholder="ENTER CODE"
                 className="flex-1 bg-surface border border-white/20 px-4 py-3 text-xs text-black placeholder:text-black/40 font-mono tracking-wider focus:outline-none focus:border-secondary transition-colors"
               />
-              <button
-                onClick={handleApplyPromo}
-                className="bg-secondary text-title hover:bg-white hover:text-title font-extrabold text-xs uppercase tracking-widest px-5 py-3 transition-colors duration-300 cursor-pointer"
-              >
+              <button className="bg-secondary text-title hover:bg-white hover:text-title font-extrabold text-xs uppercase tracking-widest px-5 py-3 transition-colors duration-300 cursor-pointer">
                 APPLY
               </button>
             </div>
-            {discountApplied && (
-              <p className="text-[11px] text-secondary font-mono">
-                ✓ PROMO CODE APPLIED (-$50.00)
-              </p>
-            )}
           </div>
 
           {/* Pricing Breakdown List */}
@@ -65,13 +46,6 @@ export default function OrderSummary() {
               <span>{t("sub-total") || "SUBTOTAL"}</span>
               <span className="text-white font-semibold">$1,650.00</span>
             </div>
-
-            {discountApplied && (
-              <div className="flex justify-between text-secondary">
-                <span>{t("discount") || "DISCOUNT"}</span>
-                <span>-$50.00</span>
-              </div>
-            )}
 
             <div className="flex justify-between text-gray-400">
               <span>{t("shipping") || "EXPRESS SHIPPING"}</span>
@@ -95,7 +69,7 @@ export default function OrderSummary() {
               </p>
             </div>
             <span className="text-3xl font-black text-white tracking-tight font-mono">
-              ${discountApplied ? "1,670.00" : "1,720.00"}
+              $1,720.00
             </span>
           </div>
 
