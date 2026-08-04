@@ -27,8 +27,7 @@ export default function Hero() {
       titleMiddle: t("titleMiddle") || "ARCHIVE",
       titleBottom: t("titleBottom") || "COLLECTION",
       subtitle:
-        t("description") ||
-        "Experience unprecedented elegance with our handcrafted signature apparel. Minimalist silhouettes tailored for modern sophistication.",
+        "Experience unprecedented elegance with handcrafted signature silhouettes.",
       image:
         "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop",
     },
@@ -39,7 +38,7 @@ export default function Hero() {
       titleMiddle: "MINIMALISM",
       titleBottom: "STATEMENT",
       subtitle:
-        "Clean cuts, premium textures, and neutral palettes designed for timeless versatility and subtle royal aesthetic.",
+        "Clean cuts and neutral palettes designed for subtle royal aesthetics.",
       image:
         "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2070&auto=format&fit=crop",
     },
@@ -50,7 +49,7 @@ export default function Hero() {
       titleMiddle: "ROYAL",
       titleBottom: "COUTURE",
       subtitle:
-        "Crafted with meticulous attention to detail. Elevate your everyday wardrobe with our bespoke, sustainable fabric drops.",
+        "Bespoke tailoring and sustainable luxury fabrics for the modern connoisseur.",
       image:
         "https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=2071&auto=format&fit=crop",
     },
