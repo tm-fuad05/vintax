@@ -1,56 +1,189 @@
 "use client";
+
 import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+interface SlideData {
+  id: number;
+  tag: string;
+  titleTop: string;
+  titleMiddle: string;
+  titleBottom: string;
+  subtitle: string;
+  image: string;
+}
 
 export default function Hero() {
   const t = useTranslations("HomePage.Hero");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const slides: SlideData[] = [
+    {
+      id: 1,
+      tag: "SPRING / SUMMER 2026",
+      titleTop: t("titleTop") || "THE LUXURY",
+      titleMiddle: t("titleMiddle") || "ARCHIVE",
+      titleBottom: t("titleBottom") || "COLLECTION",
+      subtitle:
+        t("description") ||
+        "Experience unprecedented elegance with our handcrafted signature apparel. Minimalist silhouettes tailored for modern sophistication.",
+      image:
+        "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop",
+    },
+    {
+      id: 2,
+      tag: "EXCLUSIVE RUNWAY",
+      titleTop: "TIMELESS",
+      titleMiddle: "MINIMALISM",
+      titleBottom: "STATEMENT",
+      subtitle:
+        "Clean cuts, premium textures, and neutral palettes designed for timeless versatility and subtle royal aesthetic.",
+      image:
+        "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2070&auto=format&fit=crop",
+    },
+    {
+      id: 3,
+      tag: "LIMITED EDITION",
+      titleTop: "HERITAGE",
+      titleMiddle: "ROYAL",
+      titleBottom: "COUTURE",
+      subtitle:
+        "Crafted with meticulous attention to detail. Elevate your everyday wardrobe with our bespoke, sustainable fabric drops.",
+      image:
+        "https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=2071&auto=format&fit=crop",
+    },
+  ];
+
+  // Continuous Autoplay timer
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + slides.length) % slides.length,
+    );
+  };
+
+  const currentSlide = slides[currentIndex];
+
   return (
-    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 gap-8 justify-between items-center w-11/12 mx-auto py-20 pt-40">
-      {/* Content */}
-      <motion.div
-        initial={{ x: -300, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7, ease: "easeInOut" }}
-        className="flex flex-col gap-6"
-      >
-        <h1 className="text-5xl md:text-6xl lg:text-8xl text-title font-black uppercase">
-          {t("titleTop")}{" "}
-          <span className="text-primary">{t("titleMiddle")}</span>{" "}
-          {t("titleBottom")}
-        </h1>
-        <p className="w-11/12 leading-relaxed text-paragraph text-lg md:text-xl font-medium">
-          {t("description")}
-        </p>
-        {/* Button */}
-        <div className="flex max-sm:flex-col gap-5">
-          <button className="bg-primary px-10 py-6 rounded-[25px] font-medium text-white text-xl hover:bg-primary/80 cursor-pointer duration-200 shadow-[0_0_4px_var(--primary)] uppercase">
-            {t("ctaPrimary")}
-          </button>
-          <button className="bg-white border-2 border-gray-200 px-10 py-6 rounded-[25px] font-medium text-title text-xl hover:opacity-50 cursor-pointer duration-200 uppercase">
-            {t("ctaSecondary")}
-          </button>
+    <section className="relative w-full min-h-screen bg-title overflow-hidden">
+      {/* Background Image Carousel with Crossfade */}
+      <AnimatePresence mode="sync">
+        <motion.div
+          key={currentSlide.id}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+          className="absolute inset-0 z-0"
+        >
+          <img
+            src={currentSlide.image}
+            alt={currentSlide.titleTop}
+            className="w-full h-full object-cover object-top filter brightness-[0.55] contrast-[1.05] scale-105 transition-transform duration-[8000ms]"
+          />
+          {/* Luxury Overlay Gradients */}
+          <div className="absolute inset-0 bg-gradient-to-t from-title via-title/40 to-transparent opacity-90" />
+          <div className="absolute inset-0 bg-gradient-to-r from-title/90 via-title/50 to-transparent" />
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Slide Text Content Container */}
+      <div className="relative z-10 w-11/12 max-w-7xl mx-auto h-full flex flex-col justify-between pt-32 pb-24">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentSlide.id}
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="max-w-3xl space-y-6 my-auto"
+          >
+            {/* Tag Badge */}
+            <div className="inline-flex items-center gap-3">
+              <span className="h-[1px] w-10 bg-secondary" />
+              <span className="text-xs uppercase tracking-[0.3em] font-semibold text-secondary">
+                {currentSlide.tag}
+              </span>
+            </div>
+
+            {/* Main Heading */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold tracking-tight text-white uppercase leading-[1.05]">
+              {currentSlide.titleTop}{" "}
+              <span className="text-secondary italic font-serif font-normal">
+                {currentSlide.titleMiddle}
+              </span>{" "}
+              <br />
+              {currentSlide.titleBottom}
+            </h1>
+
+            {/* Description Paragraph */}
+            <p className="text-gray-300 text-base sm:text-lg md:text-xl font-light max-w-xl leading-relaxed">
+              {currentSlide.subtitle}
+            </p>
+
+            {/* Sharp Edged Box Buttons */}
+            <div className="flex flex-wrap items-center gap-5 pt-4">
+              <button className="bg-secondary text-title px-9 py-4 font-semibold text-sm tracking-[0.2em] uppercase hover:bg-white hover:text-title transition-all duration-300 cursor-pointer border border-secondary">
+                {t("ctaPrimary") || "SHOP COLLECTION"}
+              </button>
+              <button className="bg-transparent text-white px-9 py-4 font-semibold text-sm tracking-[0.2em] uppercase hover:bg-white/10 hover:border-white transition-all duration-300 border border-white/40 cursor-pointer backdrop-blur-sm">
+                {t("ctaSecondary") || "EXPLORE LOOKBOOK"}
+              </button>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Bottom Navigation Bar */}
+        <div className="w-full flex items-center justify-between pointer-events-auto pt-6">
+          {/* Slide Indicators */}
+          <div className="flex items-center gap-3">
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                aria-label={`Go to slide ${index + 1}`}
+                className={`h-[3px] transition-all duration-500 cursor-pointer ${
+                  currentIndex === index
+                    ? "w-14 bg-secondary"
+                    : "w-8 bg-white/30 hover:bg-white/60"
+                }`}
+              />
+            ))}
+          </div>
+
+          {/* Previous & Next Control Buttons */}
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={handlePrev}
+              aria-label="Previous Slide"
+              className="w-11 h-11 border border-white/20 bg-title/40 backdrop-blur-md text-white flex items-center justify-center hover:bg-secondary hover:border-secondary hover:text-title transition-all duration-300 cursor-pointer active:scale-95"
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <button
+              type="button"
+              onClick={handleNext}
+              aria-label="Next Slide"
+              className="w-11 h-11 border border-white/20 bg-title/40 backdrop-blur-md text-white flex items-center justify-center hover:bg-secondary hover:border-secondary hover:text-title transition-all duration-300 cursor-pointer active:scale-95"
+            >
+              <ChevronRight size={18} />
+            </button>
+          </div>
         </div>
-      </motion.div>
-      {/* Image */}
-      <motion.div
-        initial={{ x: 300, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.7, ease: "easeInOut" }}
-        className="relative w-full h-200"
-      >
-        <div className="absolute z-20 right-10 bottom-10 rounded-2xl backdrop-blur-lg border- bg-white/10 border border-gray-300/60 px-6 py-4 space-y-2">
-          <p className="uppercase text-white">New Drop</p>
-          <p className="capitalize text-white font-bold text-xl">
-            azure oversize tee
-          </p>
-        </div>
-        <img
-          src={"/heromodel.jpg"}
-          alt="Model"
-          className="w-full h-full object-top object-cover rounded-3xl"
-        />
-      </motion.div>
-    </div>
+      </div>
+    </section>
   );
 }

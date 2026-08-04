@@ -1,29 +1,38 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f6f6f8;
-  --foreground: #0f172a;
-  --primary: #2563eb;
-  --secondary: #6366f1;
-  --title: #0f172a;
-  --paragraph: #475569;
+  --background: #faf9f6;
+  --foreground: #1a1a1a;
+  --primary: #1a1a1a;
+  --secondary: #c5a880;
+  --accent: #d4af37;
+  --title: #111111;
+  --paragraph: #4a4a4a;
+  --surface: #ffffff;
+  --border-color: #e5e5e5;
 }
 
 .dark {
-  --background: #020617;
-  --foreground: #f1f5f9;
-  --primary: #3b82f6;
-  --secondary: #818cf8;
-  --title: #0f172a;
-  --paragraph: #94a3b8;
+  --background: #121212;
+  --foreground: #f5f5f5;
+  --primary: #f5f5f5;
+  --secondary: #d4af37;
+  --accent: #c5a880;
+  --title: #ffffff;
+  --paragraph: #a3a3a3;
+  --surface: #1e1e1e;
+  --border-color: #2e2e2e;
 }
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
   --color-paragraph: var(--paragraph);
   --color-title: var(--title);
+  --color-surface: var(--surface);
+  --color-border: var(--border-color);
 }
 
 @layer base {
