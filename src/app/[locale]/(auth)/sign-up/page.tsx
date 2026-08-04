@@ -1,6 +1,6 @@
 "use client";
 
-import { Lock, Mail, User } from "lucide-react";
+import { Camera, Lock, Mail, User } from "lucide-react";
 import Logo from "@/component/shared/logo";
 
 import Link from "next/link";
@@ -18,6 +18,7 @@ export default function SignUpForm() {
     Record<string, string[] | undefined>
   >({});
   const [loading, setLoading] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<signUpInput>({
     name: "",
@@ -25,6 +26,17 @@ export default function SignUpForm() {
     password: "",
     confirmPassword: "",
   });
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const changehandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -71,53 +83,90 @@ export default function SignUpForm() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 overflow-y-hidden h-screen">
-      <div className="relative lg:col-span-6 hidden lg:block">
+    <div className="h-screen w-full bg-background grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
+      {/* Left Editorial Showcase Panel - Static 100vh */}
+      <div className="relative lg:col-span-6 hidden lg:block h-full overflow-hidden bg-title">
         <div
           style={{
             backgroundImage:
-              "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDNmwb-RTZZUL9D3pkOjH-jANMp8YFLuM_vB4HSyc2D7IulYTF0MWXsf73-DqGVE5ZC55Mjmaai_uJh9LI9jtzjaz4gQQ2OpV0m8LSHS4QEm100lxG7-2n8bsXBfUdebEzYO5lrUwr0NqISWRhvtQqyxJn1CwSBL1LKuHEjmjCsqEwwx-ikxMyuw8SDsJ1mY3DIn8cS_A3kXHrYV-3qkjojCJkQGrUkYm-VIsPP_BUSe-bwBhsI20TqSvdJDei358j4a4HytMbuIC8')",
+              "url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1400&auto=format&fit=crop')",
           }}
-          className="absolute inset-0 bg-cover h-screen flex flex-col justify-between p-10 gap-2"
-        >
-          {/* Overlay */}
-          <div className="absolute bg-linear-to-t from-slate-950 via-slate-950/70 to-transparent inset-0 h-screen" />
-          <div className="z-10">
-            <Logo />
+          className="absolute inset-0 bg-cover bg-center filter brightness-[0.7] h-full flex flex-col justify-between p-12 lg:p-16 z-0"
+        />
+        {/* Luxury Dark Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-title via-title/60 to-title/40 z-10" />
+
+        {/* Textured Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none z-10" />
+
+        {/* Overlay Content */}
+        <div className="relative z-20 h-full flex flex-col justify-between p-12 lg:p-16">
+          <div>
+            <Logo isDark={true} />
           </div>
-          <div className="z-10 space-y-2">
-            <h1 className="capitalize text-5xl font-black text-white ">
-              define your <br />
-              <span className="text-primary">street identitiy.</span>
-            </h1>{" "}
-            <p className="text-white text-sm">
-              Join the world's most exclusive community of streetwear
-              collectors, <br />
-              designers, and enthusiasts.
+
+          <div className="space-y-4 max-w-lg">
+            <div className="inline-flex items-center gap-2 border border-secondary/40 bg-secondary/10 px-3 py-1 backdrop-blur-md">
+              <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
+              <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-secondary">
+                ATELIER REGISTRATION
+              </span>
+            </div>
+
+            <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight text-white uppercase leading-tight">
+              DEFINE YOUR{" "}
+              <span className="text-secondary italic font-serif font-normal">
+                STREET IDENTITY
+              </span>
+            </h1>
+
+            <p className="text-gray-300 text-xs sm:text-sm font-light leading-relaxed">
+              Join the world's most exclusive community of luxury streetwear
+              collectors, designers, and haute couture enthusiasts.
             </p>
           </div>
-          <div className="flex gap-8 z-10">
-            <p className="text-gray-400 text-sm">© 2026 Vintax Collective</p>
-            <li className="text-gray-400 text-sm list-disc">Privacy Policy</li>
+
+          <div className="flex items-center gap-6 text-[11px] text-gray-400">
+            <span>© 2026 VINTAX ARCHIVE</span>
+            <span className="w-1 h-1 rounded-full bg-secondary/50" />
+            <Link
+              href="/privacy-policy"
+              className="hover:text-secondary transition-colors"
+            >
+              PRIVACY POLICY
+            </Link>
           </div>
         </div>
       </div>
-      {/* Form */}
-      <div className="overflow-y-auto lg:col-span-6 flex">
-        <div className="flex flex-col gap-5 justify-center p-20 py-8">
-          <div className="space-y-1  mb-5">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-slate-800">
-              Create your account
+
+      {/* Right Form Container - Independent Scroll */}
+      <div
+        data-lenis-prevent
+        className="lg:col-span-6 h-full overflow-y-auto flex flex-col items-center px-6 sm:px-12 py-16 lg:py-10 w-full"
+      >
+        <div className="w-full max-w-md space-y-8 my-auto">
+          {/* Header */}
+          <div className="space-y-2">
+            <span className="text-[10px] uppercase tracking-[0.25em] font-semibold text-secondary">
+              NEW MEMBER
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-title uppercase tracking-tight">
+              CREATE YOUR{" "}
+              <span className="text-secondary italic font-serif font-normal">
+                ACCOUNT
+              </span>
             </h2>
-            <p className="text-sm text-slate-500 leading-relaxed max-w-sm">
-              Join the community of streetwear enthusiasists.
+            <p className="text-xs text-gray-500">
+              Fill in your details to join the Vintax Archival Atelier.
             </p>
           </div>
-          <form onSubmit={handleSubmit} className="w-full space-y-4">
-            {/* Name */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Full Name
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Full Name Field */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] uppercase font-bold tracking-[0.2em] text-title">
+                FULL NAME
               </label>
               <div className="relative group">
                 <input
@@ -125,49 +174,53 @@ export default function SignUpForm() {
                   name="name"
                   value={formData.name}
                   onChange={changehandler}
-                  placeholder="Enter your name"
-                  className="rounded-xl ring-1 ring-gray-300 w-full py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
+                  placeholder="Enter your full name"
+                  className="w-full bg-surface border border-border py-3.5 pl-11 pr-4 text-xs text-title placeholder:text-gray-400 focus:outline-none focus:border-secondary transition-colors"
                 />
                 <User
-                  size={20}
-                  className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500 group-focus-within:text-primary"
+                  size={16}
+                  className="absolute top-1/2 -translate-y-1/2 left-3.5 text-gray-400 group-focus-within:text-secondary transition-colors"
                 />
               </div>
               {inputError.name && (
-                <small className="text-red-500 font-medium block -mt-1 ml-1">
+                <span className="text-[11px] text-red-500 block pt-0.5">
                   {inputError.name[0]}
-                </small>
+                </span>
               )}
             </div>
-            {/* Email */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Email</label>
+
+            {/* Email Field */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] uppercase font-bold tracking-[0.2em] text-title">
+                EMAIL ADDRESS
+              </label>
               <div className="relative group">
                 <input
-                  type="text"
+                  type="email"
                   name="email"
                   value={formData.email}
                   onChange={changehandler}
-                  placeholder="Your email address"
-                  className="rounded-xl ring-1 ring-gray-300 w-full py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
+                  placeholder="name@domain.com"
+                  className="w-full bg-surface border border-border py-3.5 pl-11 pr-4 text-xs text-title placeholder:text-gray-400 focus:outline-none focus:border-secondary transition-colors"
                 />
                 <Mail
-                  size={20}
-                  className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500 group-focus-within:text-primary"
+                  size={16}
+                  className="absolute top-1/2 -translate-y-1/2 left-3.5 text-gray-400 group-focus-within:text-secondary transition-colors"
                 />
               </div>
               {inputError.email && (
-                <small className="text-red-500 font-medium block -mt-1 ml-1">
+                <span className="text-[11px] text-red-500 block pt-0.5">
                   {inputError.email[0]}
-                </small>
+                </span>
               )}
             </div>
-            {/* Passwords */}
-            <div className="grid grid-cols-2 gap-3">
-              {/* Pass */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
-                  Password
+
+            {/* Passwords Fields */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Password */}
+              <div className="space-y-1.5">
+                <label className="text-[10px] uppercase font-bold tracking-[0.2em] text-title">
+                  PASSWORD
                 </label>
                 <div className="relative group">
                   <input
@@ -175,24 +228,25 @@ export default function SignUpForm() {
                     name="password"
                     value={formData.password}
                     onChange={changehandler}
-                    placeholder="••••••••"
-                    className="rounded-xl ring-1 ring-gray-300 w-full py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="••••••••••••"
+                    className="w-full bg-surface border border-border py-3.5 pl-11 pr-4 text-xs text-title placeholder:text-gray-400 focus:outline-none focus:border-secondary transition-colors"
                   />
                   <Lock
-                    size={20}
-                    className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500 group-focus-within:text-primary"
+                    size={16}
+                    className="absolute top-1/2 -translate-y-1/2 left-3.5 text-gray-400 group-focus-within:text-secondary transition-colors"
                   />
                 </div>
                 {inputError.password && (
-                  <small className="text-red-500 font-medium block -mt-1 ml-1">
+                  <span className="text-[11px] text-red-500 block pt-0.5">
                     Password must be at least {inputError.password?.join(", ")}.
-                  </small>
+                  </span>
                 )}
               </div>
-              {/* Confirm */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
-                  Confirm Password
+
+              {/* Confirm Password */}
+              <div className="space-y-1.5">
+                <label className="text-[10px] uppercase font-bold tracking-[0.2em] text-title">
+                  CONFIRM PASSWORD
                 </label>
                 <div className="relative group">
                   <input
@@ -200,42 +254,98 @@ export default function SignUpForm() {
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={changehandler}
-                    placeholder="••••••••"
-                    className="rounded-xl ring-1 ring-gray-300 w-full py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="••••••••••••"
+                    className="w-full bg-surface border border-border py-3.5 pl-11 pr-4 text-xs text-title placeholder:text-gray-400 focus:outline-none focus:border-secondary transition-colors"
                   />
                   <Lock
-                    size={20}
-                    className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500 group-focus-within:text-primary"
+                    size={16}
+                    className="absolute top-1/2 -translate-y-1/2 left-3.5 text-gray-400 group-focus-within:text-secondary transition-colors"
                   />
                 </div>
                 {inputError.confirmPassword && (
-                  <small className="text-red-500 font-medium block -mt-1 ml-1">
+                  <span className="text-[11px] text-red-500 block pt-0.5">
                     {inputError.confirmPassword[0]}
-                  </small>
+                  </span>
                 )}
               </div>
             </div>
-            {/* Button */}
-            <AuthButton loading={loading}>Sign Up</AuthButton>
+
+            {/* Profile Photo Field */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] uppercase font-bold tracking-[0.2em] text-title">
+                PROFILE PHOTO (OPTIONAL)
+              </label>
+              <label
+                htmlFor="profile-photo-upload"
+                className="group/photo flex items-center justify-between p-3.5 bg-surface border border-dashed border-border hover:border-secondary transition-colors cursor-pointer"
+              >
+                <div className="flex items-center gap-3">
+                  {imagePreview ? (
+                    <img
+                      src={imagePreview}
+                      alt="Profile Preview"
+                      className="w-10 h-10 rounded-full object-cover border border-secondary"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-title/5 flex items-center justify-center text-gray-400 group-hover/photo:text-secondary group-hover/photo:bg-secondary/10 transition-colors">
+                      <Camera size={18} />
+                    </div>
+                  )}
+                  <div className="text-left">
+                    <p className="text-xs font-semibold text-title group-hover/photo:text-secondary transition-colors line-clamp-1">
+                      {imagePreview
+                        ? "Photo Selected"
+                        : "Upload Profile Picture"}
+                    </p>
+                    <p className="text-[10px] text-gray-400">
+                      JPG, PNG up to 5MB
+                    </p>
+                  </div>
+                </div>
+
+                <span className="px-3.5 py-2 bg-title text-white text-[10px] uppercase font-bold tracking-widest group-hover/photo:bg-secondary group-hover/photo:text-title transition-all duration-300">
+                  {imagePreview ? "CHANGE" : "CHOOSE FILE"}
+                </span>
+
+                <input
+                  id="profile-photo-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+              </label>
+            </div>
+
+            {/* Auth Submit Button */}
+            <AuthButton loading={loading}>CREATE ACCOUNT</AuthButton>
           </form>
+
           {/* Divider */}
-          <div className="flex items-center gap-2">
-            <div className="h-px grow bg-gray-300" />
-            <p className="uppercase text-sm text-gray-500 font-medium">
-              or sign up with
-            </p>
-            <div className="h-px grow bg-gray-300" />
+          <div className="relative flex items-center justify-center my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-border" />
+            </div>
+            <span className="relative bg-background px-4 text-[10px] uppercase tracking-[0.2em] text-gray-400">
+              OR JOIN WITH
+            </span>
           </div>
-          {/* OAuth Login */}
+
+          {/* OAuth Social Login */}
           <SocialLogin />
-          <p className="text gray-600 text-center">
-            Already have an account?{" "}
-            <Link href={"sign-in"} className="text-primary font-semibold">
-              Login
+
+          {/* Footer Link */}
+          <p className="text-center text-xs text-gray-500 pt-4">
+            ALREADY HAVE AN ATELIER ACCOUNT?{" "}
+            <Link
+              href="/sign-in"
+              className="text-secondary font-bold hover:underline ml-1"
+            >
+              LOG IN
             </Link>
           </p>
         </div>
-      </div>{" "}
+      </div>
     </div>
   );
 }
