@@ -68,13 +68,17 @@ const Navbar = () => {
     router.replace(pathname, { locale: nextLocale, scroll: false });
   };
 
+  const transparentPaths = ["/"];
+  const isTransparentPath = transparentPaths.includes(pathname);
+  const isTransparent = isTransparentPath && !isScrolled;
+
   const hiddenPath = [
     "/sign-in",
     "/sign-up",
     "/forgot-password",
     "/reset-password",
   ];
-  const isHiddenNavbar = hiddenPath.some((p) => p === pathname);
+  const isHiddenNavbar = hiddenPath.includes(pathname);
 
   if (isHiddenNavbar) return null;
 
@@ -83,12 +87,12 @@ const Navbar = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
         isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
       } ${
-        isScrolled
-          ? "bg-title/90 backdrop-blur-md border-b border-white/10 shadow-2xl py-3"
-          : "bg-transparent border-transparent py-5"
+        isTransparent
+          ? "bg-transparent border-transparent py-5"
+          : "bg-title/90 backdrop-blur-md border-b border-white/10 shadow-2xl py-3"
       }`}
     >
-      <div className="w-11/12 max-w-7xl mx-auto flex items-center justify-between">
+      <div className="w-11/12 mx-auto flex items-center justify-between">
         {/* 1. Logo Section */}
         <div className="flex items-center gap-6">
           <Logo isDark={true} />
@@ -185,4 +189,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

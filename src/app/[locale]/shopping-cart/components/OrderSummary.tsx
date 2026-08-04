@@ -1,96 +1,141 @@
-import { ArrowRight, ShieldCheck, Truck, HelpCircle } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+"use client";
 
-export default async function OrderSummary() {
-  const t = await getTranslations("Cart.OrderSummary");
+import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { ArrowRight, ShieldCheck, Truck, Lock, HelpCircle } from "lucide-react";
+
+export default function OrderSummary() {
+  const t = useTranslations("Cart.OrderSummary");
+  const [promo, setPromo] = useState("");
+  const [discountApplied, setDiscountApplied] = useState(false);
+
+  const handleApplyPromo = () => {
+    if (promo.trim().length > 0) {
+      setDiscountApplied(true);
+    }
+  };
+
   return (
-    <div className="w-full max-w-md">
-      {/* Main Card */}
-      <div className="bg-white/80 backdrop-blur-md border border-slate-100 rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
-        <h2 className="font-black text-xl text-slate-900 uppercase tracking-wide mb-6">
-          {t("title")}
-        </h2>
+    <div className="w-full space-y-6">
+      {/* Main Luxury Dark Summary Card */}
+      <div className="bg-title text-white border border-border p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+        {/* Subtle Background Overlay Grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
-        {/* Promo Code Input */}
-        <div className="mb-8">
-          <label className="block text-[10px] font-bold tracking-wider text-slate-400 uppercase mb-2">
-            {t("promo")}
-          </label>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              placeholder="Enter code"
-              className="flex-1 bg-[#F1F3F6] border-0 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition"
+        <div className="relative z-10 space-y-6">
+          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+            <h2 className="font-extrabold text-lg uppercase tracking-[0.2em] text-white">
+              {t("title") || "ORDER SUMMARY"}
+            </h2>
+            <span className="text-xs font-mono text-secondary font-bold">
+              CAD / USD
+            </span>
+          </div>
+
+          {/* Promo Code Input */}
+          <div className="space-y-2">
+            <label className="block text-[10px] font-semibold tracking-[0.25em] text-secondary uppercase">
+              {t("promo") || "PROMO CODE / GIFT VOUCHER"}
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={promo}
+                onChange={(e) => setPromo(e.target.value)}
+                placeholder="ENTER CODE"
+                className="flex-1 bg-surface border border-white/20 px-4 py-3 text-xs text-black placeholder:text-black/40 font-mono tracking-wider focus:outline-none focus:border-secondary transition-colors"
+              />
+              <button
+                onClick={handleApplyPromo}
+                className="bg-secondary text-title hover:bg-white hover:text-title font-extrabold text-xs uppercase tracking-widest px-5 py-3 transition-colors duration-300 cursor-pointer"
+              >
+                APPLY
+              </button>
+            </div>
+            {discountApplied && (
+              <p className="text-[11px] text-secondary font-mono">
+                ✓ PROMO CODE APPLIED (-$50.00)
+              </p>
+            )}
+          </div>
+
+          {/* Pricing Breakdown List */}
+          <div className="space-y-3.5 text-xs font-mono border-t border-b border-white/10 py-5">
+            <div className="flex justify-between text-gray-400">
+              <span>{t("sub-total") || "SUBTOTAL"}</span>
+              <span className="text-white font-semibold">$1,650.00</span>
+            </div>
+
+            {discountApplied && (
+              <div className="flex justify-between text-secondary">
+                <span>{t("discount") || "DISCOUNT"}</span>
+                <span>-$50.00</span>
+              </div>
+            )}
+
+            <div className="flex justify-between text-gray-400">
+              <span>{t("shipping") || "EXPRESS SHIPPING"}</span>
+              <span className="text-white font-semibold">$25.00</span>
+            </div>
+
+            <div className="flex justify-between text-gray-400">
+              <span>{t("estimated-tax") || "ESTIMATED TAX"}</span>
+              <span className="text-white font-semibold">$45.00</span>
+            </div>
+          </div>
+
+          {/* Grand Total */}
+          <div className="flex justify-between items-baseline pt-2">
+            <div>
+              <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-white">
+                {t("total") || "TOTAL"}
+              </span>
+              <p className="text-[10px] text-gray-400 font-mono">
+                TAX & DUTIES INCLUDED
+              </p>
+            </div>
+            <span className="text-3xl font-black text-white tracking-tight font-mono">
+              ${discountApplied ? "1,670.00" : "1,720.00"}
+            </span>
+          </div>
+
+          {/* Checkout CTA Button */}
+          <button className="w-full py-4 bg-secondary text-title hover:bg-white hover:text-title font-extrabold text-xs uppercase tracking-[0.25em] flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer shadow-xl group/btn border border-secondary">
+            <span>{t("checkout") || "PROCEED TO CHECKOUT"}</span>
+            <ArrowRight
+              size={15}
+              className="group-hover/btn:translate-x-1 transition-transform duration-300"
             />
-            <button className="bg-[#0B1220] hover:bg-slate-800 text-white font-semibold text-xs tracking-wide px-5 py-3 rounded-xl transition-all duration-200 active:scale-95">
-              Apply
-            </button>
-          </div>
-        </div>
+          </button>
 
-        {/* Pricing List */}
-        <div className="space-y-4 text-sm font-medium border-b border-slate-100 pb-6 mb-6">
-          <div className="flex justify-between text-slate-400">
-            <span>{t("sub-total")}</span>
-            <span className="text-slate-800">$325.00</span>
-          </div>
-          <div className="flex justify-between text-[#10B981]">
-            <span>{t("discount")}</span>
-            <span>-$20.00</span>
-          </div>
-          <div className="flex justify-between text-slate-400">
-            <span>{t("shipping")}</span>
-            <span className="text-slate-800">$15.00</span>
-          </div>
-          <div className="flex justify-between text-slate-400">
-            <span>{t("estimated-tax")}</span>
-            <span className="text-slate-800">$24.50</span>
-          </div>
-        </div>
-
-        {/* Total Price */}
-        <div className="flex justify-between items-baseline mb-8">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-900">
-            {t("total")}
-          </span>
-          <span className="text-[32px] font-black text-slate-900 tracking-tight">
-            $344.50
-          </span>
-        </div>
-
-        {/* Checkout Button */}
-        <button className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-sm tracking-wide py-4 px-6 rounded-2xl inline-flex items-center justify-center gap-2 transition-all shadow-[0_4px_20px_rgba(37,99,235,0.2)] hover:shadow-[0_4px_24px_rgba(37,99,235,0.3)] active:scale-[0.98] uppercase">
-          {t("checkout")}
-          <ArrowRight size={16} />
-        </button>
-
-        {/* Trust Badges */}
-        <div className="grid grid-cols-3 gap-2 mt-8 pt-6 border-t border-slate-50 text-center">
-          <div className="flex flex-col items-center gap-1.5">
-            <ShieldCheck size={16} className="text-slate-400" />
-            <span className="text-[9px] font-bold tracking-wider text-slate-400 uppercase">
-              Authentic
-            </span>
-          </div>
-          <div className="flex flex-col items-center gap-1.5">
-            <Truck size={16} className="text-slate-400" />
-            <span className="text-[9px] font-bold tracking-wider text-slate-400 uppercase">
-              Global Ship
-            </span>
-          </div>
-          <div className="flex flex-col items-center gap-1.5">
-            <ShieldCheck size={16} className="text-slate-400" />
-            <span className="text-[9px] font-bold tracking-wider text-slate-400 uppercase">
-              Secure
-            </span>
+          {/* Trust Guarantee Badges */}
+          <div className="grid grid-cols-3 gap-2 pt-4 border-t border-white/10 text-center">
+            <div className="flex flex-col items-center gap-1.5">
+              <ShieldCheck size={16} className="text-secondary" />
+              <span className="text-[9px] font-bold tracking-wider text-gray-400 uppercase">
+                AUTHENTIC
+              </span>
+            </div>
+            <div className="flex flex-col items-center gap-1.5">
+              <Truck size={16} className="text-secondary" />
+              <span className="text-[9px] font-bold tracking-wider text-gray-400 uppercase">
+                EXPRESS SHIP
+              </span>
+            </div>
+            <div className="flex flex-col items-center gap-1.5">
+              <Lock size={16} className="text-secondary" />
+              <span className="text-[9px] font-bold tracking-wider text-gray-400 uppercase">
+                ENCRYPTED
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Help Link */}
-      <div className="flex items-center justify-center gap-1.5 mt-6 text-xs font-semibold text-slate-400 hover:text-slate-600 cursor-pointer transition">
-        <HelpCircle size={14} />
-        <span> {t("help")} </span>
+      {/* Concierge Help Line */}
+      <div className="flex items-center justify-center gap-2 text-xs text-gray-500 font-mono hover:text-title cursor-pointer transition-colors duration-300">
+        <HelpCircle size={14} className="text-secondary" />
+        <span>{t("help") || "Need help with your atelier order?"}</span>
       </div>
     </div>
   );
