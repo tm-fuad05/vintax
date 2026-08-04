@@ -1,39 +1,32 @@
 "use client";
 
-import { Search, X, RotateCcw, Check } from "lucide-react";
-
-export interface FilterState {
-  searchQuery: string;
-  category: string;
-  minPrice: number;
-  maxPrice: number;
-  size: string;
-  color: string;
-}
+import { Search, RotateCcw, X } from "lucide-react";
 
 interface ShopSidebarProps {
-  filters: FilterState;
-  onFilterChange: (newFilters: Partial<FilterState>) => void;
-  onResetFilters: () => void;
-  categories: { name: string; count: number }[];
   isMobileOpen?: boolean;
   onCloseMobile?: () => void;
 }
 
 export const ShopSidebar = ({
-  filters,
-  onFilterChange,
-  onResetFilters,
-  categories,
   isMobileOpen = false,
   onCloseMobile,
 }: ShopSidebarProps) => {
+  const categories = [
+    { name: "ALL PIECES", count: 10, active: true },
+    { name: "STREETWEAR", count: 3, active: false },
+    { name: "OUTERWEAR", count: 3, active: false },
+    { name: "FOOTWEAR", count: 2, active: false },
+    { name: "ACCESSORIES", count: 2, active: false },
+    { name: "EYEWEAR", count: 1, active: false },
+    { name: "TAILORED SUITS", count: 1, active: false },
+  ];
+
   const priceRanges = [
-    { label: "ALL PRICES", min: 0, max: 5000 },
-    { label: "UNDER $300", min: 0, max: 300 },
-    { label: "$300 - $600", min: 300, max: 600 },
-    { label: "$600 - $1,000", min: 600, max: 1000 },
-    { label: "$1,000+", min: 1000, max: 5000 },
+    { label: "ALL PRICES", active: true },
+    { label: "UNDER $300", active: false },
+    { label: "$300 - $600", active: false },
+    { label: "$600 - $1,000", active: false },
+    { label: "$1,000+", active: false },
   ];
 
   const content = (
@@ -44,10 +37,7 @@ export const ShopSidebar = ({
           CATALOG FILTERS
         </h3>
 
-        <button
-          onClick={onResetFilters}
-          className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-secondary hover:underline cursor-pointer"
-        >
+        <button className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-secondary hover:underline cursor-pointer">
           <RotateCcw size={12} />
           <span>RESET ALL</span>
         </button>
@@ -61,8 +51,6 @@ export const ShopSidebar = ({
         <div className="relative group">
           <input
             type="text"
-            value={filters.searchQuery}
-            onChange={(e) => onFilterChange({ searchQuery: e.target.value })}
             placeholder="Search by title, style..."
             className="w-full bg-surface border border-border py-3 pl-10 pr-9 text-xs text-title placeholder:text-gray-400 focus:outline-none focus:border-secondary transition-colors"
           />
@@ -70,14 +58,6 @@ export const ShopSidebar = ({
             size={16}
             className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-400 group-focus-within:text-secondary transition-colors"
           />
-          {filters.searchQuery && (
-            <button
-              onClick={() => onFilterChange({ searchQuery: "" })}
-              className="absolute top-1/2 -translate-y-1/2 right-3 text-gray-400 hover:text-title cursor-pointer"
-            >
-              <X size={14} />
-            </button>
-          )}
         </div>
       </div>
 
@@ -87,31 +67,27 @@ export const ShopSidebar = ({
           CATEGORIES
         </label>
         <div className="space-y-1">
-          {categories.map((cat) => {
-            const isSelected = filters.category === cat.name;
-            return (
-              <button
-                key={cat.name}
-                onClick={() => onFilterChange({ category: cat.name })}
-                className={`w-full flex items-center justify-between px-3 py-2.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
-                  isSelected
-                    ? "bg-title text-white border-l-4 border-secondary"
-                    : "text-gray-600 hover:text-title hover:bg-surface"
+          {categories.map((cat) => (
+            <button
+              key={cat.name}
+              className={`w-full flex items-center justify-between px-3 py-2.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
+                cat.active
+                  ? "bg-title text-white border-l-4 border-secondary"
+                  : "text-gray-600 hover:text-title hover:bg-surface"
+              }`}
+            >
+              <span>{cat.name}</span>
+              <span
+                className={`text-[10px] font-mono px-2 py-0.5 ${
+                  cat.active
+                    ? "bg-secondary text-title font-extrabold"
+                    : "text-gray-400 bg-gray-100"
                 }`}
               >
-                <span>{cat.name}</span>
-                <span
-                  className={`text-[10px] font-mono px-2 py-0.5 ${
-                    isSelected
-                      ? "bg-secondary text-title font-extrabold"
-                      : "text-gray-400 bg-gray-100"
-                  }`}
-                >
-                  {cat.count}
-                </span>
-              </button>
-            );
-          })}
+                {cat.count}
+              </span>
+            </button>
+          ))}
         </div>
       </div>
 
@@ -121,28 +97,18 @@ export const ShopSidebar = ({
           PRICE RANGE
         </label>
         <div className="space-y-2">
-          {priceRanges.map((range) => {
-            const isActive =
-              filters.minPrice === range.min && filters.maxPrice === range.max;
-            return (
-              <button
-                key={range.label}
-                onClick={() =>
-                  onFilterChange({
-                    minPrice: range.min,
-                    maxPrice: range.max,
-                  })
-                }
-                className={`w-full text-left px-3 py-2 text-xs font-semibold uppercase tracking-wider border transition-all cursor-pointer ${
-                  isActive
-                    ? "bg-secondary/15 border-secondary text-title font-extrabold"
-                    : "border-border text-gray-600 hover:border-title"
-                }`}
-              >
-                {range.label}
-              </button>
-            );
-          })}
+          {priceRanges.map((range) => (
+            <button
+              key={range.label}
+              className={`w-full text-left px-3 py-2 text-xs font-semibold uppercase tracking-wider border transition-all cursor-pointer ${
+                range.active
+                  ? "bg-secondary/15 border-secondary text-title font-extrabold"
+                  : "border-border text-gray-600 hover:border-title"
+              }`}
+            >
+              {range.label}
+            </button>
+          ))}
         </div>
       </div>
     </div>
@@ -179,6 +145,15 @@ export const ShopSidebar = ({
                 </button>
               </div>
               {content}
+            </div>
+
+            <div className="pt-6 border-t border-border mt-6">
+              <button
+                onClick={onCloseMobile}
+                className="w-full py-3.5 bg-title text-white text-xs font-extrabold uppercase tracking-widest hover:bg-secondary hover:text-title transition-all"
+              >
+                APPLY FILTERS
+              </button>
             </div>
           </div>
         </div>

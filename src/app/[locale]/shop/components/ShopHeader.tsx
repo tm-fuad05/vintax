@@ -1,19 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { SlidersHorizontal, Grid3X3 } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 
 interface ShopHeaderProps {
-  totalItems: number;
-  activeCategory: string;
-  onToggleMobileFilter: () => void;
+  onToggleMobileFilter?: () => void;
 }
 
-export const ShopHeader = ({
-  totalItems,
-  activeCategory,
-  onToggleMobileFilter,
-}: ShopHeaderProps) => {
+export const ShopHeader = ({ onToggleMobileFilter }: ShopHeaderProps) => {
   const t = useTranslations("Shop");
 
   return (
@@ -53,7 +47,7 @@ export const ShopHeader = ({
               CURRENT CATEGORY
             </span>
             <span className="text-sm font-extrabold uppercase text-white">
-              {activeCategory} ({totalItems})
+              ALL PIECES (10)
             </span>
           </div>
 

@@ -1,27 +1,15 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { ShopHeader } from "./components/ShopHeader";
-import { ShopSidebar, FilterState } from "./components/ShopSidebar";
+import { ShopSidebar } from "./components/ShopSidebar";
 import { ProductGrid } from "./components/ProductGrid";
 import { ShopProduct } from "./components/ShopCard";
-import { toast } from "sonner";
 
 export default function ShopPage() {
-  const initialFilters: FilterState = {
-    searchQuery: "",
-    category: "ALL",
-    minPrice: 0,
-    maxPrice: 5000,
-    size: "ALL",
-    color: "ALL",
-  };
-
-  const [filters, setFilters] = useState<FilterState>(initialFilters);
-  const [sortBy, setSortBy] = useState("newest");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
-  // Archival Fashion Mock Dataset
+  // Archival Fashion Mock Dataset (Pure UI Data)
   const allProducts: ShopProduct[] = [
     {
       id: "shop-1",
@@ -159,129 +147,21 @@ export default function ShopPage() {
     },
   ];
 
-  // Dynamic Category Counts
-  const categoriesList = useMemo(() => {
-    const counts: Record<string, number> = {
-      ALL: allProducts.length,
-      STREETWEAR: 0,
-      OUTERWEAR: 0,
-      FOOTWEAR: 0,
-      ACCESSORIES: 0,
-      EYEWEAR: 0,
-      "TAILORED SUITS": 0,
-    };
-
-    allProducts.forEach((p) => {
-      if (counts[p.category] !== undefined) {
-        counts[p.category] += 1;
-      }
-    });
-
-    return Object.entries(counts).map(([name, count]) => ({ name, count }));
-  }, [allProducts]);
-
-  // Filter & Sort Logic
-  const filteredProducts = useMemo(() => {
-    return allProducts
-      .filter((product) => {
-        // Search Filter
-        if (
-          filters.searchQuery &&
-          !product.name
-            .toLowerCase()
-            .includes(filters.searchQuery.toLowerCase()) &&
-          !product.category
-            .toLowerCase()
-            .includes(filters.searchQuery.toLowerCase())
-        ) {
-          return false;
-        }
-
-        // Category Filter
-        if (
-          filters.category !== "ALL" &&
-          product.category !== filters.category
-        ) {
-          return false;
-        }
-
-        // Price Filter
-        if (
-          product.price < filters.minPrice ||
-          product.price > filters.maxPrice
-        ) {
-          return false;
-        }
-
-        // Size Filter
-        if (
-          filters.size !== "ALL" &&
-          product.size !== "ALL" &&
-          product.size !== filters.size
-        ) {
-          return false;
-        }
-
-        // Color Filter
-        if (filters.color !== "ALL" && product.color !== filters.color) {
-          return false;
-        }
-
-        return true;
-      })
-      .sort((a, b) => {
-        if (sortBy === "price-asc") return a.price - b.price;
-        if (sortBy === "price-desc") return b.price - a.price;
-        if (sortBy === "rating") return b.rating - a.rating;
-        return (
-          new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
-        );
-      });
-  }, [allProducts, filters, sortBy]);
-
-  const handleFilterChange = (newFilters: Partial<FilterState>) => {
-    setFilters((prev) => ({ ...prev, ...newFilters }));
-  };
-
-  const handleResetFilters = () => {
-    setFilters(initialFilters);
-    toast.info("All catalog filters have been reset.");
-  };
-
-  const handleAddToCart = (product: ShopProduct) => {
-    toast.success(`Added ${product.name} to your bag`);
-  };
-
   return (
     <div className="min-h-screen bg-background text-title pb-28">
       {/* 1. Header Banner */}
-      <ShopHeader
-        totalItems={filteredProducts.length}
-        activeCategory={filters.category}
-        onToggleMobileFilter={() => setIsMobileFilterOpen(true)}
-      />
+      <ShopHeader onToggleMobileFilter={() => setIsMobileFilterOpen(true)} />
 
-      {/* 2. Main Layout Container - Enforcing w-11/12 mx-auto */}
+      {/* 2. Main Layout Container */}
       <div className="w-11/12 mx-auto pt-12 flex gap-10">
         {/* Sidebar Filters */}
         <ShopSidebar
-          filters={filters}
-          onFilterChange={handleFilterChange}
-          onResetFilters={handleResetFilters}
-          categories={categoriesList}
           isMobileOpen={isMobileFilterOpen}
           onCloseMobile={() => setIsMobileFilterOpen(false)}
         />
 
         {/* Catalog Grid */}
-        <ProductGrid
-          products={filteredProducts}
-          totalProductsCount={allProducts.length}
-          sortBy={sortBy}
-          onSortChange={setSortBy}
-          onResetFilters={handleResetFilters}
-          onAddToCart={handleAddToCart}
-        />
+        <ProductGrid products={allProducts} />
       </div>
     </div>
   );
