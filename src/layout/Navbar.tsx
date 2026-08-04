@@ -1,4 +1,6 @@
 "use client";
+
+import { useState, useEffect } from "react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { Globe, Moon, Menu } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -17,6 +19,42 @@ const Navbar = () => {
 
   const t = useTranslations("Navbar");
 
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Detect whether scrolled past top threshold
+      if (currentScrollY > 30) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+
+      // Smart direction tracking:
+      // When at top (<= 30), always show transparent navbar
+      if (currentScrollY <= 30) {
+        setIsVisible(true);
+      } else {
+        // If scrolling UP: hide navbar (-translate-y-full)
+        if (currentScrollY < lastScrollY) {
+          setIsVisible(false);
+        } else {
+          // If scrolling DOWN: show navbar with dark background
+          setIsVisible(true);
+        }
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
   const navLinks = [
     { label: t("home"), href: "/" },
     { label: t("shop"), href: "/solutions" },
@@ -29,6 +67,7 @@ const Navbar = () => {
     document.documentElement.lang = nextLocale;
     router.replace(pathname, { locale: nextLocale, scroll: false });
   };
+
   const hiddenPath = [
     "/sign-in",
     "/sign-up",
@@ -37,98 +76,113 @@ const Navbar = () => {
   ];
   const isHiddenNavbar = hiddenPath.some((p) => p === pathname);
 
-  if (!isHiddenNavbar)
-    return (
-      <nav className="fixed z-50 w-full bg-white border-b border-gray-200">
-        {/* Container: Glassmorphism with Primary Tint */}
-        <div className="relative w-11/12 mx-auto py-5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-5">
-              {/* 1. Logo Section */}
-              <Logo />
+  if (isHiddenNavbar) return null;
 
-              {/* 2. Navigation - Matching Hero Accent */}
-              <div className="hidden lg:flex items-center gap-1">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    className="relative px-5 py-2 text-sm font-bold text-paragraph transition-all duration-300 rounded-full hover:text-primary hover:bg-primary/5 active:scale-95"
-                  >
-                    <span className="relative z-10">{link.label}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
+  return (
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+        isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+      } ${
+        isScrolled
+          ? "bg-title/90 backdrop-blur-md border-b border-white/10 shadow-2xl py-3"
+          : "bg-transparent border-transparent py-5"
+      }`}
+    >
+      <div className="w-11/12 max-w-7xl mx-auto flex items-center justify-between">
+        {/* 1. Logo Section */}
+        <div className="flex items-center gap-6">
+          <Logo isDark={true} />
 
-            {/* 3. Right Actions Section */}
-            <div className="flex items-center gap-2 ">
-              <div className="lg:flex items-center gap-1 hidden">
-                <button className="flex p-2 items-center justify-center rounded-full text-paragraph transition-all hover:bg-primary/10 hover:text-primary uppercase font-bold text-xs cursor-pointer">
-                  <BsHeartFill size={18} />
-                </button>
-                <Link
-                  href={"/shopping-cart"}
-                  className=" relative flex p-2 items-center justify-center  rounded-full text-paragraph transition-all hover:bg-primary/10 hover:text-primary uppercase font-bold text-xs cursor-pointer"
-                >
-                  <p className="absolute top-1 right-0 bg-primary w-4 h-4 rounded-full text-white flex items-center justify-center">
-                    5
-                  </p>
-                  <FaShoppingBag size={18} />
-                </Link>
-              </div>
-              <div className="mx-2 h-6 w-px bg-primary/10 hidden lg:block" />
-              <div className="flex items-center gap-1">
-                {/* Language Switcher */}
-                <button
-                  onClick={toggleLang}
-                  className="flex p-2 items-center justify-center gap-1.5 rounded-full text-paragraph transition-all hover:bg-primary/10 hover:text-primary uppercase font-bold text-xs cursor-pointer"
-                >
-                  <Globe size={16} />
-                  <span>{locale === "en" ? "bn" : "en"}</span>
-                </button>
-
-                {/* Theme Toggle */}
-                <button className="flex p-2 items-center justify-center rounded-full text-paragraph transition-all hover:bg-primary/10 hover:text-primary cursor-pointer">
-                  <Moon size={16} />
-                </button>
-              </div>
-              <div className="mx-2 h-6 w-px bg-primary/10 hidden md:block" />
-              {/* Auth Buttons - Matching Hero Style */}{" "}
-              {!user ? (
-                <div className="flex items-center gap-3">
-                  <Link href="/sign-in" className="hidden sm:block">
-                    <button className="px-4 py-2 text-sm font-bold text-foreground transition-all hover:text-primary">
-                      {t("login")}
-                    </button>
-                  </Link>
-
-                  <Link href="/sign-up" className="hidden sm:block">
-                    <button className="relative group overflow-hidden rounded-full bg-primary px-6 py-2.5 text-sm font-black text-white transition-all hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] active:scale-95">
-                      <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
-                      <span className="relative z-10 flex items-center gap-2">
-                        {t("getStarted")}
-                      </span>
-                    </button>
-                  </Link>
-                </div>
-              ) : (
-                <button
-                  onClick={async () => await authClient.signOut()}
-                  className="px-4 py-2 text-sm font-bold text-foreground transition-all hover:text-red-500"
-                >
-                  {t("logout")}
-                </button>
-              )}
-              {/* Mobile Menu */}
-              <button className="lg:hidden flex size-10 items-center justify-center rounded-full bg-primary/5 text-primary border border-primary/10">
-                <Menu size={20} />
-              </button>
-            </div>
+          {/* 2. Navigation Links */}
+          <div className="hidden lg:flex items-center gap-1 ml-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="px-4 py-2 text-xs uppercase tracking-[0.2em] font-bold text-white/90 hover:text-secondary hover:bg-white/10 transition-all duration-300 rounded-full cursor-pointer"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
-      </nav>
-    );
+
+        {/* 3. Right Actions Section */}
+        <div className="flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-1">
+            <button
+              aria-label="Wishlist"
+              className="p-2.5 rounded-full text-white/90 hover:text-secondary hover:bg-white/10 transition-all cursor-pointer"
+            >
+              <BsHeartFill size={16} />
+            </button>
+            <Link
+              href="/shopping-cart"
+              className="relative p-2.5 rounded-full text-white/90 hover:text-secondary hover:bg-white/10 transition-all cursor-pointer"
+            >
+              <span className="absolute top-1 right-1 bg-secondary text-title text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-md">
+                5
+              </span>
+              <FaShoppingBag size={16} />
+            </Link>
+          </div>
+
+          <div className="mx-2 h-5 w-px bg-white/20 hidden lg:block" />
+
+          <div className="flex items-center gap-1">
+            {/* Language Switcher */}
+            <button
+              onClick={toggleLang}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-full text-white/90 hover:text-secondary hover:bg-white/10 uppercase font-bold text-xs cursor-pointer transition-all"
+            >
+              <Globe size={15} />
+              <span>{locale === "en" ? "BN" : "EN"}</span>
+            </button>
+
+            {/* Theme Toggle */}
+            <button
+              aria-label="Toggle Theme"
+              className="p-2.5 rounded-full text-white/90 hover:text-secondary hover:bg-white/10 transition-all cursor-pointer"
+            >
+              <Moon size={15} />
+            </button>
+          </div>
+
+          <div className="mx-2 h-5 w-px bg-white/20 hidden md:block" />
+
+          {/* Auth Buttons */}
+          {!user ? (
+            <div className="flex items-center gap-3">
+              <Link href="/sign-in" className="hidden sm:block">
+                <button className="px-4 py-2 text-xs font-extrabold uppercase tracking-widest text-white/90 hover:text-secondary transition-all cursor-pointer">
+                  {t("login") || "LOGIN"}
+                </button>
+              </Link>
+
+              <Link href="/sign-up" className="hidden sm:block">
+                <button className="bg-secondary text-title hover:bg-white hover:text-title px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 cursor-pointer shadow-lg active:scale-95">
+                  {t("getStarted") || "GET STARTED"}
+                </button>
+              </Link>
+            </div>
+          ) : (
+            <button
+              onClick={async () => await authClient.signOut()}
+              className="px-4 py-2 text-xs font-extrabold uppercase tracking-widest text-white/90 hover:text-red-400 transition-all cursor-pointer"
+            >
+              {t("logout") || "LOGOUT"}
+            </button>
+          )}
+
+          {/* Mobile Menu Toggle */}
+          <button className="lg:hidden flex size-10 items-center justify-center rounded-full bg-white/10 text-white border border-white/20 hover:bg-secondary hover:text-title transition-all">
+            <Menu size={18} />
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
 };
 
 export default Navbar;
+

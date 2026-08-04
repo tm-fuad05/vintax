@@ -99,7 +99,7 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* Slide Text Content Container */}
-      <div className="relative z-10 w-11/12 max-w-7xl mx-auto h-full flex flex-col justify-between pt-32 pb-24">
+      <div className="relative z-10 w-11/12  mx-auto h-full flex flex-col justify-between pt-32 pb-24">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide.id}

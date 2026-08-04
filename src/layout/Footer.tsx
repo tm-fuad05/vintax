@@ -53,7 +53,7 @@ const Footer = () => {
       <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-secondary/5 rounded-full filter blur-[140px] pointer-events-none" />
       <div className="absolute top-1/3 -right-32 w-96 h-96 bg-secondary/5 rounded-full filter blur-[140px] pointer-events-none" />
 
-      <div className="w-11/12 max-w-7xl mx-auto pt-24 pb-12 relative z-10">
+      <div className="w-11/12  mx-auto pt-24 pb-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 pb-16 border-b border-border/60">
           {/* 1. Brand & Newsletter Column (5 Columns) */}
           <motion.div
@@ -214,13 +214,21 @@ const Footer = () => {
 
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-4 text-[11px] font-bold text-white/90 tracking-widest uppercase">
-              <span className="hover:text-secondary transition-colors">VISA</span>
+              <span className="hover:text-secondary transition-colors">
+                VISA
+              </span>
               <span>•</span>
-              <span className="hover:text-secondary transition-colors">MASTERCARD</span>
+              <span className="hover:text-secondary transition-colors">
+                MASTERCARD
+              </span>
               <span>•</span>
-              <span className="hover:text-secondary transition-colors">AMEX</span>
+              <span className="hover:text-secondary transition-colors">
+                AMEX
+              </span>
               <span>•</span>
-              <span className="hover:text-secondary transition-colors">APPLE PAY</span>
+              <span className="hover:text-secondary transition-colors">
+                APPLE PAY
+              </span>
             </div>
           </div>
         </div>
@@ -230,5 +238,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
-

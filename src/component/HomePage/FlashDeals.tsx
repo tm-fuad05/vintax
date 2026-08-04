@@ -43,7 +43,7 @@ export const FlashDeals = () => {
       }
 
       const hours = Math.floor(
-        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
       );
       const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((difference % (1000 * 60)) / 1000);
@@ -113,7 +113,7 @@ export const FlashDeals = () => {
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-secondary/5 rounded-full filter blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/10 rounded-full filter blur-[140px] pointer-events-none" />
 
-      <div className="w-11/12 max-w-7xl mx-auto space-y-16 relative z-10">
+      <div className="w-11/12 mx-auto space-y-16 relative z-10">
         {/* Top Header Card Container */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
@@ -165,13 +165,13 @@ export const FlashDeals = () => {
                 },
               ].map((unit, index) => (
                 <div key={index} className="flex flex-col items-center">
-                  <div className="relative w-20 h-24 sm:w-24 sm:h-28 bg-surface/80 border border-white/10 backdrop-blur-xl flex items-center justify-center shadow-xl group">
+                  <div className="relative w-20 h-24 sm:w-24 sm:h-28 bg-white/10 border border-white/20 backdrop-blur-xl flex items-center justify-center shadow-2xl group">
                     <span className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-mono">
                       {unit.value}
                     </span>
                     <div className="absolute inset-x-0 bottom-0 h-[2px] bg-secondary/50 group-hover:bg-secondary transition-colors" />
                   </div>
-                  <span className="text-[10px] sm:text-xs font-semibold text-secondary/80 tracking-[0.25em] uppercase mt-3">
+                  <span className="text-[10px] sm:text-xs font-semibold text-secondary tracking-[0.25em] uppercase mt-3">
                     {unit.label}
                   </span>
                 </div>
@@ -204,14 +204,6 @@ export const FlashDeals = () => {
                 <div className="absolute top-4 left-4 z-10 bg-secondary text-title px-3 py-1 text-xs font-extrabold tracking-wider uppercase">
                   {product.discount}
                 </div>
-
-                {/* Quick Add Button Icon */}
-                <button
-                  aria-label="Add to bag"
-                  className="absolute top-4 right-4 z-10 w-9 h-9 bg-title/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-secondary hover:border-secondary hover:text-title transition-all duration-300 cursor-pointer"
-                >
-                  <ShoppingBag size={15} />
-                </button>
               </div>
 
               {/* Product Card Details */}
@@ -274,4 +266,3 @@ export const FlashDeals = () => {
     </section>
   );
 };
-

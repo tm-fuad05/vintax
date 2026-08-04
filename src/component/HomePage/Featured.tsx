@@ -43,7 +43,7 @@ export default function Featured() {
 
   return (
     <section className="w-full py-28 bg-background">
-      <div className="w-11/12 max-w-7xl mx-auto space-y-16">
+      <div className="w-11/12  mx-auto space-y-16">
         {/* Header Section */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
@@ -125,4 +125,3 @@ export default function Featured() {
     </section>
   );
 }
-
