@@ -212,7 +212,7 @@ export const FlashDeals = () => {
                   <p className="text-[10px] tracking-[0.25em] uppercase font-semibold text-secondary mb-1">
                     {product.category}
                   </p>
-                  <h3 className="text-base font-bold text-white uppercase tracking-wider group-hover:text-secondary transition-colors duration-300 line-clamp-1">
+                  <h3 className="text-base font-bold text-title uppercase tracking-wider group-hover:text-secondary transition-colors duration-300 line-clamp-1">
                     {product.name}
                   </h3>
                 </div>

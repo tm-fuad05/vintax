@@ -4,7 +4,7 @@ export const signUpSchema = z
   .object({
     name: z
       .string()
-      .min(2, "Name must be at least 2 characters")
+      .min(1, "Name is required")
       .max(50, "Name cannot exceed 50 characters")
       .trim(),
 
@@ -29,6 +29,7 @@ export const signUpSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
+
 // Sign In Schema
 export const signInSchema = z.object({
   email: z.string().email("Invalid email address").trim(),
@@ -53,6 +54,9 @@ export const resetPasswordSchema = z
     message: "Passwords do not match",
     path: ["confirmNewPassword"],
   });
+
+// Reset Password email Schema
+export const emailSchema = z.email().trim();
 
 export type signUpInput = z.infer<typeof signUpSchema>;
 export type signInInput = z.infer<typeof signInSchema>;

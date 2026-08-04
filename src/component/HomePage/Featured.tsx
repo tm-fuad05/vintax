@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAnimation } from "@/providers/AnimationProvider";
 
 interface CategoryItem {
   id: string;
@@ -13,6 +14,7 @@ interface CategoryItem {
 
 export default function Featured() {
   const t = useTranslations("HomePage.Categories");
+  const { shouldAnimate } = useAnimation();
 
   const categories: CategoryItem[] = [
     {
@@ -46,7 +48,7 @@ export default function Featured() {
       <div className="w-11/12  mx-auto space-y-16">
         {/* Header Section */}
         <motion.div
-          initial={{ y: 30, opacity: 0 }}
+          initial={shouldAnimate ? { y: 30, opacity: 0 } : false}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: "easeOut" }}
@@ -82,7 +84,7 @@ export default function Featured() {
           {categories.map((cat, index) => (
             <motion.div
               key={cat.id}
-              initial={{ y: 40, opacity: 0 }}
+              initial={shouldAnimate ? { y: 40, opacity: 0 } : false}
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.15 }}

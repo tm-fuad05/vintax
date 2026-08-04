@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import {
   Globe,
@@ -25,6 +25,7 @@ const Navbar = () => {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const [, startTransition] = useTransition();
 
   const t = useTranslations("Navbar");
 
@@ -68,7 +69,7 @@ const Navbar = () => {
 
   const navLinks = [
     { label: t("home"), href: "/" },
-    { label: t("shop"), href: "/solutions" },
+    { label: t("shop"), href: "/shop" },
     { label: t("categories"), href: "/enterprise" },
     { label: t("community"), href: "/docs" },
   ];
@@ -76,10 +77,12 @@ const Navbar = () => {
   const toggleLang = () => {
     const nextLocale = locale === "en" ? "bn" : "en";
     document.documentElement.lang = nextLocale;
-    router.replace(pathname, { locale: nextLocale, scroll: false });
+    startTransition(() => {
+      router.replace(pathname, { locale: nextLocale, scroll: false });
+    });
   };
 
-  const transparentPaths = ["/"];
+  const transparentPaths = ["/", "/shop"];
   const isTransparentPath = transparentPaths.includes(pathname);
   const isTransparent = isTransparentPath && !isScrolled;
 
@@ -280,7 +283,7 @@ const Navbar = () => {
       {/* Mobile Drawer Overlay */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md lg:hidden"
+          className="fixed inset-0 z-40 bg-black/75 backdrop-blur-md lg:hidden"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
@@ -342,28 +345,6 @@ const Navbar = () => {
               >
                 <BsHeartFill size={14} />
                 <span>WISHLIST</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Preferences (Language & Theme) Section */}
-          <div className="space-y-3">
-            <p className="text-[10px] font-semibold text-secondary uppercase tracking-[0.25em]">
-              PREFERENCES
-            </p>
-            <div className="flex items-center justify-between gap-3 bg-white/5 p-3.5 border border-white/10">
-              <button
-                onClick={toggleLang}
-                className="flex items-center gap-2 text-xs font-bold text-white uppercase hover:text-secondary transition-colors cursor-pointer"
-              >
-                <Globe size={15} className="text-secondary" />
-                <span>{locale === "en" ? "BANGLA (BN)" : "ENGLISH (EN)"}</span>
-              </button>
-              <button
-                aria-label="Toggle Theme"
-                className="p-1.5 text-white hover:text-secondary transition-colors cursor-pointer"
-              >
-                <Moon size={16} />
               </button>
             </div>
           </div>

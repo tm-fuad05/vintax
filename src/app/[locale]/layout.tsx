@@ -10,6 +10,8 @@ import Footer from "@/layout/Footer";
 import { Toaster } from "sonner";
 import { ReactLenis } from "lenis/react";
 import TanstackQueryProvider from "@/providers/TanstackQueryProvider";
+import { AnimationProvider } from "@/providers/AnimationProvider";
+import ScrollToTop from "@/utils/ScrollToTop";
 
 const interFont = Inter({
   subsets: ["latin"],
@@ -50,21 +52,24 @@ export default async function LocaleLayout({ children, params }: Props) {
       >
         <TanstackQueryProvider>
           <NextIntlClientProvider>
-            <ReactLenis root options={{ lerp: 0.1, duration: 1.5 }}>
-              <Navbar />
-              <main>{children}</main>
-              <Footer />
-              <Toaster
-                position="top-right"
-                duration={3000}
-                toastOptions={{
-                  style: {
-                    background: "black",
-                    color: "white",
-                  },
-                }}
-              />
-            </ReactLenis>
+            <AnimationProvider>
+              <ReactLenis root options={{ lerp: 0.1, duration: 1.5 }}>
+                <Navbar />
+                <main>{children}</main>
+                <Footer />
+                <Toaster
+                  position="top-right"
+                  duration={3000}
+                  toastOptions={{
+                    style: {
+                      background: "black",
+                      color: "white",
+                    },
+                  }}
+                />
+                <ScrollToTop />
+              </ReactLenis>
+            </AnimationProvider>
           </NextIntlClientProvider>
         </TanstackQueryProvider>
       </body>

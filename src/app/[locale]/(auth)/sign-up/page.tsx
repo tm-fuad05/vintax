@@ -18,7 +18,7 @@ export default function SignUpForm() {
     Record<string, string[] | undefined>
   >({});
   const [loading, setLoading] = useState(false);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imagePreview, setImagePreview] = useState("");
 
   const [formData, setFormData] = useState<signUpInput>({
     name: "",
@@ -48,6 +48,7 @@ export default function SignUpForm() {
     e.preventDefault();
     // Zod Parse
     const formDataValidation = signUpSchema.safeParse(formData);
+    // const imageVa
 
     if (!formDataValidation.success) {
       const error = formDataValidation.error.flatten().fieldErrors;
@@ -62,7 +63,7 @@ export default function SignUpForm() {
           name: formData.name,
           email: formData.email,
           password: formData.password,
-          image: imagePreview!,
+          image: imagePreview || "",
           callbackURL: "/",
         },
         {

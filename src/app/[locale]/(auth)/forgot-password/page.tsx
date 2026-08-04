@@ -3,18 +3,13 @@
 import AuthButton from "@/component/shared/AuthButton";
 import Logo from "@/component/shared/logo";
 import { authClient } from "@/lib/auth-client";
+import { emailSchema } from "@/ZodSchema/authSchema";
 import { ArrowLeft, Mail, MailCheck, MailOpen } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import z from "zod";
-
-// Zod Schema
-const emailSchema = z.email().trim();
 
 export default function ResetPassword() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [errorInput, setErrorInput] = useState("");
@@ -23,6 +18,7 @@ export default function ResetPassword() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Zod Schema
     const emailValidation = emailSchema.safeParse(email);
 
     if (!emailValidation.success) {
@@ -34,7 +30,7 @@ export default function ResetPassword() {
     setLoading(true);
 
     try {
-      const { data, error } = await authClient.requestPasswordReset({
+      const { error } = await authClient.requestPasswordReset({
         email: email,
         redirectTo: "/reset-password",
       });
@@ -54,129 +50,172 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-white">
-      {/* ── LEFT PANEL ── */}
-      <div className="relative w-full md:w-1/2 h-56 sm:h-72 md:h-screen flex-shrink-0 overflow-hidden hidden lg:block">
-        <img
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmeiy3nu3WpbtBPHSBwx9dpI-NC7Ergs1Sz0943k-CmTRJZ1hj2ntmQsp1O_SVyWhlbRNXG96HO0x5rzM-k5HcnOHDzH9zwwWh3oKE3iqG05rkaYYDBH40TzGBeXUvQ5DYCNmBJ90vl5-4C3tO0FP7letFj4yJFzdcoXu8Ep4D4IgrVuwqJ2mLc9ljFppXNfjItM7a1jZ6NNCLZBy2c3wA5RxjddRuy4WLGLTyrcvq3PDT1555q8UtGfu9CW7i94ts-g2bgauwaMI"
-          alt="Streetwear model"
-          className="h-full w-full object-cover object-top brightness-75"
+    <div className="h-screen w-full bg-background grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
+      {/* Left Editorial Showcase Panel - Static 100vh */}
+      <div className="relative lg:col-span-6 hidden lg:block h-full overflow-hidden bg-title">
+        <div
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1400&auto=format&fit=crop')",
+          }}
+          className="absolute inset-0 bg-cover bg-center filter brightness-[0.65] h-full flex flex-col justify-between p-12 lg:p-16 z-0"
         />
+        {/* Luxury Dark Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-title via-title/60 to-title/40 z-10" />
 
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-linear-to-t from-slate-950/80 via-slate-950/10 to-transparent" />
+        {/* Textured Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none z-10" />
 
-        {/* Tagline — hidden on small, shown md+ */}
-        <div className="absolute bottom-8 left-8 right-8 hidden sm:block">
-          <h2 className="text-5xl font-black leading-tight text-white tracking-tight">
-            Define Your
-            <br />
-            Street Identity.
-          </h2>
-        </div>
+        {/* Overlay Content */}
+        <div className="relative z-20 h-full flex flex-col justify-between p-12 lg:p-16">
+          <div>
+            <Logo isDark={true} />
+          </div>
 
-        {/* Tagline — shown only on small */}
-        <div className="absolute bottom-5 left-5 right-5 block sm:hidden">
-          <h2 className="text-2xl font-black leading-tight text-white tracking-tight">
-            Define Your Street Identity.
-          </h2>
+          <div className="space-y-4 max-w-lg">
+            <div className="inline-flex items-center gap-2 border border-secondary/40 bg-secondary/10 px-3 py-1 backdrop-blur-md">
+              <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
+              <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-secondary">
+                RECOVERY ATELIER
+              </span>
+            </div>
+
+            <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight text-white uppercase leading-tight">
+              RESTORE YOUR{" "}
+              <span className="text-secondary italic font-serif font-normal">
+                ATELIER ACCESS
+              </span>
+            </h1>
+
+            <p className="text-gray-300 text-xs sm:text-sm font-light leading-relaxed">
+              Securely reset your password and regain access to your exclusive
+              archival collections and luxury profile.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-6 text-[11px] text-gray-400">
+            <span>© 2026 VINTAX ARCHIVE</span>
+            <span className="w-1 h-1 rounded-full bg-secondary/50" />
+            <Link
+              href="/privacy-policy"
+              className="hover:text-secondary transition-colors"
+            >
+              PRIVACY POLICY
+            </Link>
+          </div>
         </div>
       </div>
-      {/* ── RIGHT PANEL ── */}
-      {!submitted ? (
-        <div className="flex flex-1 flex-col justify-center px-6 py-10 sm:px-10 md:px-16 lg:px-20 bg-white">
-          {/* Brand */}
-          <div className="mb-10 md:mb-16">
-            <Logo />
-          </div>
 
-          {/* Heading */}
-          <h1 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-slate-800 mb-2">
-            Reset your password
-          </h1>
-
-          {/* Description */}
-          <p className="text-sm text-slate-500 leading-relaxed mb-5 max-w-sm">
-            Enter the email address associated with your account and we'll send
-            you a link to reset your password.
-          </p>
-
-          <form onSubmit={handleSubmit} className="space-y-3">
-            {/* Email */}
-            <div className="space-y-2">
-              <div className="relative group">
-                <input
-                  type="text"
-                  name="email"
-                  value={email}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setEmail(e.target.value);
-                    setErrorInput("");
-                  }}
-                  placeholder="Your email address"
-                  className="rounded-xl ring-1 ring-gray-300 w-full py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
-                />
-                <Mail
-                  size={20}
-                  className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500 group-focus-within:text-primary"
-                />
+      {/* Right Form Container - Independent Scroll */}
+      <div
+        data-lenis-prevent
+        className="lg:col-span-6 h-full overflow-y-auto flex flex-col items-center px-6 sm:px-12 py-16 lg:py-10 w-full"
+      >
+        <div className="w-full max-w-md space-y-8 my-auto">
+          {!submitted ? (
+            <>
+              {/* Header */}
+              <div className="space-y-2">
+                <span className="text-[10px] uppercase tracking-[0.25em] font-semibold text-secondary">
+                  PASSWORD RECOVERY
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-title uppercase tracking-tight">
+                  RESET YOUR{" "}
+                  <span className="text-secondary italic font-serif font-normal">
+                    PASSWORD
+                  </span>
+                </h2>
+                <p className="text-xs text-gray-500">
+                  Enter your registered email address to receive a secure
+                  password reset link.
+                </p>
               </div>
-              {errorInput && (
-                <small className="text-red-500 font-medium block -mt-1 ml-1">
-                  {errorInput}
-                </small>
-              )}
-            </div>
-            {/* Button */}
-            <AuthButton loading={loading}>Send Reset Link</AuthButton>
-            {/* back to login */}
-            <Link
-              href={"/sign-in"}
-              className="text-gray-500 flex items-center justify-center gap-2 group mt-10 w-fit mx-auto"
-            >
-              <ArrowLeft
-                size={20}
-                className="group-hover:-translate-x-2 duration-200"
-              />
-              <span>Back to Login</span>
-            </Link>
-          </form>
-        </div>
-      ) : (
-        <div className="min-h-screen flex items-center justify-center bg-white p-6 font-sans">
-          <div className="w-full rounded-2xl p-10 text-center">
-            {/* Icon Area */}
-            <div className="flex justify-center mb-6">
-              <div className="p-4 bg-slate-50 rounded-full">
-                <MailOpen className="w-10 h-10 text-primary" />
+
+              {/* Form */}
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="space-y-1.5">
+                  <label className="text-[10px] uppercase font-bold tracking-[0.2em] text-title">
+                    EMAIL ADDRESS
+                  </label>
+                  <div className="relative group">
+                    <input
+                      type="email"
+                      name="email"
+                      value={email}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setEmail(e.target.value);
+                        setErrorInput("");
+                      }}
+                      placeholder="name@domain.com"
+                      className="w-full bg-surface border border-border py-3.5 pl-11 pr-4 text-xs text-title placeholder:text-gray-400 focus:outline-none focus:border-secondary transition-colors"
+                    />
+                    <Mail
+                      size={16}
+                      className="absolute top-1/2 -translate-y-1/2 left-3.5 text-gray-400 group-focus-within:text-secondary transition-colors"
+                    />
+                  </div>
+                  {errorInput && (
+                    <span className="text-[11px] text-red-500 block pt-0.5">
+                      {errorInput}
+                    </span>
+                  )}
+                </div>
+
+                <AuthButton loading={loading}>SEND RECOVERY LINK</AuthButton>
+              </form>
+
+              {/* Back to Login Link */}
+              <div className="pt-4 border-t border-border text-center">
+                <Link
+                  href="/sign-in"
+                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-secondary transition-colors group"
+                >
+                  <ArrowLeft
+                    size={15}
+                    className="group-hover:-translate-x-1 transition-transform"
+                  />
+                  <span>BACK TO SIGN IN</span>
+                </Link>
+              </div>
+            </>
+          ) : (
+            /* Success State Card */
+            <div className="text-center space-y-6 bg-surface border border-border p-8 sm:p-10 shadow-2xl">
+              <div className="w-16 h-16 rounded-full bg-secondary/10 border border-secondary/40 flex items-center justify-center text-secondary mx-auto">
+                <MailOpen size={28} />
+              </div>
+
+              <div className="space-y-2">
+                <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-secondary">
+                  EMAIL DISPATCHED
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-title uppercase">
+                  CHECK YOUR{" "}
+                  <span className="text-secondary italic font-serif font-normal">
+                    INBOX
+                  </span>
+                </h2>
+                <p className="text-xs text-gray-500 leading-relaxed max-w-sm mx-auto">
+                  We have dispatched a password reset link to{" "}
+                  <span className="font-mono text-title font-semibold">
+                    {email}
+                  </span>
+                  . Please follow the instructions in the message.
+                </p>
+              </div>
+
+              <div className="pt-4">
+                <Link
+                  href="/sign-in"
+                  className="inline-flex items-center justify-center w-full bg-title text-white py-3.5 px-6 text-xs uppercase font-bold tracking-[0.2em] hover:bg-secondary hover:text-title transition-colors"
+                >
+                  RETURN TO SIGN IN
+                </Link>
               </div>
             </div>
-
-            {/* Text Content */}
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-slate-800 mb-3">
-              Check your email
-            </h1>
-            <p className="text-sm text-slate-500 leading-relaxed mb-5">
-              We have sent a password reset link to your email address. Please
-              click the link in the message to set a new password.
-            </p>
-
-            {/* Back to Login */}
-            <div className="mt-10 pt-6 border-t border-slate-100">
-              <Link
-                href={"/sign-in"}
-                className="text-gray-500 flex items-center justify-center gap-2 group mt-10 w-fit mx-auto"
-              >
-                <ArrowLeft
-                  size={20}
-                  className="group-hover:-translate-x-2 duration-200"
-                />
-                <span>Back to Login</span>
-              </Link>
-            </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

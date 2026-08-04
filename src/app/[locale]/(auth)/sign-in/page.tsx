@@ -31,6 +31,7 @@ export default function SignInForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     // Zod Parse
     const formDataValidation = signInSchema.safeParse(formData);
 
