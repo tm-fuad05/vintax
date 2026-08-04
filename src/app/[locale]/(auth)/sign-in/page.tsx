@@ -5,15 +5,15 @@ import { Lock, Mail } from "lucide-react";
 import Logo from "@/component/shared/logo";
 import SocialLogin from "@/component/shared/SocialLogin";
 import { authClient } from "@/lib/auth-client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { signInInput, signInSchema } from "@/ZodSchema/authSchema";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { toast } from "sonner";
 import AuthButton from "@/component/shared/AuthButton";
 
 export default function SignInForm() {
   const router = useRouter();
-  const { data } = authClient.useSession();
+  const { data, isPending } = authClient.useSession();
   const [loading, setLoading] = useState(false);
   const [inputError, setInputError] = useState<
     Record<string, string[] | undefined>

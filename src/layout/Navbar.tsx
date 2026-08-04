@@ -17,10 +17,11 @@ import { BsHeartFill } from "react-icons/bs";
 import { FaShoppingBag } from "react-icons/fa";
 
 import Logo from "../component/shared/logo";
+import SmallLoader from "@/component/shared/SmallLoader";
 import { authClient } from "@/lib/auth-client";
 
 const Navbar = () => {
-  const { data } = authClient.useSession();
+  const { data, isPending } = authClient.useSession();
   const user = data?.user;
   const locale = useLocale();
   const router = useRouter();
@@ -173,7 +174,11 @@ const Navbar = () => {
             <div className="mx-2 h-5 w-px bg-white/20 hidden md:block" />
 
             {/* Auth / User Profile Avatar Section */}
-            {!user ? (
+            {isPending ? (
+              <div className="px-3 py-1.5 flex items-center justify-center">
+                <SmallLoader size={18} color="text-secondary" />
+              </div>
+            ) : !user ? (
               <div className="flex items-center gap-3">
                 <Link href="/sign-in" className="hidden sm:block">
                   <button className="px-4 py-2 text-xs font-extrabold uppercase tracking-widest text-white/90 hover:text-secondary transition-all cursor-pointer">
