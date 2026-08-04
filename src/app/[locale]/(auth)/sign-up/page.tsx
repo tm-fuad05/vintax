@@ -62,6 +62,7 @@ export default function SignUpForm() {
           name: formData.name,
           email: formData.email,
           password: formData.password,
+          image: imagePreview!,
           callbackURL: "/",
         },
         {
@@ -273,12 +274,9 @@ export default function SignUpForm() {
             {/* Profile Photo Field */}
             <div className="space-y-1.5">
               <label className="text-[10px] uppercase font-bold tracking-[0.2em] text-title">
-                PROFILE PHOTO (OPTIONAL)
+                PROFILE PHOTO
               </label>
-              <label
-                htmlFor="profile-photo-upload"
-                className="group/photo flex items-center justify-between p-3.5 bg-surface border border-dashed border-border hover:border-secondary transition-colors cursor-pointer"
-              >
+              <div className="group/photo flex items-center justify-between p-3.5 bg-surface border border-dashed border-border hover:border-secondary transition-colors">
                 <div className="flex items-center gap-3">
                   {imagePreview ? (
                     <img
@@ -292,21 +290,19 @@ export default function SignUpForm() {
                     </div>
                   )}
                   <div className="text-left">
-                    <p className="text-xs font-semibold text-title group-hover/photo:text-secondary transition-colors line-clamp-1">
+                    <p className="text-xs font-semibold text-title group-hover/photo:text-secondary transition-colors line-clamp-1 select-none">
                       {imagePreview
                         ? "Photo Selected"
                         : "Upload Profile Picture"}
                     </p>
-                    <p className="text-[10px] text-gray-400">
-                      JPG, PNG up to 5MB
-                    </p>
                   </div>
                 </div>
 
-                <span className="px-3.5 py-2 bg-title text-white text-[10px] uppercase font-bold tracking-widest group-hover/photo:bg-secondary group-hover/photo:text-title transition-all duration-300">
-                  {imagePreview ? "CHANGE" : "CHOOSE FILE"}
-                </span>
-
+                <label htmlFor="profile-photo-upload">
+                  <span className="px-3.5 py-2 bg-title text-white text-[10px] uppercase font-bold tracking-widest group-hover/photo:bg-secondary group-hover/photo:text-title transition-all duration-300 cursor-pointer">
+                    {imagePreview ? "CHANGE" : "CHOOSE FILE"}
+                  </span>
+                </label>
                 <input
                   id="profile-photo-upload"
                   type="file"
@@ -314,7 +310,7 @@ export default function SignUpForm() {
                   onChange={handleImageChange}
                   className="hidden"
                 />
-              </label>
+              </div>
             </div>
 
             {/* Auth Submit Button */}
