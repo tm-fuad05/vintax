@@ -1,5 +1,5 @@
 "use client";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 export default function AuthButton({
   children,
@@ -10,13 +10,18 @@ export default function AuthButton({
 }) {
   return (
     <button
+      type="submit"
       disabled={loading}
-      className="text-white bg-primary py-3 rounded-xl w-full mt-2 text-sm flex items-center justify-center gap-2 group hover:bg-blue-700 duration-200 cursor-pointer disabled:bg-gray-600 disabled:cursor-not-allowed"
+      className="w-full py-4 mt-3 bg-title hover:bg-secondary text-white hover:text-title border border-title hover:border-secondary font-extrabold text-xs uppercase tracking-[0.25em] flex items-center justify-center gap-2 transition-all duration-300 shadow-xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed group/btn"
     >
       <span>{loading ? <div className="loader" /> : children}</span>
       {!loading && (
-        <ArrowRight className="group-hover:translate-x-2 duration-200" />
+        <ArrowUpRight
+          size={16}
+          className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform duration-300"
+        />
       )}
     </button>
   );
 }
+
