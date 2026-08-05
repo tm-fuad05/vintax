@@ -5,8 +5,6 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import "@/app/globals.css";
-import Navbar from "@/layout/Navbar";
-import Footer from "@/layout/Footer";
 import { Toaster } from "sonner";
 import { ReactLenis } from "lenis/react";
 import TanstackQueryProvider from "@/providers/TanstackQueryProvider";
@@ -54,9 +52,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           <NextIntlClientProvider>
             <AnimationProvider>
               <ReactLenis root options={{ lerp: 0.1, duration: 1.5 }}>
-                <Navbar />
-                <main>{children}</main>
-                <Footer />
+                {children}
                 <Toaster
                   position="top-right"
                   duration={3000}

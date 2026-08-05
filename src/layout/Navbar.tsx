@@ -147,16 +147,6 @@ const Navbar = () => {
   const isTransparentPath = transparentPaths.includes(pathname);
   const isTransparent = isTransparentPath && !isScrolled;
 
-  const hiddenPath = [
-    "/sign-in",
-    "/sign-up",
-    "/forgot-password",
-    "/reset-password",
-  ];
-  const isHiddenNavbar = hiddenPath.includes(pathname);
-
-  if (isHiddenNavbar) return null;
-
   return (
     <>
       <nav

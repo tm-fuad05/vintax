@@ -17,7 +17,7 @@ interface FlashProduct {
   image: string;
 }
 
-export const FlashDeals = () => {
+export default function FlashDeals() {
   const t = useTranslations("HomePage.FlashDeals");
 
   // Real-time Countdown Timer logic (Targeting end of current 24-hour window)
@@ -265,4 +265,4 @@ export const FlashDeals = () => {
       </div>
     </section>
   );
-};
+}

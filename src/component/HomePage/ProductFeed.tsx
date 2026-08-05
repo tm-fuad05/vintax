@@ -33,7 +33,7 @@ interface Product {
   tabType: string;
 }
 
-export const ProductFeed = () => {
+export default function ProductFeed() {
   const t = useTranslations("HomePage.ProductFeed");
   const tabNew = t("tabNew") || "NEW ARRIVALS";
   const tabBest = t("tabBest") || "BEST SELLERS";
