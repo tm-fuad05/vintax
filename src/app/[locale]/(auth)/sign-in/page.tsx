@@ -128,7 +128,7 @@ export default function SignInForm() {
       {/* Right Form Container - Independent Scroll */}
       <div
         data-lenis-prevent
-        className="lg:col-span-6 h-full overflow-y-auto flex flex-col items-center px-6 sm:px-12 w-full"
+        className="lg:col-span-6 h-full overflow-y-auto flex flex-col items-center px-6 sm:px-12 py-10 w-full"
       >
         <div className="w-full max-w-md space-y-8 my-auto">
           {/* Header */}

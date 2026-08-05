@@ -201,14 +201,14 @@ export const ProductFeed = () => {
             aria-label="Previous Slide"
             className="product-feed-next absolute -left-15 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full transition-all duration-300 shadow-2xl cursor-pointer active:scale-90 flex items-center justify-center"
           >
-            <ChevronLeft size={50} className="text-accent" />
+            <ChevronLeft size={50} className="text-secondary" />
           </button>
           <button
             onClick={() => swiperInstance?.slideNext()}
             aria-label="Next Slide"
             className="product-feed-next absolute -right-15 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full transition-all duration-300 shadow-2xl cursor-pointer active:scale-90 flex items-center justify-center"
           >
-            <ChevronRight size={50} className="text-accent" />
+            <ChevronRight size={50} className="text-secondary" />
           </button>
 
           <Swiper
