@@ -160,13 +160,13 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
           isVisible
             ? "translate-y-0 opacity-100"
             : "-translate-y-full opacity-0"
         } ${
           isTransparent
-            ? "bg-transparent border-transparent py-4"
+            ? "bg-transparent border-transparent py-2.5"
             : "bg-title/95 backdrop-blur-xl border-b border-white/10 shadow-2xl py-2.5"
         }`}
       >
@@ -175,13 +175,13 @@ const Navbar = () => {
           {/* 1. SCROLLED STATE NAVBAR (Compact Bar: Logo + Category Links + Quick Icons) */}
           {/* ========================================================================= */}
           {isScrolled ? (
-            <div className="flex items-center justify-between gap-6 py-1 animate-in fade-in duration-300">
+            <div className="flex items-center justify-between gap-6 animate-in fade-in duration-300">
               {/* Left Logo */}
               <div className="scale-90 sm:scale-100 origin-left flex-shrink-0">
-                <div className="block md:hidden">
+                <div className="block sm:hidden">
                   <MobileLogo />
                 </div>
-                <div className="hidden md:block">
+                <div className="hidden sm:block">
                   <Logo isDark={true} />
                 </div>
               </div>
@@ -269,58 +269,67 @@ const Navbar = () => {
 
               {/* Far Right Quick Action Icons (Search, Wishlist, Cart, User Avatar) */}
               <div className="flex items-center gap-2 sm:gap-3">
-                {/* Search Icon */}
-                <button
-                  onClick={() => setShowSearchModal((prev) => !prev)}
-                  aria-label="Search"
-                  className="p-2.5 rounded-full text-white/90 hover:text-secondary hover:bg-white/10 transition-all cursor-pointer"
-                >
-                  <Search size={18} />
-                </button>
+                <div className="flex items-center gap-1">
+                  {/* Search Icon */}
+                  <button
+                    onClick={() => setShowSearchModal((prev) => !prev)}
+                    aria-label="Search"
+                    className="p-2.5 rounded-full text-white/90 hover:text-secondary hover:bg-white/10 transition-all cursor-pointer"
+                  >
+                    <Search size={18} />
+                  </button>
 
-                {/* Wishlist Icon */}
-                <button
-                  aria-label="Wishlist"
-                  className="p-2.5 rounded-full text-white/90 hover:text-secondary hover:bg-white/10 transition-all cursor-pointer"
-                >
-                  <BsHeartFill size={16} />
-                </button>
+                  {/* Wishlist Icon */}
+                  <button
+                    aria-label="Wishlist"
+                    className="p-2.5 rounded-full text-white/90 hover:text-secondary hover:bg-white/10 transition-all cursor-pointer"
+                  >
+                    <BsHeartFill size={16} />
+                  </button>
 
-                {/* Shopping Bag Icon */}
-                <Link
-                  href="/shopping-cart"
-                  className={`relative p-2.5 rounded-full hover:text-secondary hover:bg-white/10 transition-all cursor-pointer ${
-                    isShoppingCartPage
-                      ? "text-secondary bg-white/10"
-                      : "text-white/90"
-                  }`}
-                >
-                  <span className="absolute top-1 right-1 bg-secondary text-title text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-md">
-                    5
-                  </span>
-                  <FaShoppingBag size={16} />
-                </Link>
+                  {/* Shopping Bag Icon */}
+                  <Link
+                    href="/shopping-cart"
+                    className={`relative p-2.5 rounded-full hover:text-secondary hover:bg-white/10 transition-all cursor-pointer ${
+                      isShoppingCartPage
+                        ? "text-secondary bg-white/10"
+                        : "text-white/90"
+                    }`}
+                  >
+                    <span className="absolute top-1 right-1 bg-secondary text-title text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-md">
+                      5
+                    </span>
+                    <FaShoppingBag size={16} />
+                  </Link>
+                </div>
 
-                {/* User Avatar / Profile */}
+                {/* User Avatar / Login Icon */}
                 {isPending ? (
                   <SmallLoader size={18} color="text-secondary" />
                 ) : user ? (
-                  <div className="relative hidden sm:block">
+                  <div className="relative">
                     <button
                       onClick={() => setUserMenuOpen((prev) => !prev)}
-                      className="flex items-center gap-1.5 p-1 rounded-full hover:bg-white/10 transition-all cursor-pointer"
+                      className="flex items-center gap-1.5 p-1 rounded-full hover:bg-white/10 transition-all cursor-pointer group"
+                      aria-label="User menu"
                     >
                       {user.image ? (
                         <img
                           src={user.image}
                           alt={user.name || "User"}
-                          className="w-8 h-8 rounded-full object-cover border border-secondary"
+                          className="w-7 h-7 lg:w-10 lg:h-10 rounded-full object-cover border border-secondary group-hover:scale-105 transition-transform"
                         />
                       ) : (
-                        <div className="w-8 h-8 rounded-full bg-secondary text-title font-extrabold flex items-center justify-center text-xs uppercase border border-secondary">
+                        <div className="w-7 h-7 lg:w-10 lg:h-10 rounded-full bg-secondary text-title font-extrabold flex items-center justify-center text-xs uppercase border border-secondary shadow-md group-hover:scale-105 transition-transform">
                           {user.name ? user.name.charAt(0) : "U"}
                         </div>
                       )}
+                      <ChevronDown
+                        size={14}
+                        className={`text-white/80 transition-transform duration-300 ${
+                          userMenuOpen ? "rotate-180 text-secondary" : ""
+                        }`}
+                      />
                     </button>
 
                     {userMenuOpen && (
@@ -329,33 +338,54 @@ const Navbar = () => {
                           <p className="text-xs font-extrabold uppercase text-white truncate">
                             {user.name || "ATELIER MEMBER"}
                           </p>
+                          <p className="text-[10px] text-gray-400 font-mono truncate">
+                            {user.email}
+                          </p>
                         </div>
-                        <Link
-                          href="/profile"
-                          onClick={() => setUserMenuOpen(false)}
-                          className="flex items-center gap-2 px-4 py-2 text-xs font-bold uppercase text-white/90 hover:bg-white/10 hover:text-secondary"
-                        >
-                          <UserIcon size={14} className="text-secondary" />
-                          <span>PROFILE</span>
-                        </Link>
-                        <button
-                          onClick={async () => {
-                            setUserMenuOpen(false);
-                            await authClient.signOut();
-                            router.push("/");
-                          }}
-                          className="w-full flex items-center gap-2 px-4 py-2 text-xs font-bold uppercase text-red-400 hover:bg-white/10 text-left"
-                        >
-                          <LogOut size={14} />
-                          <span>LOG OUT</span>
-                        </button>
+
+                        <div className="py-1">
+                          <Link
+                            href="/profile"
+                            onClick={() => setUserMenuOpen(false)}
+                            className="flex items-center gap-2.5 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white/90 hover:bg-white/10 hover:text-secondary transition-all"
+                          >
+                            <UserIcon size={14} className="text-secondary" />
+                            <span>PROFILE</span>
+                          </Link>
+
+                          <Link
+                            href="/shopping-cart"
+                            onClick={() => setUserMenuOpen(false)}
+                            className="flex items-center gap-2.5 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white/90 hover:bg-white/10 hover:text-secondary transition-all"
+                          >
+                            <Package size={14} className="text-secondary" />
+                            <span>MY ORDERS</span>
+                          </Link>
+                        </div>
+
+                        <div className="border-t border-white/10 pt-1">
+                          <button
+                            onClick={async () => {
+                              setUserMenuOpen(false);
+                              await authClient.signOut();
+                              router.push("/");
+                            }}
+                            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-bold uppercase tracking-wider text-red-400 hover:bg-white/10 transition-all cursor-pointer text-left"
+                          >
+                            <LogOut size={14} />
+                            <span>LOG OUT</span>
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>
                 ) : (
-                  <Link href="/sign-in" className="hidden sm:block">
-                    <button className="px-3 py-1.5 text-xs font-extrabold uppercase tracking-widest text-secondary hover:text-white transition-all cursor-pointer border border-secondary/40 rounded-full">
-                      LOGIN
+                  <Link href="/sign-in" aria-label="Sign in">
+                    <button
+                      className="p-2.5 rounded-full text-white/90 hover:text-secondary hover:bg-white/10 transition-all cursor-pointer"
+                      aria-label="Sign in"
+                    >
+                      <UserIcon size={18} />
                     </button>
                   </Link>
                 )}
@@ -374,7 +404,7 @@ const Navbar = () => {
             /* ========================================================================= */
             /* 2. TOP OF PAGE NAVBAR (Full 2-Tier Header: Top Bar + Category Bar) */
             /* ========================================================================= */
-            <div className="space-y-3 animate-in fade-in duration-300">
+            <div className="space-y-0 lg:space-y-3 animate-in fade-in duration-300">
               {/* Top Tier: Logo, Search Bar, Actions, Auth */}
               <div className="flex items-center justify-between gap-6">
                 <div className="scale-90 sm:scale-100 origin-left">
@@ -400,6 +430,15 @@ const Navbar = () => {
 
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="flex items-center gap-1">
+                    {/* Search Icon for Mobile/All screens */}
+                    <button
+                      onClick={() => setShowSearchModal((prev) => !prev)}
+                      aria-label="Search"
+                      className="p-2.5 rounded-full text-white/90 hover:text-secondary hover:bg-white/10 transition-all cursor-pointer md:hidden"
+                    >
+                      <Search size={18} />
+                    </button>
+
                     <button
                       aria-label="Wishlist"
                       className="p-2.5 rounded-full text-white/90 hover:text-secondary hover:bg-white/10 transition-all cursor-pointer"
@@ -440,8 +479,14 @@ const Navbar = () => {
                     </div>
                   ) : !user ? (
                     <div className="flex items-center gap-2">
-                      <Link href="/sign-in" className="hidden sm:block">
-                        <button className="px-3 py-2 text-xs font-extrabold uppercase tracking-widest text-white/90 hover:text-secondary transition-all cursor-pointer">
+                      <Link href="/sign-in">
+                        <button
+                          className="p-2.5 rounded-full text-white/90 hover:text-secondary hover:bg-white/10 transition-all cursor-pointer sm:hidden"
+                          aria-label="Sign in"
+                        >
+                          <UserIcon size={18} />
+                        </button>
+                        <button className="hidden sm:block px-3 py-2 text-xs font-extrabold uppercase tracking-widest text-white/90 hover:text-secondary transition-all cursor-pointer">
                           {t("login") || "LOGIN"}
                         </button>
                       </Link>
@@ -453,7 +498,7 @@ const Navbar = () => {
                       </Link>
                     </div>
                   ) : (
-                    <div className="relative hidden sm:block">
+                    <div className="relative">
                       <button
                         onClick={() => setUserMenuOpen((prev) => !prev)}
                         className="flex items-center gap-2 p-1 rounded-full hover:bg-white/10 transition-all cursor-pointer group"
@@ -463,10 +508,10 @@ const Navbar = () => {
                           <img
                             src={user.image}
                             alt={user.name || "User"}
-                            className="w-8 h-8 rounded-full object-cover border-2 border-secondary group-hover:scale-105 transition-transform"
+                            className="w-7 h-7 lg:w-10 lg:h-10 rounded-full object-cover border-2 border-secondary group-hover:scale-105 transition-transform"
                           />
                         ) : (
-                          <div className="w-8 h-8 rounded-full bg-secondary text-title font-extrabold flex items-center justify-center text-xs uppercase border border-secondary shadow-md group-hover:scale-105 transition-transform">
+                          <div className="w-7 h-7 lg:w-10 lg:h-10 rounded-full bg-secondary text-title font-extrabold flex items-center justify-center text-xs uppercase border border-secondary shadow-md group-hover:scale-105 transition-transform">
                             {user.name ? user.name.charAt(0) : "U"}
                           </div>
                         )}
@@ -697,11 +742,11 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search products..."
-              className="w-full bg-surface border border-white/15 py-2.5 pl-9 pr-4 text-xs text-white placeholder:text-white/40 focus:outline-none focus:border-secondary"
+              className="w-full bg-surface border border-white/15 py-2.5 pl-9 pr-4 text-xs text-title placeholder:text-title/40 focus:outline-none focus:border-secondary"
             />
             <Search
               size={14}
-              className="absolute top-1/2 -translate-y-1/2 left-3 text-white/40"
+              className="absolute top-1/2 -translate-y-1/2 left-3 text-secondary"
             />
           </div>
 
@@ -734,13 +779,13 @@ const Navbar = () => {
 
                     {/* Accordion Sub-links */}
                     {isExpanded && (
-                      <div className="grid grid-cols-2 gap-2 pt-2 pl-2">
+                      <div className="flex flex-col space-y-1.5 py-3 pl-4">
                         {cat.items.map((sub) => (
                           <Link
                             key={sub.name}
                             href={sub.href}
                             onClick={() => setMobileMenuOpen(false)}
-                            className="px-2.5 py-1.5 text-[11px] font-bold text-gray-300 hover:text-secondary bg-white/5 uppercase tracking-wider rounded-sm"
+                            className="py-3 text-xs font-bold text-white/80 hover:text-secondary uppercase tracking-wider transition-colors duration-200"
                           >
                             {sub.name}
                           </Link>
@@ -754,35 +799,18 @@ const Navbar = () => {
           </div>
 
           {/* User / Auth Section in Mobile Drawer */}
-          <div className="space-y-3 pt-2">
-            <p className="text-[10px] font-semibold text-secondary uppercase tracking-[0.25em]">
-              ATELIER MEMBER
-            </p>
-            {!user ? (
-              <div className="space-y-2">
-                <Link
-                  href="/sign-in"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full text-center py-2.5 border border-white/20 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/10 transition-all"
-                >
-                  {t("login") || "SIGN IN"}
-                </Link>
-                <Link
-                  href="/sign-up"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full text-center py-2.5 bg-secondary text-title font-black text-xs uppercase tracking-widest hover:bg-white transition-all shadow-lg"
-                >
-                  {t("getStarted") || "CREATE ACCOUNT"}
-                </Link>
-              </div>
-            ) : (
+          {user && (
+            <div className="space-y-3 pt-2">
+              <p className="text-[10px] font-semibold text-secondary uppercase tracking-[0.25em]">
+                ATELIER MEMBER
+              </p>
               <div className="space-y-3 bg-white/5 p-4 border border-white/10">
                 <div className="flex items-center gap-3 pb-3 border-b border-white/10">
                   {user.image ? (
                     <img
                       src={user.image}
                       alt={user.name || "User"}
-                      className="w-10 h-10 rounded-full object-cover border-2 border-secondary"
+                      className="w-5 h-5 rounded-full object-cover border-2 border-secondary"
                     />
                   ) : (
                     <div className="w-10 h-10 rounded-full bg-secondary text-title font-black flex items-center justify-center text-xs uppercase">
@@ -831,11 +859,10 @@ const Navbar = () => {
                   </button>
                 </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
+          {/* Drawer Footer */}
         </div>
-
-        {/* Drawer Footer */}
         <div className="pt-4 border-t border-white/10 text-center">
           <p className="text-[10px] text-gray-400 font-mono">
             © 2026 VINTAX ARCHIVE • HAUTE COUTURE
