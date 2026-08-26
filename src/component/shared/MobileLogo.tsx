@@ -34,7 +34,7 @@ export default function MobileLogo() {
           {/* V Shape */}
           <path
             d="M8 10L20 30L32 10H27L20 22L13 10H8Z"
-            fill="url(#goldGradient)"
+            fill="url(#mobileGoldGradient)"
           />
 
           {/* X Interlocking Diagonal */}
@@ -48,7 +48,7 @@ export default function MobileLogo() {
 
           <defs>
             <linearGradient
-              id="goldGradient"
+              id="mobileGoldGradient"
               x1="8"
               y1="10"
               x2="32"

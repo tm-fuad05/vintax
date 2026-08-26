@@ -26,6 +26,9 @@ const hindFont = Hind_Siliguri({
 export const metadata: Metadata = {
   title: "Vintax",
   description: "...",
+  icons: {
+    icon: "/logo/logo.png",
+  },
 };
 
 type Props = {
