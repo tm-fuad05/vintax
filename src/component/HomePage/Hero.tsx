@@ -100,7 +100,7 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* Slide Text Content Container */}
-      <div className="relative z-10 w-11/12  mx-auto h-full flex flex-col justify-between pt-45 pb-24">
+      <div className="relative z-10 w-11/12 mx-auto min-h-screen flex flex-col justify-between pt-28 pb-12">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide.id}
@@ -108,18 +108,18 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="max-w-3xl space-y-6 my-auto"
+            className="max-w-3xl space-y-4 my-auto"
           >
             {/* Tag Badge */}
             <div className="inline-flex items-center gap-3">
-              <span className="h-[1px] w-10 bg-secondary" />
-              <span className="text-xs uppercase tracking-[0.3em] font-semibold text-secondary">
+              <span className="h-[1px] w-8 bg-secondary" />
+              <span className="text-[11px] sm:text-xs uppercase tracking-[0.25em] font-semibold text-secondary">
                 {currentSlide.tag}
               </span>
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold tracking-tight text-white uppercase leading-[1.05]">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
               {currentSlide.titleTop}{" "}
               <span className="text-secondary italic font-serif font-normal">
                 {currentSlide.titleMiddle}
@@ -129,16 +129,16 @@ export default function Hero() {
             </h1>
 
             {/* Description Paragraph */}
-            <p className="text-gray-300 text-base sm:text-lg md:text-xl font-light max-w-xl leading-relaxed">
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg font-light max-w-lg leading-relaxed">
               {currentSlide.subtitle}
             </p>
 
             {/* Sharp Edged Box Buttons */}
-            <div className="flex flex-wrap items-center gap-5 pt-4">
-              <button className="bg-secondary text-title px-9 py-4 font-semibold text-sm tracking-[0.2em] uppercase hover:bg-white hover:text-title transition-all duration-300 cursor-pointer border border-secondary">
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <button className="bg-secondary text-title px-7 py-3 font-semibold text-xs sm:text-sm tracking-[0.18em] uppercase hover:bg-white hover:text-title transition-all duration-300 cursor-pointer border border-secondary">
                 {t("ctaPrimary") || "SHOP COLLECTION"}
               </button>
-              <button className="bg-transparent text-white px-9 py-4 font-semibold text-sm tracking-[0.2em] uppercase hover:bg-white/10 hover:border-white transition-all duration-300 border border-white/40 cursor-pointer backdrop-blur-sm">
+              <button className="bg-transparent text-white px-7 py-3 font-semibold text-xs sm:text-sm tracking-[0.18em] uppercase hover:bg-white/10 hover:border-white transition-all duration-300 border border-white/40 cursor-pointer backdrop-blur-sm">
                 {t("ctaSecondary") || "EXPLORE LOOKBOOK"}
               </button>
             </div>
