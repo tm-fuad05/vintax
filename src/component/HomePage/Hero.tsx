@@ -112,14 +112,14 @@ export default function Hero() {
           >
             {/* Tag Badge */}
             <div className="inline-flex items-center gap-3">
-              <span className="h-[1px] w-8 bg-secondary" />
-              <span className="text-[11px] sm:text-xs uppercase tracking-[0.25em] font-semibold text-secondary">
+              <span className="h-[1px] w-8 sm:w-10 bg-secondary" />
+              <span className="text-xs sm:text-sm uppercase tracking-[0.25em] font-semibold text-secondary">
                 {currentSlide.tag}
               </span>
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-white uppercase leading-[1.1]">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-white uppercase leading-[1.12]">
               {currentSlide.titleTop} <br />
               <span className="text-secondary italic font-serif font-normal">
                 {currentSlide.titleMiddle}
@@ -129,16 +129,16 @@ export default function Hero() {
             </h1>
 
             {/* Description Paragraph */}
-            <p className="text-gray-300 text-xs sm:text-sm md:text-base font-light max-w-lg leading-relaxed">
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg font-light max-w-xl leading-relaxed">
               {currentSlide.subtitle}
             </p>
 
             {/* Sharp Edged Box Buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <button className="bg-secondary text-title px-6 py-2.5 sm:px-7 sm:py-3 font-semibold text-xs sm:text-sm tracking-[0.18em] uppercase hover:bg-white hover:text-title transition-all duration-300 cursor-pointer border border-secondary">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4 pt-3 sm:pt-4 w-full sm:w-auto">
+              <button className="w-full sm:w-auto bg-secondary text-title px-7 py-3.5 sm:px-8 sm:py-4 font-semibold text-xs sm:text-sm tracking-[0.18em] uppercase hover:bg-white hover:text-title transition-all duration-300 cursor-pointer border border-secondary text-center">
                 {t("ctaPrimary") || "SHOP COLLECTION"}
               </button>
-              <button className="bg-transparent text-white px-6 py-2.5 sm:px-7 sm:py-3 font-semibold text-xs sm:text-sm tracking-[0.18em] uppercase hover:bg-white/10 hover:border-white transition-all duration-300 border border-white/40 cursor-pointer backdrop-blur-sm">
+              <button className="w-full sm:w-auto bg-transparent text-white px-7 py-3.5 sm:px-8 sm:py-4 font-semibold text-xs sm:text-sm tracking-[0.18em] uppercase hover:bg-white/10 hover:border-white transition-all duration-300 border border-white/40 cursor-pointer backdrop-blur-sm text-center">
                 {t("ctaSecondary") || "EXPLORE LOOKBOOK"}
               </button>
             </div>

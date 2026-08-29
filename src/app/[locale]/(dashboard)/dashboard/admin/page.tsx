@@ -8,8 +8,6 @@ import {
   TrendingUp,
   ArrowUpRight,
   ArrowDownRight,
-  PackageCheck,
-  Clock,
   ExternalLink,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
@@ -168,7 +166,9 @@ export default function AdminDashboardPage() {
         <div className="lg:col-span-2 bg-surface border border-border/70 rounded-2xl p-6 space-y-5 shadow-sm">
           <div className="flex items-center justify-between border-b border-border/60 pb-4">
             <div>
-              <h2 className="text-base font-bold text-foreground">Recent Orders</h2>
+              <h2 className="text-base font-bold text-foreground">
+                Recent Orders
+              </h2>
               <p className="text-xs font-mono text-muted-foreground">
                 Latest customer purchases requiring management
               </p>
@@ -190,21 +190,32 @@ export default function AdminDashboardPage() {
               </thead>
               <tbody className="divide-y divide-border/40">
                 {recentOrders.map((order) => (
-                  <tr key={order.id} className="hover:bg-background/50 transition-colors">
-                    <td className="py-3.5 px-2 font-bold text-foreground">{order.id}</td>
-                    <td className="py-3.5 px-2">
-                      <div className="font-semibold text-foreground">{order.customer}</div>
-                      <div className="text-[10px] text-muted-foreground">{order.items}</div>
+                  <tr
+                    key={order.id}
+                    className="hover:bg-background/50 transition-colors"
+                  >
+                    <td className="py-3.5 px-2 font-bold text-foreground">
+                      {order.id}
                     </td>
-                    <td className="py-3.5 px-2 font-bold text-foreground">{order.amount}</td>
+                    <td className="py-3.5 px-2">
+                      <div className="font-semibold text-foreground">
+                        {order.customer}
+                      </div>
+                      <div className="text-[10px] text-muted-foreground">
+                        {order.items}
+                      </div>
+                    </td>
+                    <td className="py-3.5 px-2 font-bold text-foreground">
+                      {order.amount}
+                    </td>
                     <td className="py-3.5 px-2">
                       <span
                         className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold ${
                           order.status === "Delivered"
                             ? "bg-emerald-500/10 text-emerald-600 border border-emerald-500/30"
                             : order.status === "Processing"
-                            ? "bg-amber-500/10 text-amber-600 border border-amber-500/30"
-                            : "bg-blue-500/10 text-blue-600 border border-blue-500/30"
+                              ? "bg-amber-500/10 text-amber-600 border border-amber-500/30"
+                              : "bg-blue-500/10 text-blue-600 border border-blue-500/30"
                         }`}
                       >
                         {order.status}
@@ -220,8 +231,12 @@ export default function AdminDashboardPage() {
         {/* Top Performing Products (1 Col) */}
         <div className="bg-surface border border-border/70 rounded-2xl p-6 space-y-5 shadow-sm">
           <div className="border-b border-border/60 pb-4">
-            <h2 className="text-base font-bold text-foreground">Top Products</h2>
-            <p className="text-xs font-mono text-muted-foreground">Highest revenue items this month</p>
+            <h2 className="text-base font-bold text-foreground">
+              Top Products
+            </h2>
+            <p className="text-xs font-mono text-muted-foreground">
+              Highest revenue items this month
+            </p>
           </div>
 
           <div className="space-y-4">
@@ -242,7 +257,9 @@ export default function AdminDashboardPage() {
                   </p>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs font-bold font-mono text-foreground">{item.revenue}</span>
+                  <span className="text-xs font-bold font-mono text-foreground">
+                    {item.revenue}
+                  </span>
                 </div>
               </div>
             ))}

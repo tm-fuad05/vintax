@@ -1,5 +1,7 @@
 import { redirect } from "next/navigation";
 
+const role: "ADMIN" | "USER" = "USER";
 export default function DashboardRootPage() {
-  redirect("/dashboard/user");
+  if (role == "ADMIN") redirect("/dashboard/admin");
+  else redirect("/dashboard/user");
 }
