@@ -23,9 +23,9 @@ export default function Hero() {
     {
       id: 1,
       tag: "SPRING / SUMMER 2026",
-      titleTop: t("titleTop") || "THE LUXURY",
-      titleMiddle: t("titleMiddle") || "ARCHIVE",
-      titleBottom: t("titleBottom") || "COLLECTION",
+      titleTop: t("titleTop"),
+      titleMiddle: t("titleMiddle"),
+      titleBottom: t("titleBottom"),
       subtitle:
         "Experience unprecedented elegance with handcrafted signature silhouettes.",
       image:
@@ -100,7 +100,7 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* Slide Text Content Container */}
-      <div className="relative z-10 w-11/12 mx-auto min-h-screen flex flex-col justify-between pt-28 pb-12">
+      <div className="relative z-10 w-11/12 mx-auto min-h-screen flex flex-col justify-between pt-24 sm:pt-28 pb-8 sm:pb-12">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide.id}
@@ -119,8 +119,8 @@ export default function Hero() {
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
-              {currentSlide.titleTop}{" "}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-white uppercase leading-[1.1]">
+              {currentSlide.titleTop} <br />
               <span className="text-secondary italic font-serif font-normal">
                 {currentSlide.titleMiddle}
               </span>{" "}
@@ -129,16 +129,16 @@ export default function Hero() {
             </h1>
 
             {/* Description Paragraph */}
-            <p className="text-gray-300 text-sm sm:text-base md:text-lg font-light max-w-lg leading-relaxed">
+            <p className="text-gray-300 text-xs sm:text-sm md:text-base font-light max-w-lg leading-relaxed">
               {currentSlide.subtitle}
             </p>
 
             {/* Sharp Edged Box Buttons */}
             <div className="flex flex-wrap items-center gap-4 pt-2">
-              <button className="bg-secondary text-title px-7 py-3 font-semibold text-xs sm:text-sm tracking-[0.18em] uppercase hover:bg-white hover:text-title transition-all duration-300 cursor-pointer border border-secondary">
+              <button className="bg-secondary text-title px-6 py-2.5 sm:px-7 sm:py-3 font-semibold text-xs sm:text-sm tracking-[0.18em] uppercase hover:bg-white hover:text-title transition-all duration-300 cursor-pointer border border-secondary">
                 {t("ctaPrimary") || "SHOP COLLECTION"}
               </button>
-              <button className="bg-transparent text-white px-7 py-3 font-semibold text-xs sm:text-sm tracking-[0.18em] uppercase hover:bg-white/10 hover:border-white transition-all duration-300 border border-white/40 cursor-pointer backdrop-blur-sm">
+              <button className="bg-transparent text-white px-6 py-2.5 sm:px-7 sm:py-3 font-semibold text-xs sm:text-sm tracking-[0.18em] uppercase hover:bg-white/10 hover:border-white transition-all duration-300 border border-white/40 cursor-pointer backdrop-blur-sm">
                 {t("ctaSecondary") || "EXPLORE LOOKBOOK"}
               </button>
             </div>
