@@ -37,8 +37,8 @@ export default function ShoppingCart() {
               </span>
               CHECKOUT
             </span>
-            <span className="w-6 sm:w-8 h-[1px] bg-border hidden sm:inline" />
-            <span className="text-gray-400 hidden sm:flex items-center gap-2">
+            <span className="w-6 sm:w-8 h-[1px] bg-border" />
+            <span className="text-gray-400 flex items-center gap-2">
               <span className="w-6 h-6 rounded-full bg-surface border border-border text-gray-400 font-bold flex items-center justify-center text-[10px]">
                 03
               </span>
