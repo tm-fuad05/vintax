@@ -77,8 +77,7 @@ const Navbar = () => {
       id: "men",
       label: "MEN",
       subTitle: "Archival Tailoring & Menswear",
-      image:
-        "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=800&auto=format&fit=crop",
+
       items: [
         { name: "Shirts", href: "/shop?cat=men-shirts" },
         { name: "Pants & Trousers", href: "/shop?cat=men-pants" },
@@ -92,8 +91,7 @@ const Navbar = () => {
       id: "women",
       label: "WOMEN",
       subTitle: "Haute Couture & Heritage Attire",
-      image:
-        "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=800&auto=format&fit=crop",
+
       items: [
         { name: "Three Piece", href: "/shop?cat=women-three-piece" },
         { name: "Designer Saree", href: "/shop?cat=women-saree" },
@@ -107,8 +105,7 @@ const Navbar = () => {
       id: "sneakers",
       label: "SNEAKERS",
       subTitle: "Street Identity Footwear",
-      image:
-        "https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=800&auto=format&fit=crop",
+
       items: [
         { name: "Men's Sneakers", href: "/shop?cat=sneakers-men" },
         { name: "Women's Sneakers", href: "/shop?cat=sneakers-women" },
@@ -121,8 +118,6 @@ const Navbar = () => {
       id: "accessories",
       label: "ACCESSORIES",
       subTitle: "Statement Atelier Goods",
-      image:
-        "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=800&auto=format&fit=crop",
       items: [
         { name: "Chrono Timepieces", href: "/shop?cat=acc-watches" },
         { name: "Sculptural Eyewear", href: "/shop?cat=acc-eyewear" },
@@ -210,8 +205,8 @@ const Navbar = () => {
 
                       {/* Mega Menu Dropdown */}
                       {isHovered && (
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 w-[620px] bg-title/95 backdrop-blur-2xl border border-secondary/30 p-6 shadow-2xl z-50 grid grid-cols-12 gap-6 animate-in fade-in slide-in-from-top-2 duration-300">
-                          <div className="col-span-7 space-y-3">
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 w-[480px] bg-title/95 backdrop-blur-2xl border border-secondary/30 p-6 shadow-2xl z-50 flex flex-col gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
+                          <div className="w-full space-y-3">
                             <div className="border-b border-white/10 pb-2">
                               <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-secondary flex items-center gap-1.5">
                                 <Sparkles size={12} />
@@ -224,30 +219,13 @@ const Navbar = () => {
                                 <Link
                                   key={sub.name}
                                   href={sub.href}
-                                  className="group/sub flex items-center justify-between p-2 rounded-sm hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-200"
+                                  className="group/sub flex items-center justify-between p-2.5 rounded-sm hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-200"
                                 >
                                   <span className="text-xs font-bold text-gray-200 group-hover/sub:text-secondary uppercase tracking-wider transition-colors">
                                     {sub.name}
                                   </span>
                                 </Link>
                               ))}
-                            </div>
-                          </div>
-
-                          <div className="col-span-5 relative h-48 rounded-sm overflow-hidden border border-white/10 group/img">
-                            <img
-                              src={cat.image}
-                              alt={cat.label}
-                              className="w-full h-full object-cover filter brightness-90 group-hover/img:scale-105 transition-transform duration-700"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-title via-transparent to-transparent opacity-80" />
-                            <div className="absolute bottom-3 left-3 right-3 space-y-0.5">
-                              <span className="text-[9px] uppercase font-mono tracking-widest text-secondary block">
-                                EXPLORE COLLECTION
-                              </span>
-                              <h4 className="text-xs font-extrabold text-white uppercase tracking-wider">
-                                VINTAX {cat.label} ARCHIVE
-                              </h4>
                             </div>
                           </div>
                         </div>
@@ -606,8 +584,8 @@ const Navbar = () => {
 
                       {/* Mega Menu Dropdown */}
                       {isHovered && (
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 w-[620px] bg-title/95 backdrop-blur-2xl border border-secondary/30 p-6 shadow-2xl z-50 grid grid-cols-12 gap-6 animate-in fade-in slide-in-from-top-2 duration-300">
-                          <div className="col-span-7 space-y-3">
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 w-[480px] bg-title/95 backdrop-blur-2xl border border-secondary/30 p-6 shadow-2xl z-50 flex flex-col gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
+                          <div className="w-full space-y-3">
                             <div className="border-b border-white/10 pb-2">
                               <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-secondary flex items-center gap-1.5">
                                 <Sparkles size={12} />
@@ -620,30 +598,13 @@ const Navbar = () => {
                                 <Link
                                   key={sub.name}
                                   href={sub.href}
-                                  className="group/sub flex items-center justify-between p-2 rounded-sm hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-200"
+                                  className="group/sub flex items-center justify-between p-2.5 rounded-sm hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-200"
                                 >
                                   <span className="text-xs font-bold text-gray-200 group-hover/sub:text-secondary uppercase tracking-wider transition-colors">
                                     {sub.name}
                                   </span>
                                 </Link>
                               ))}
-                            </div>
-                          </div>
-
-                          <div className="col-span-5 relative h-48 rounded-sm overflow-hidden border border-white/10 group/img">
-                            <img
-                              src={cat.image}
-                              alt={cat.label}
-                              className="w-full h-full object-cover filter brightness-90 group-hover/img:scale-105 transition-transform duration-700"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-title via-transparent to-transparent opacity-80" />
-                            <div className="absolute bottom-3 left-3 right-3 space-y-0.5">
-                              <span className="text-[9px] uppercase font-mono tracking-widest text-secondary block">
-                                EXPLORE COLLECTION
-                              </span>
-                              <h4 className="text-xs font-extrabold text-white uppercase tracking-wider">
-                                VINTAX {cat.label} ARCHIVE
-                              </h4>
                             </div>
                           </div>
                         </div>
