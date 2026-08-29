@@ -3,12 +3,20 @@
 import { authClient } from "@/lib/auth-client";
 import { BiLogoFacebookCircle } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
+import { toast } from "sonner";
 
 export default function SocialLogin() {
   const signInWithGoogle = async () => {
-    await authClient.signIn.social({
-      provider: "google",
-    });
+    try {
+      const { data } = await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+      console.log(data?.redirect);
+      console.log(data?.url);
+    } catch (error: any) {
+      toast.error(error?.message);
+    }
   };
 
   return (

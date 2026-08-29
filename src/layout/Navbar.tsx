@@ -21,6 +21,7 @@ import Logo from "../component/shared/logo";
 import SmallLoader from "@/component/shared/SmallLoader";
 import { authClient } from "@/lib/auth-client";
 import MobileLogo from "@/component/shared/MobileLogo";
+import { toast } from "sonner";
 
 const Navbar = () => {
   const { data, isPending } = authClient.useSession();
@@ -71,6 +72,20 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
+
+  const handleSignOut = async () => {
+    setUserMenuOpen(false);
+    try {
+      const { data } = await authClient.signOut();
+      if (data?.success) {
+        toast.success("Signed out");
+        router.push("/");
+      }
+    } catch (error: any) {
+      toast.error("Something went wrong!");
+      console.error(error?.message);
+    }
+  };
 
   const categoryMenus = [
     {
@@ -333,11 +348,7 @@ const Navbar = () => {
 
                         <div className="border-t border-white/10 pt-1">
                           <button
-                            onClick={async () => {
-                              setUserMenuOpen(false);
-                              await authClient.signOut();
-                              router.push("/");
-                            }}
+                            onClick={handleSignOut}
                             className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-bold uppercase tracking-wider text-red-400 hover:bg-white/10 transition-all cursor-pointer text-left"
                           >
                             <LogOut size={14} />

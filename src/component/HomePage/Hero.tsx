@@ -119,7 +119,7 @@ export default function Hero() {
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-white uppercase leading-[1.12]">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white uppercase leading-[1.12]">
               {currentSlide.titleTop} <br />
               <span className="text-secondary italic font-serif font-normal">
                 {currentSlide.titleMiddle}
