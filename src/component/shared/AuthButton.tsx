@@ -1,5 +1,6 @@
 "use client";
 import { ArrowUpRight } from "lucide-react";
+import React from "react";
 
 export default function AuthButton({
   children,
@@ -24,4 +25,3 @@ export default function AuthButton({
     </button>
   );
 }
-

@@ -21,10 +21,11 @@ const Footer = () => {
   const t = useTranslations("Footer");
 
   const hiddenPath = [
-    "/sign-in",
-    "/sign-up",
-    "/forgot-password",
-    "/reset-password",
+    // "/sign-in",
+    // "/sign-up",
+    // "/forgot-password",
+    // "/reset-password",
+    "",
   ];
   const isHiddenFooter = hiddenPath.some((p) => p === pathname);
 
