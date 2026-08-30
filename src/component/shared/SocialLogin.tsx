@@ -7,16 +7,18 @@ import { toast } from "sonner";
 
 export default function SocialLogin() {
   const signInWithGoogle = async () => {
-    try {
-      const { data } = await authClient.signIn.social({
+    await authClient.signIn.social(
+      {
         provider: "google",
         callbackURL: "/",
-      });
-      console.log(data?.redirect);
-      console.log(data?.url);
-    } catch (error: any) {
-      toast.error(error?.message);
-    }
+      },
+      {
+        onSuccess: () => {},
+        onError: (ctx) => {
+          toast.error(ctx.error.message || "Social login failed");
+        },
+      },
+    );
   };
 
   return (
