@@ -29,7 +29,7 @@ export default function Hero() {
       subtitle:
         "Experience unprecedented elegance with handcrafted signature silhouettes.",
       image:
-        "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop",
+        "https://res.cloudinary.com/djdzuwgqr/image/upload/v1788225260/photo-1490481651871-ab68de25d43d_ek6wgu.avif",
     },
     {
       id: 2,
@@ -40,7 +40,7 @@ export default function Hero() {
       subtitle:
         "Clean cuts and neutral palettes designed for subtle royal aesthetics.",
       image:
-        "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2070&auto=format&fit=crop",
+        "https://res.cloudinary.com/djdzuwgqr/image/upload/v1788225259/photo-1469334031218-e382a71b716b_fxlwju.avif",
     },
     {
       id: 3,
@@ -51,7 +51,7 @@ export default function Hero() {
       subtitle:
         "Bespoke tailoring and sustainable luxury fabrics for the modern connoisseur.",
       image:
-        "https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=2071&auto=format&fit=crop",
+        "https://res.cloudinary.com/djdzuwgqr/image/upload/v1788225259/photo-1445205170230-053b83016050_rvgas8.avif",
     },
   ];
 
