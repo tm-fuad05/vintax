@@ -55,6 +55,13 @@ export default function Hero() {
     },
   ];
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Reset loaded state when slide changes
+  useEffect(() => {
+    setIsLoaded(false);
+  }, [currentIndex]);
+
   // Continuous Autoplay timer
   useEffect(() => {
     const timer = setInterval(() => {
@@ -77,12 +84,19 @@ export default function Hero() {
 
   return (
     <section className="relative w-full min-h-screen bg-title overflow-hidden">
+      {/* Clean Background Only Skeleton Loader */}
+      {!isLoaded && (
+        <div className="absolute inset-0 z-0 bg-surface/40 overflow-hidden">
+          <div className="w-full h-full bg-gradient-to-r from-title/80 via-white/10 to-title/80 animate-pulse" />
+        </div>
+      )}
+
       {/* Background Image Carousel with Crossfade */}
       <AnimatePresence mode="sync">
         <motion.div
           key={currentSlide.id}
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={{ opacity: isLoaded ? 1 : 0 }}
           viewport={{ once: true }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.2, ease: "easeInOut" }}
@@ -91,6 +105,7 @@ export default function Hero() {
           <img
             src={currentSlide.image}
             alt={currentSlide.titleTop}
+            onLoad={() => setIsLoaded(true)}
             className="w-full h-full object-cover object-top filter brightness-[0.55] contrast-[1.05] scale-105 transition-transform duration-[8000ms]"
           />
           {/* Luxury Overlay Gradients */}
@@ -100,7 +115,7 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* Slide Text Content Container */}
-      <div className="relative z-10 w-11/12 mx-auto min-h-screen flex flex-col justify-between pt-24 sm:pt-28 pb-8 sm:pb-12">
+      <div className="relative z-40 w-11/12 mx-auto min-h-screen flex flex-col justify-between pt-24 sm:pt-28 pb-8 sm:pb-12">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide.id}

@@ -1,5 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
-import { Prisma } from "../generated/prisma/client";
+import { Prisma } from "../../src/generated/prisma/client";
 
 type Product = Prisma.ProductUncheckedCreateInput;
 

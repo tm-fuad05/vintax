@@ -4,44 +4,16 @@ import { useTranslations } from "next-intl";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAnimation } from "@/providers/AnimationProvider";
+import { Category } from "@/generated/prisma/client";
 
-interface CategoryItem {
-  id: string;
-  name: string;
-  count: string;
-  img: string;
-}
-
-export default function Featured() {
+export default function Featured({
+  categoryData,
+}: {
+  categoryData: Category[];
+}) {
   const t = useTranslations("HomePage.Categories");
   const { shouldAnimate } = useAnimation();
-
-  const categories: CategoryItem[] = [
-    {
-      id: "men",
-      name: t("men") || "MEN'S COUTURE",
-      count: `120+ ${t("itemCount") || "ITEMS"}`,
-      img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1000&auto=format&fit=crop",
-    },
-    {
-      id: "women",
-      name: t("women") || "WOMEN'S COLLECTION",
-      count: `150+ ${t("itemCount") || "ITEMS"}`,
-      img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1000&auto=format&fit=crop",
-    },
-    {
-      id: "sneakers",
-      name: t("sneakers") || "FOOTWEAR ARCHIVE",
-      count: `85+ ${t("itemCount") || "ITEMS"}`,
-      img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=1000&auto=format&fit=crop",
-    },
-    {
-      id: "accessories",
-      name: t("accessories") || "LUXURY ACCESSORIES",
-      count: `95+ ${t("itemCount") || "ITEMS"}`,
-      img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1000&auto=format&fit=crop",
-    },
-  ];
+  console.log(categoryData);
 
   return (
     <section className="w-full py-28 bg-background">
@@ -81,7 +53,7 @@ export default function Featured() {
 
         {/* Categories Grid - Minimalist Sharp Frames */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {categories.map((cat, index) => (
+          {categoryData?.map((cat, index) => (
             <motion.div
               key={cat.id}
               initial={shouldAnimate ? { y: 40, opacity: 0 } : false}
@@ -93,7 +65,7 @@ export default function Featured() {
               {/* Category Background Image */}
               <div className="absolute inset-0 z-0 overflow-hidden">
                 <img
-                  src={cat.img}
+                  src={cat.image ?? undefined}
                   alt={cat.name}
                   className="w-full h-full object-cover object-center filter brightness-[0.85] contrast-[1.02] group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
@@ -113,9 +85,6 @@ export default function Featured() {
 
               {/* Minimal Card Bottom Overlay Info */}
               <div className="absolute bottom-6 left-6 right-6 z-10 space-y-2">
-                <p className="text-[10px] tracking-[0.25em] uppercase font-semibold text-secondary">
-                  {cat.count}
-                </p>
                 <h3 className="text-xl font-bold text-white uppercase tracking-wider group-hover:text-secondary transition-colors duration-300">
                   {cat.name}
                 </h3>

@@ -54,8 +54,8 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, var(--color-primary), transparent);
-  border-radius: 50px;
+  background: linear-gradient(to bottom, var(--color-secondary), transparent);
+  border-radius: 0;
 }
 
 /* ডার্ক মোড ভেরিয়েন্ট ডিটেকশন */

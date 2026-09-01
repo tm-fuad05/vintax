@@ -1,4 +1,4 @@
-import { dummyProductsWithId } from "../../src/data/dummyProductsData";
+import { dummyProductsWithId } from "../data/dummyProductsData";
 import { prisma } from "../../src/lib/prisma";
 
 export async function seedProducts() {
