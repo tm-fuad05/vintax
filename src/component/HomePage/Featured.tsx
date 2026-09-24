@@ -4,12 +4,18 @@ import { useTranslations } from "next-intl";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAnimation } from "@/providers/AnimationProvider";
-import { Category } from "@/generated/prisma/client";
+export interface CategoryWithProducts {
+  id: string;
+  name: string;
+  slug?: string;
+  image?: string | null;
+  products?: { id: string; name?: string }[];
+}
 
 export default function Featured({
-  categoryData,
+  categoryData = [],
 }: {
-  categoryData: Category[];
+  categoryData?: CategoryWithProducts[];
 }) {
   const t = useTranslations("HomePage.Categories");
   const { shouldAnimate } = useAnimation();
@@ -85,6 +91,9 @@ export default function Featured({
 
               {/* Minimal Card Bottom Overlay Info */}
               <div className="absolute bottom-6 left-6 right-6 z-10 space-y-2">
+                <p className="text-sm text-secondary font-medium">
+                  {cat.products?.length || 0} Products
+                </p>
                 <h3 className="text-xl font-bold text-white uppercase tracking-wider group-hover:text-secondary transition-colors duration-300">
                   {cat.name}
                 </h3>

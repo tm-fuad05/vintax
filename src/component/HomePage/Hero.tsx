@@ -57,11 +57,6 @@ export default function Hero() {
 
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Reset loaded state when slide changes
-  useEffect(() => {
-    setIsLoaded(false);
-  }, [currentIndex]);
-
   // Continuous Autoplay timer
   useEffect(() => {
     const timer = setInterval(() => {
